@@ -1,3 +1,5 @@
+// Context: https://qiita.com/k_tada/items/cfb9a4046984431468b7
+
 import { useEffect, useRef } from "react";
 
 // カラー設定
