@@ -6,7 +6,7 @@ export const envKeys = {
 } as const;
 
 export const envLoader = (key: string, defaultValue?: string): string => {
-  const value = process.env[key];
+  const value = import.meta.env[key];
   if (value === undefined) {
     if (defaultValue === undefined) {
       throw new Error(`Environment variable ${key} is not defined and no default value was provided.`);
