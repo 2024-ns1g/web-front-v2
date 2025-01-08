@@ -11,7 +11,7 @@ export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 
 export const register = async (params: RegisterRequest) => {
   const apiClient = useApiClient();
-  const log = useLogger('api/register');
+  const log = useLogger('api/username/register');
 
   const response = await apiClient.post('/auth/register', params);
 
