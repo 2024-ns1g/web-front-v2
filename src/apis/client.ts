@@ -15,6 +15,8 @@ const createApiClient = (auth: boolean = true) => {
     addAuthInterceptor(apiClient);
   }
 
+  return apiClient;
+
 }
 
 const addAuthInterceptor = (client: AxiosInstance) => {
