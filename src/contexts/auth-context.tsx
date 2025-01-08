@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -20,6 +20,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   });
 
   const isAuthenticated = !!token;
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token);
+    } else {
+      localStorage.removeItem('token');
+    }
+  }, [token]);
 
   const handleLogin = (token: string) => {
     setToken(token);
