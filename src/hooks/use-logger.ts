@@ -1,5 +1,3 @@
-import { useCallback } from "react";
-
 /**
  * ログレベルの定義
  */
@@ -16,54 +14,44 @@ const logLevelPriority: Record<LogLevel, number> = {
 };
 
 /**
- * ログ関数のタイプ定義
+ * 現在の環境で許可される最低ログレベル
  */
-type LogFunction = (message: string, src?: any) => void;
+const currentLogLevel: LogLevel = process.env.NODE_ENV === "production" ? "WARN" : "DEBUG";
 
 /**
  * useLogger フック
  * 
  * @param prefix - ログメッセージのプレフィックス
- * @returns log オブジェクト (log.debug, log.info, log.warn, log.error)
- * 
- * 使用例:
- * const log = useLogger("MyComponent");
- * log.info("This is an info message", { data: someData });
- * log.error("This is an error message", new Error("Something went wrong"));
+ * @returns チェーン式ログオブジェクト
  */
-export function useLogger(prefix: string): {
-  debug: LogFunction;
-  info: LogFunction;
-  warn: LogFunction;
-  error: LogFunction;
-} {
-  const createLog = useCallback(
-    (level: LogLevel, consoleFunc: (...args: any[]) => void): LogFunction => {
-      return (message, src) => {
-        // 本番環境でかつログレベルがWARN以下の場合はログを出力しない
-        if (
-          process.env.NODE_ENV === "production" &&
-          logLevelPriority[level] < logLevelPriority.WARN
-        ) {
-          return;
-        }
+export function useLogger(prefix: string) {
+  const log = (level: LogLevel) => (message: string, src?: any) => {
+    if (logLevelPriority[level] < logLevelPriority[currentLogLevel]) {
+      return; // 許可されていないログレベルは無視
+    }
 
-        const formattedMessage = `[${prefix}] [${level}] ${message}`;
+    const formattedMessage = `[${prefix}] [${level}] ${message}`;
 
-        if (src !== undefined) {
-          consoleFunc(formattedMessage, src);
-        } else {
-          consoleFunc(formattedMessage);
-        }
-      };
-    },
-    [prefix]
-  );
+    switch (level) {
+      case "DEBUG":
+        console.debug(formattedMessage, src || "");
+        break;
+      case "INFO":
+        console.info(formattedMessage, src || "");
+        break;
+      case "WARN":
+        console.warn(formattedMessage, src || "");
+        break;
+      case "ERROR":
+        console.error(formattedMessage, src || "");
+        break;
+    }
+  };
 
   return {
-    debug: createLog("DEBUG", console.debug),
-    info: createLog("INFO", console.info),
-    warn: createLog("WARN", console.warn),
-    error: createLog("ERROR", console.error),
+    debug: log("DEBUG"),
+    info: log("INFO"),
+    warn: log("WARN"),
+    error: log("ERROR"),
   };
 }
