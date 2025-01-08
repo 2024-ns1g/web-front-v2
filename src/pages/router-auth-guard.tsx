@@ -13,7 +13,7 @@ export const RouteAuthGuard: React.VFC<Props> = (props) => {
 
 
   let allowRoute = false;
-  if (auth.isAuthenticated) {
+  if (!auth.isAuthenticated) {
     // allowRoute = props.allowroles ? props.allowroles.includes(authUser.role) : true;
     // TODO: Impl role check system
     allowRoute = true;
