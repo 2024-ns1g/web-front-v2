@@ -1,3 +1,4 @@
+import { RegisterResponseSchema } from "@/types/responses/auth/register";
 import { AxiosInstance } from "axios";
 import { z } from "zod";
 
@@ -9,10 +10,10 @@ const registerRequestSchema = z.object({
 export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 
 export const register = async (apiClient: AxiosInstance, log: any, params: RegisterRequest) => {
-  const response = await apiClient.post('/auth/register', params);
+  const response = await apiClient.post('/auth/username/register', params);
 
   try {
-    const parsed = registerRequestSchema.parse(response.data);
+    const parsed = RegisterResponseSchema.parse(response.data);
 
     return parsed;
   } catch (error) {
