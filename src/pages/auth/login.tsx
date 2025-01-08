@@ -9,15 +9,22 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { toast } from "react-toastify";
 import { useLogger } from "@/hooks/use-logger";
 import { AuthLayout } from "@/layouts/authLayout";
+import { useAuth } from "@/contexts/auth-context";
+import { LoginResponseSchema } from "@/types/responses/auth/login";
 
 export const Login = () => {
 
   const api = useApis();
+  const auth = useAuth();
   const { log } = useLogger("LoginPage");
 
   const handleLogin = async (values: LoginRequest) => {
     const toastId = toast.loading("ログイン中...");
-    await api.auth.login(values).then(() => {
+    await api.auth.login(values).then((response) => {
+      const parsed = LoginResponseSchema.parse(response);
+
+      auth.handleLogin(parsed.token);
+
       toast.update("ログインに成功しました", { toastId: toastId, type: "success" });
     }).catch((error) => {
       log("Failed to login", error, "ERROR");
