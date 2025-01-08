@@ -9,15 +9,23 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { toast } from "react-toastify";
 import { useLogger } from "@/hooks/use-logger";
 import { AuthLayout } from "@/layouts/authLayout";
+import { useAuth } from "@/contexts/auth-context";
+import { RegisterResponseSchema } from "@/types/responses/auth/register";
 
 export const Register = () => {
 
   const api = useApis();
+  const auth = useAuth();
   const { log } = useLogger("RegisterPage");
 
   const handleRegister = async (values: RegisterRequest) => {
     const toastId = toast.loading("登録中...");
-    await api.auth.register(values).then(() => {
+    await api.auth.register(values).then((response) => {
+      const parsed = RegisterResponseSchema.parse(response)
+
+      // handleLoginは実質的にトークン処理を行う→このサービスにおいては登録時自動でログインするため
+      auth.handleLogin(parsed.token);
+
       toast.update(toastId, { render: "登録に成功しました", type: "success", isLoading: false });
     }).catch((error) => {
       log("Failed to register", error, "ERROR");
