@@ -1,17 +1,24 @@
+import { loginFormSchema } from "@/types/validate/loginFormSchema";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Formik } from "formik";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 export const Login = () => {
+
+  const handleLogin = (values: { username: string; password: string }) => {
+    // TODO: impl
+    console.log(values);
+  };
+
   return (
     <>
       <div className="text-center text-[25px] font-bold mb-6">ログイン</div>
 
       <Formik
         initialValues={{ username: "", password: "" }}
-        validationSchema={LoginSchema}
+        validationSchema={toFormikValidationSchema(loginFormSchema)}
         onSubmit={handleLogin}
       >
         {({ values, errors, touched, handleChange, handleSubmit }) => (
