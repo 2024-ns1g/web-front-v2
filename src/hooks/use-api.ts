@@ -6,11 +6,19 @@ export const useApis = () => {
   const apiClient = useApiClient();
   const log = useLogger('api');
 
+  // 共通処理を抽象化
+  const createApiMethod = <T extends (...args: any[]) => any>(
+    apiFunction: T
+  ) => {
+    return async (params: Parameters<T>[2]) => {
+      return await apiFunction(apiClient, log, params);
+    };
+  };
+
   return {
     auth: {
-      login: async (params: Parameters<typeof apiEndpoints.auth.login>[2]) => {
-        return await apiEndpoints.auth.login(apiClient, log, params);
-      },
-    }
-  }
+      login: createApiMethod(apiEndpoints.auth.login),
+      register: createApiMethod(apiEndpoints.auth.register),
+    },
+  };
 };
