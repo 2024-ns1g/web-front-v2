@@ -1,5 +1,4 @@
-import { useApiClient } from "@/contexts/api-client-context";
-import { useLogger } from "@/hooks/use-logger";
+import { AxiosInstance } from "axios";
 import { z } from "zod";
 
 const loginRequestSchema = z.object({
@@ -9,10 +8,7 @@ const loginRequestSchema = z.object({
 
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 
-export const login = async (params: LoginRequest) => {
-  const apiClient = useApiClient();
-  const log = useLogger('api/username/login');
-
+export const login = async (apiClient: AxiosInstance, log: any, params: LoginRequest) => {
   const response = await apiClient.post('/auth/login', params);
 
   try {

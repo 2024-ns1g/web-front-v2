@@ -1,5 +1,4 @@
-import { useApiClient } from "@/contexts/api-client-context";
-import { useLogger } from "@/hooks/use-logger";
+import { AxiosInstance } from "axios";
 import { z } from "zod";
 
 const registerRequestSchema = z.object({
@@ -9,10 +8,7 @@ const registerRequestSchema = z.object({
 
 export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 
-export const register = async (params: RegisterRequest) => {
-  const apiClient = useApiClient();
-  const log = useLogger('api/username/register');
-
+export const register = async (apiClient: AxiosInstance, log: any, params: RegisterRequest) => {
   const response = await apiClient.post('/auth/register', params);
 
   try {
