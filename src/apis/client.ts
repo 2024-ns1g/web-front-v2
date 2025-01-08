@@ -1,25 +1,35 @@
 import { envKeys, envLoader } from '@/utils/env';
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
-const apiClient = axios.create({
-  baseURL: envLoader(envKeys.apiHost, 'http://localhost:8080'),
-  timeout: Number(envLoader(envKeys.defaultTimeout, '5000')),
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const createApiClient = (auth: boolean = true) => {
 
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const apiClient = axios.create({
+    baseURL: envLoader(envKeys.apiHost, 'http://localhost:8080'),
+    timeout: Number(envLoader(envKeys.defaultTimeout, '5000')),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
-  if (token) {
-    if (!config.headers)
-      config.headers = {};
-
-    config.headers.Authorization = `Bearer ${token}`;
+  if (auth) {
+    addAuthInterceptor(apiClient);
   }
 
-  return config;
-});
+}
 
-export default apiClient;
+const addAuthInterceptor = (client: AxiosInstance) => {
+  client.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      if (!config.headers)
+        config.headers = config.headers
+
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  });
+}
+
+export default createApiClient;
