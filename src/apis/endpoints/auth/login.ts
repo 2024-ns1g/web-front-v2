@@ -1,6 +1,5 @@
-import { Logger } from "@/hooks/use-logger";
+import { ApiClient, Logger } from "@/types"; // `apiClient` と `log` の型を定義
 import { LoginResponse, LoginResponseSchema } from "@/types/responses/auth/login";
-import { AxiosInstance } from "axios";
 import { z } from "zod";
 
 const loginRequestSchema = z.object({
@@ -11,7 +10,7 @@ const loginRequestSchema = z.object({
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 
 export const login = async (
-  apiClient: AxiosInstance,
+  apiClient: ApiClient,
   log: Logger,
   params: LoginRequest
 ): Promise<LoginResponse> => {
