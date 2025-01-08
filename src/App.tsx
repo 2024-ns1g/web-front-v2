@@ -6,6 +6,7 @@ import PricingPage from "@/pages/pricing";
 import BlogPage from "@/pages/blog";
 import AboutPage from "@/pages/about";
 import { Login } from "./pages/auth/login";
+import { Register } from "./pages/auth/register";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       <Route element={<BlogPage />} path="/blog" />
       <Route element={<AboutPage />} path="/about" />
 
-      <Route element={<Login />} path="/login" />
+      <Route element={<Login />} path="/auth" />
+      <Route element={<Register />} path="/auth/register" />
     </Routes>
   );
 }
