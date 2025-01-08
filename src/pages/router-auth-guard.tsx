@@ -9,7 +9,7 @@ type Props = {
 
 export const RouteAuthGuard: React.VFC<Props> = (props) => {
   const auth = useAuth();
-  const { log } = useLogger("RouteAuthGuard");
+  const log = useLogger("RouteAuthGuard");
 
 
   let allowRoute = false;
@@ -18,13 +18,13 @@ export const RouteAuthGuard: React.VFC<Props> = (props) => {
     // TODO: Impl role check system
     allowRoute = true;
   } else {
-    log("Not authenticated");
+    log.info("Not authenticated");
   }
 
   if (!allowRoute) {
     // return <Navigate to={props.redirect} state={{from:useLocation()}} replace={false} />
     return <Navigate to="/auth/login" state={{ from: useLocation() }} replace={false} />
-  }
+  } else log.info("Authenticated");
 
   return <>{props.component}</>;
 
