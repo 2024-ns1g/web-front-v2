@@ -66,7 +66,7 @@ export const Login = () => {
 
       <div className="font-light text-slate-400 mt-4 text-sm">
         {/* <Link href="/register" className="font-bold">新規登録</Link> */}
-        <Link to="/register" className="font-bold"> 新規登録</Link>
+        <Link to="/auth/register" className="font-bold"> 新規登録</Link>
       </div>
     </AuthLayout>
   );

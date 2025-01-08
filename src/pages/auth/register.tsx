@@ -74,7 +74,7 @@ export const Register = () => {
       </Formik>
 
       <div className="font-light text-slate-400 mt-4 text-sm">
-        <Link to="/login" className="font-bold">ログインはこちら</Link>
+        <Link to="/auth/login" className="font-bold">ログインはこちら</Link>
       </div>
     </AuthLayout>
   );
