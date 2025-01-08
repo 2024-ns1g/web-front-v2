@@ -16,7 +16,7 @@ export const Register = () => {
 
   const api = useApis();
   const auth = useAuth();
-  const { log } = useLogger("RegisterPage");
+  const log = useLogger("RegisterPage");
 
   const handleRegister = async (values: RegisterRequest) => {
     const toastId = toast.loading("登録中...");
@@ -28,7 +28,7 @@ export const Register = () => {
 
       toast.update(toastId, { render: "登録に成功しました", type: "success", isLoading: false });
     }).catch((error) => {
-      log("Failed to register", error, "ERROR");
+      log.error("Failed to register", error);
       toast.update(toastId, { render: error.message, type: "error", isLoading: false });
     });
   };

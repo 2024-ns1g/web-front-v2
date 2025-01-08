@@ -16,7 +16,7 @@ export const Login = () => {
 
   const api = useApis();
   const auth = useAuth();
-  const { log } = useLogger("LoginPage");
+  const log = useLogger("LoginPage");
 
   const handleLogin = async (values: LoginRequest) => {
     const toastId = toast.loading("ログイン中...");
@@ -27,7 +27,7 @@ export const Login = () => {
 
       toast.update("ログインに成功しました", { toastId: toastId, type: "success" });
     }).catch((error) => {
-      log("Failed to login", error, "ERROR");
+      log.error("Failed to login", error);
       toast.update(error.message, { toastId: toastId, type: "error" });
     });
   };
