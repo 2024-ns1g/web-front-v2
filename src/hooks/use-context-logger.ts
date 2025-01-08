@@ -1,8 +1,5 @@
-// Context: https://qiita.com/k_tada/items/cfb9a4046984431468b7
-
 import { useEffect, useRef } from "react";
 
-// カラー設定
 const colors: Record<string, string> = {
   prefix: "#4CAF50",
   log: "inherit",
@@ -11,10 +8,8 @@ const colors: Record<string, string> = {
   error: "#F20404",
 };
 
-// 入力の型定義
 type Inputs = Record<string, any>;
 
-// タイムスタンプを生成するヘルパー関数
 function getTimestamp(): string {
   const date = new Date();
   const hours = date.getHours().toString().padStart(2, "0");
@@ -24,9 +19,11 @@ function getTimestamp(): string {
   return `${hours}:${minutes}:${seconds}.${milliseconds}`;
 }
 
-// useContextLogger フックの定義
 export function useContextLogger<T extends Inputs>(prefix: string, inputs: T): void {
-  // 前回の入力値を保持するための Ref
+  if (process.env.NODE_ENV === "production") {
+    return;
+  }
+
   const prevInputs = useRef<Partial<Record<keyof T, any>>>({});
 
   useEffect(() => {
@@ -39,7 +36,6 @@ export function useContextLogger<T extends Inputs>(prefix: string, inputs: T): v
       "color: gray; font-weight: lighter;"
     );
 
-    // 各入力の前後の値をログに出力
     (Object.keys(inputs) as Array<keyof T>).forEach((key) => {
       const value = inputs[key];
       const prev = prevInputs.current[key];
@@ -47,10 +43,9 @@ export function useContextLogger<T extends Inputs>(prefix: string, inputs: T): v
       console.log(`%c${String(key)} - prev`, `color: ${colors.prev}`, prev);
       console.log(`%c${String(key)} - next`, `color: ${colors.next}`, value);
 
-      // 現在の値を前回の値として更新
       prevInputs.current[key] = value;
     });
 
     console.groupEnd();
-  }, [prefix, inputs]); // prefix と inputs に依存
+  }, [prefix, inputs]);
 }
