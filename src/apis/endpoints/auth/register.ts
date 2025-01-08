@@ -11,7 +11,7 @@ export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 
 export const register = async (params: RegisterRequest) => {
   const apiClient = useApiClient();
-  const { log } = useLogger('api/register');
+  const log = useLogger('api/register');
 
   const response = await apiClient.post('/auth/register', params);
 
@@ -21,9 +21,9 @@ export const register = async (params: RegisterRequest) => {
     return parsed;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      log('Failed to parse response', error.errors, "ERROR");
+      log.error('Failed to parse response', error.errors);
     } else {
-      log('Unknown error', error, "ERROR");
+      log.error('Unknown error', error);
     }
   }
 }
