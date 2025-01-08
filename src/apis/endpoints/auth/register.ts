@@ -1,5 +1,5 @@
-import { Logger } from "@/hooks/use-logger";
-import { AxiosInstance } from "axios";
+import { useApiClient } from "@/contexts/api-client-context";
+import { useLogger } from "@/hooks/use-logger";
 import { z } from "zod";
 
 const registerRequestSchema = z.object({
@@ -9,18 +9,21 @@ const registerRequestSchema = z.object({
 
 export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 
-export const register = async (apiClient: AxiosInstance, log: Logger, params: RegisterRequest) => {
-  const response = await apiClient.post("/auth/register", params);
+export const register = async (params: RegisterRequest) => {
+  const apiClient = useApiClient();
+  const log = useLogger('api/username/register');
+
+  const response = await apiClient.post('/auth/register', params);
 
   try {
     const parsed = registerRequestSchema.parse(response.data);
+
     return parsed;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      log.error("Failed to parse response", error.errors);
+      log.error('Failed to parse response', error.errors);
     } else {
-      log.error("Unknown error", error);
+      log.error('Unknown error', error);
     }
-    throw error;
   }
-};
+}
