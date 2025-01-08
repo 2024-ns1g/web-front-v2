@@ -1,5 +1,6 @@
 export const envKeys = {
   apiHost: 'VITE_API_HOST',
+  defaultTimeout: 'VITE_API_DEFAULT_TIMEOUT',
 } as const;
 
 export const envLoader = (key: string, defaultValue?: string): string => {
