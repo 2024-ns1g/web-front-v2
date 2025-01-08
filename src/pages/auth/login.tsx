@@ -1,15 +1,27 @@
+import { LoginRequest } from "@/apis/endpoints/auth/login";
+import { useApis } from "@/contexts/api-context";
 import { loginFormSchema } from "@/types/validate/loginFormSchema";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { toast } from "react-toastify";
+import { useLogger } from "@/hooks/use-logger";
 
 export const Login = () => {
 
-  const handleLogin = (values: { username: string; password: string }) => {
-    // TODO: impl
-    console.log(values);
+  const api = useApis();
+  const { log } = useLogger("LoginPage");
+
+  const handleLogin = async (values: LoginRequest) => {
+    const toastId = toast.loading("ログイン中...");
+    await api.auth.login(values).then(() => {
+      toast.update("ログインに成功しました", { toastId: toastId, type: "success" });
+    }).catch((error) => {
+      log("Failed to login", error, "ERROR");
+      toast.update(error.message, { toastId: toastId, type: "error" });
+    });
   };
 
   return (
