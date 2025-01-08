@@ -1,7 +1,7 @@
 import { login } from "./auth/login";
 import { register } from "./auth/register";
 
-export const endPoints = {
+export const apiEndpoints = {
   auth: {
     login,
     register
