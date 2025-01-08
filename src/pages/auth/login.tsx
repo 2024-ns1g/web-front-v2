@@ -10,17 +10,17 @@ import { useLogger } from "@/hooks/use-logger";
 import { AuthLayout } from "@/layouts/authLayout";
 import { useAuth } from "@/contexts/auth-context";
 import { LoginResponseSchema } from "@/types/responses/auth/login";
-import { useApis } from "@/hooks/use-api";
+import { useApi } from "@/hooks/use-api";
 
 export const Login = () => {
 
-  const api = useApis();
+  const { login } = useApi();
   const auth = useAuth();
   const log = useLogger("LoginPage");
 
   const handleLogin = async (values: LoginRequest) => {
     const toastId = toast.loading("ログイン中...");
-    await api.auth.login(values).then((response) => {
+    await login(values).then((response) => {
       const parsed = LoginResponseSchema.parse(response);
 
       auth.handleLogin(parsed.token);

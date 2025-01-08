@@ -55,3 +55,5 @@ export function useLogger(prefix: string) {
     error: log("ERROR"),
   };
 }
+
+export type Logger = ReturnType<typeof useLogger>;

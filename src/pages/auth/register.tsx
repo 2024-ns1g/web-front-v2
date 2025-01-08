@@ -10,17 +10,17 @@ import { useLogger } from "@/hooks/use-logger";
 import { AuthLayout } from "@/layouts/authLayout";
 import { useAuth } from "@/contexts/auth-context";
 import { RegisterResponseSchema } from "@/types/responses/auth/register";
-import { useApis } from "@/hooks/use-api";
+import { useApi } from "@/hooks/use-api";
 
 export const Register = () => {
 
-  const api = useApis();
+  const { register } = useApi();
   const auth = useAuth();
   const log = useLogger("RegisterPage");
 
   const handleRegister = async (values: RegisterRequest) => {
     const toastId = toast.loading("登録中...");
-    await api.auth.register(values).then((response) => {
+    await register(values).then((response) => {
       const parsed = RegisterResponseSchema.parse(response)
 
       // handleLoginは実質的にトークン処理を行う→このサービスにおいては登録時自動でログインするため
