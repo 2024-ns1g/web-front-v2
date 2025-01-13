@@ -15,8 +15,11 @@ const ChooseRoom = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const updateRooms = () => {
+    // api.room.getJoinedRoomList(null).then((res) => {
+    //   setRooms(res!.rooms);
+    // });
     api.room.getJoinedRoomList(null).then((res) => {
-      setRooms(res!.rooms);
+      console.log(res);
     });
   }
 
