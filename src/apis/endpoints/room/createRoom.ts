@@ -1,8 +1,9 @@
+import { StateContextType } from "@/contexts/state-context";
 import { CreateRoomRequest, createRoomResponseSchema } from "@/types/endpoints/room/createRoom";
 import { AxiosInstance } from "axios";
 import { z } from "zod";
 
-export const createRoom = async (apiClient: AxiosInstance, log: any, params: CreateRoomRequest) => {
+export const createRoom = async (apiClient: AxiosInstance, log: any, _state: StateContextType, params: CreateRoomRequest) => {
   const response = await apiClient.post('/room/create', params);
   try {
     const parsed = createRoomResponseSchema.parse(response.data);
