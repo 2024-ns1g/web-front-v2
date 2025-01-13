@@ -8,9 +8,5 @@ const PageBaseSchema = z.object({
 });
 
 export const PageSchema = PageBaseSchema;
-export const PageListSchama = z.object({
-  pages: z.array(PageBaseSchema),
-});
 
 export type Page = z.infer<typeof PageSchema>;
-export type PageList = z.infer<typeof PageListSchama>;

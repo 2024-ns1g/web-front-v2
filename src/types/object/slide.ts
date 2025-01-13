@@ -9,9 +9,5 @@ const SlideBaseSchema = z.object({
 });
 
 export const SlideSchema = SlideBaseSchema;
-export const SlideListSchema = z.object({
-  slides: z.array(SlideBaseSchema),
-});
 
 export type Slide = z.infer<typeof SlideSchema>;
-export type SlideList = z.infer<typeof SlideListSchema>;
