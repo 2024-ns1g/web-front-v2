@@ -1,4 +1,4 @@
-import { LoginResponseSchema } from "@/types/responses/auth/login";
+import { LoginResponseSchema } from "@/types/endpoints/auth/login";
 import { AxiosInstance } from "axios";
 import { z } from "zod";
 

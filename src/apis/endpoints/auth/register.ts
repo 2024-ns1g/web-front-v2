@@ -1,4 +1,4 @@
-import { RegisterResponseSchema } from "@/types/responses/auth/register";
+import { RegisterResponseSchema } from "@/types/endpoints/auth/register";
 import { AxiosInstance } from "axios";
 import { z } from "zod";
 
