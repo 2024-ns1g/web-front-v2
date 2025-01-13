@@ -4,7 +4,7 @@ import { SimpleUserSchema } from "./user";
 const RoomBaseSchema = z.object({
   roomId: z.string(),
   displayName: z.string(),
-  icon: z.string(),
+  icon: z.string().nullable().optional(),
   owner: SimpleUserSchema,
   createdAt: z.string(),
 });
