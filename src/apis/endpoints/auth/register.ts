@@ -1,8 +1,9 @@
+import { StateContextType } from "@/contexts/state-context";
 import { RegisterRequest, RegisterResponseSchema } from "@/types/endpoints/auth/register";
 import { AxiosInstance } from "axios";
 import { z } from "zod";
 
-export const register = async (apiClient: AxiosInstance, log: any, params: RegisterRequest) => {
+export const register = async (apiClient: AxiosInstance, log: any, _state: StateContextType, params: RegisterRequest) => {
   const response = await apiClient.post('/auth/username/register', params);
 
   try {

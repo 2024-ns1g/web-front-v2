@@ -1,8 +1,9 @@
+import { StateContextType } from "@/contexts/state-context";
 import { LoginResponseSchema, LoginRequest } from "@/types/endpoints/auth/login";
 import { AxiosInstance } from "axios";
 import { z } from "zod";
 
-export const login = async (apiClient: AxiosInstance, log: any, params: LoginRequest) => {
+export const login = async (apiClient: AxiosInstance, log: any, _state: StateContextType,  params: LoginRequest) => {
   const response = await apiClient.post('/auth/username/login', params);
 
   try {
