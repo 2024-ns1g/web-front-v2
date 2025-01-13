@@ -40,27 +40,33 @@ export const CacheProvider: React.FC<CacheProviderProps> = ({ children }) => {
   const [pageCache, setPageCache] = useState<Record<string, Page>>({});
 
   const setRoomCacheList = (rooms: Room[]) => {
-    const newRoomCache: Record<string, Room> = {};
-    rooms.forEach(room => {
-      newRoomCache[room.roomId] = room;
+    setRoomCache(prev => {
+      const newRoomCache = { ...prev };
+      rooms.forEach(room => {
+        newRoomCache[room.roomId] = room;
+      });
+      return newRoomCache;
     });
-    setRoomCache(newRoomCache);
   }
 
   const setSlideCacheList = (slides: Slide[]) => {
-    const newSlideCache: Record<string, Slide> = {};
-    slides.forEach(slide => {
-      newSlideCache[slide.slideId] = slide;
+    setSlideCache(prev => {
+      const newSlideCache = { ...prev };
+      slides.forEach(slide => {
+        newSlideCache[slide.slideId] = slide;
+      });
+      return newSlideCache;
     });
-    setSlideCache(newSlideCache);
   }
 
   const setPageCacheList = (pages: Page[]) => {
-    const newPageCache: Record<string, Page> = {};
-    pages.forEach(page => {
-      newPageCache[page.pageId] = page;
+    setPageCache(prev => {
+      const newPageCache = { ...prev };
+      pages.forEach(page => {
+        newPageCache[page.pageId] = page;
+      });
+      return newPageCache
     });
-    setPageCache(newPageCache);
   }
 
   const setPageCacheImpl = (page: Page) => {
@@ -90,14 +96,14 @@ export const CacheProvider: React.FC<CacheProviderProps> = ({ children }) => {
   return (
     <CacheContext.Provider value={
       {
-        roomCache, 
-        setRoomCache: setRoomCacheImpl, 
-        setRoomCacheList, 
-        slideCache, 
-        setSlideCache: setSlideCacheImpl, 
-        setSlideCacheList, 
-        pageCache, 
-        setPageCache: setPageCacheImpl, 
+        roomCache,
+        setRoomCache: setRoomCacheImpl,
+        setRoomCacheList,
+        slideCache,
+        setSlideCache: setSlideCacheImpl,
+        setSlideCacheList,
+        pageCache,
+        setPageCache: setPageCacheImpl,
         setPageCacheList
       }}>
       {children}
