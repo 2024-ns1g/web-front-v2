@@ -10,18 +10,28 @@ const ChooseRoom = () => {
   const api = useApis();
 
   const [rooms, setRooms] = useState<Room[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
+  const updateRooms = () => {
     api.room.getJoinedRoomList(null).then((res) => {
       setRooms(res!.rooms);
     });
+  }
+
+  const selectHandler = (room: Room) => {
+    console.log(room);
+  }
+
+  // When the component is mounted
+  useEffect(() => {
+    updateRooms();
   }, []);
 
   return (
     <>
       <header className="flex justify-between items-center p-4 bg-white shadow z-50 sticky top-0 h-16">
         <h1 className="text-2xl font-bold">ルームを選択</h1>
-        <Button color="primary" variant="shadow" onPress={onOpen}>
+        <Button color="primary" variant="shadow" onPress={() => setIsOpen(true)}>
           新規作成
         </Button>
       </header>
