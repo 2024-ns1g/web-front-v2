@@ -6,6 +6,7 @@ import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
 import { Tooltip } from "@nextui-org/tooltip";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ChooseRoom = () => {
   const api = useApis();
@@ -28,6 +29,7 @@ const ChooseRoom = () => {
   }
 
   const roomCreateCompleted = () => {
+    toast.success("ルームを作成しました");
     updateRooms();
   }
 
