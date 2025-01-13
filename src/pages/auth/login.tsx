@@ -1,4 +1,3 @@
-import { LoginRequest } from "@/apis/endpoints/auth/login";
 import { loginFormSchema } from "@/types/validate/loginFormSchema";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
@@ -9,8 +8,8 @@ import { toast } from "react-toastify";
 import { useLogger } from "@/hooks/use-logger";
 import { AuthLayout } from "@/layouts/authLayout";
 import { useAuth } from "@/contexts/auth-context";
-import { LoginResponseSchema } from "@/types/responses/auth/login";
 import { useApis } from "@/hooks/use-api";
+import { LoginRequest, LoginResponseSchema } from "@/types/endpoints/auth/login";
 
 export const Login = () => {
 
