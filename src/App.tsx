@@ -9,6 +9,7 @@ import { Login } from "./pages/auth/login";
 import { Register } from "./pages/auth/register";
 import DebugPage from "./pages/debug";
 import { RouteAuthGuard } from "./pages/router-auth-guard";
+import { RouterGuard } from "./pages/router-guard"; 
 
 function App() {
   return (
@@ -19,7 +20,11 @@ function App() {
       <Route element={<BlogPage />} path="/blog" />
       <Route element={<AboutPage />} path="/about" />
       <Route path="/debug" element={
-        <RouteAuthGuard component={<DebugPage />}
+        <RouterGuard
+          component={<DebugPage />}
+          checkAccess={[
+            (auth) => auth.isAuthenticated,
+          ]}
         />
       } />
 
