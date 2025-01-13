@@ -20,5 +20,8 @@ export const useApis = () => {
       login: createApiMethod(apiEndpoints.auth.login),
       register: createApiMethod(apiEndpoints.auth.register),
     },
+    room: {
+      getJoinedRoomList: createApiMethod(apiEndpoints.room.getJoinedRoomList),
+    },
   };
 };
