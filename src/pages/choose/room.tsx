@@ -1,3 +1,4 @@
+import CreateRoomModal from "@/components/modal/create-room-modal";
 import { useApis } from "@/hooks/use-api";
 import { Room } from "@/types/object/room";
 import { Button } from "@nextui-org/button";
@@ -20,6 +21,14 @@ const ChooseRoom = () => {
 
   const selectHandler = (room: Room) => {
     // TODO: Impl
+  }
+
+  const onClose = () => {
+    setIsOpen(false);
+  }
+
+  const roomCreateCompleted = () => {
+    updateRooms();
   }
 
   // When the component is mounted
@@ -70,7 +79,7 @@ const ChooseRoom = () => {
           ))}
         </div>
       </div>
-      {/* <CreateRoomModal isOpen={isOpen} onClose={onClose} completedCallback={updateRooms} /> */}
+      <CreateRoomModal isOpen={isOpen} onClose={onClose} completedCallback={roomCreateCompleted} />
     </>
   );
 }
