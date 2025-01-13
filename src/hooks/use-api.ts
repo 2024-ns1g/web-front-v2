@@ -23,6 +23,7 @@ export const useApis = (): UseApis => {
     },
     room: {
       getJoinedRoomList: createApiMethod(apiEndpoints.room.getJoinedRoomList),
+      createRoom: createApiMethod(apiEndpoints.room.createRoom),
     },
     // Add other namespaces and methods as needed
   };
