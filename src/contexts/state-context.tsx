@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type StateContextType = {
   // Active
@@ -27,6 +27,20 @@ export const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
   const [activeRoomId, setActiveRoomId] = useState<string>("");
   const [activeSlideId, setActiveSlideId] = useState<string>("");
   const [activePageId, setActivePageId] = useState<string>("");
+
+  // Cache to localstorage
+  useEffect(() => {
+    localStorage.setItem("activeRoomId", activeRoomId);
+  }, [activeRoomId]);
+
+  useEffect(() => {
+    localStorage.setItem("activeSlideId", activeSlideId);
+  }, [activeSlideId]);
+
+  useEffect(() => {
+    localStorage.setItem("activePageId", activePageId);
+  }, [activePageId]);
+
   return (
     <StateContext.Provider value={{ activeRoomId, setActiveRoomId, activeSlideId, setActiveSlideId, activePageId, setActivePageId }}>
       {children}
