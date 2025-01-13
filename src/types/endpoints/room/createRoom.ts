@@ -9,3 +9,5 @@ export const createRoomResponseSchema = z.object({
   newToken: z.string(),
 });
 
+export type CreateRoomRequest = z.infer<typeof createRoomRequestSchema>;
+export type CreateRoomResponse = z.infer<typeof createRoomResponseSchema>;
