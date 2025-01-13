@@ -24,9 +24,9 @@ interface StateProviderProps {
 }
 
 export const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
-  const [activeRoomId, setActiveRoomId] = useState<string>("");
-  const [activeSlideId, setActiveSlideId] = useState<string>("");
-  const [activePageId, setActivePageId] = useState<string>("");
+  const [activeRoomId, setActiveRoomId] = useState<string>(localStorage.getItem("activeRoomId") || "");
+  const [activeSlideId, setActiveSlideId] = useState<string>(localStorage.getItem("activeSlideId") || "");
+  const [activePageId, setActivePageId] = useState<string>(localStorage.getItem("activePageId") || "");
 
   // Cache to localstorage
   useEffect(() => {
