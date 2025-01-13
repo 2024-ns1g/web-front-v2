@@ -5,6 +5,7 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/modal";
 import { z } from "zod";
+import { useApis } from "@/hooks/use-api";
 
 interface CreateRoomModalProps {
   isOpen: boolean;
@@ -15,6 +16,8 @@ interface CreateRoomModalProps {
 type CreateRoomFormType = z.infer<typeof createRoomFormSchema>;
 
 const CreateRoomModal: React.FC<CreateRoomModalProps> = ({ isOpen, onClose, completedCallback }) => {
+  const api = useApis();
+
   const [message, setMessage] = useState<{ message: string; isError: boolean }>({
     message: "",
     isError: false,
@@ -22,9 +25,9 @@ const CreateRoomModal: React.FC<CreateRoomModalProps> = ({ isOpen, onClose, comp
 
   const handle = async (values: CreateRoomFormType) => {
     try {
-      await createRoom(values.displayName).then(() => {
+      await api.room.createRoom({ displayName: values.displayName }).then(() => {
         completedCallback();
-        onClose(); // モーダルを閉じる
+        onClose();
       });
     } catch (err: any) {
       setMessage({ message: err.message || "Create failed", isError: true });
