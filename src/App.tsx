@@ -6,12 +6,15 @@ import { Register } from "./pages/auth/register";
 import DebugPage from "./pages/debug";
 import { RouterGuard } from "./pages/router-guard";
 import { useAuth } from "./contexts/auth-context";
+import { useStateContext } from "./contexts/state-context";
 
 function App() {
   const auth = useAuth();
+  const state = useStateContext();
 
   // Access control methods
   const isAuthenticated = () => auth.isAuthenticated;
+  const activeRoomSelected = () => state.activeRoom !== null;
 
   // Utility function
   const makeCommonPrivateRoute = (component: React.ReactNode) => {
