@@ -2,17 +2,19 @@ import { apiEndpoints } from '@/apis/endpoints';
 import { useApiClient } from '@/contexts/api-client-context';
 import { useLogger } from './use-logger';
 import type { UseApis } from '@/types/api-wrapper';
+import { useStateContext } from '@/contexts/state-context';
 
 export const useApis = (): UseApis => {
+  const state = useStateContext();
   const apiClient = useApiClient();
   const log = useLogger('api');
 
   // 共通処理を抽象化
   const createApiMethod = <P, R>(
-    apiFunction: (client: any, log: any, params: P) => Promise<R>
+    apiFunction: (client: any, log: any, state:any, params: P) => Promise<R>
   ): (params: P) => Promise<R> => {
     return (params: P): Promise<R> => {
-      return apiFunction(apiClient, log, params);
+      return apiFunction(apiClient, log, state, params);
     };
   };
 
