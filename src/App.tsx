@@ -5,8 +5,13 @@ import { Login } from "./pages/auth/login";
 import { Register } from "./pages/auth/register";
 import DebugPage from "./pages/debug";
 import { RouterGuard } from "./pages/router-guard";
+import { useAuth } from "./contexts/auth-context";
 
 function App() {
+  const auth = useAuth();
+
+  // Access control methods
+  const isAuthenticated = () => auth.isAuthenticated;
 
   // Utility function
   const makeCommonPrivateRoute = (component: React.ReactNode) => {
@@ -14,7 +19,7 @@ function App() {
       <RouterGuard
         component={component}
         checkAccess={[
-          (auth) => auth.isAuthenticated,
+          isAuthenticated
         ]}
       />
     );
