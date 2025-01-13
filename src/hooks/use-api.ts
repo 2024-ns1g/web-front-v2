@@ -11,7 +11,7 @@ export const useApis = (): UseApis => {
   const createApiMethod = <P, R>(
     apiFunction: (client: any, log: any, params: P) => Promise<R>
   ): (params: P) => Promise<R> => {
-    return (params: P) => {
+    return (params: P): Promise<R> => {
       return apiFunction(apiClient, log, params);
     };
   };
@@ -23,7 +23,7 @@ export const useApis = (): UseApis => {
     },
     room: {
       getJoinedRoomList: createApiMethod(apiEndpoints.room.getJoinedRoomList),
-      createRoom: createApiMethod(apiEndpoints.room.createRoom),
+      createRoom: createApiMethod(apiEndpoints.room.createRoom)
     },
     // Add other namespaces and methods as needed
   };
