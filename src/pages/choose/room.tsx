@@ -19,7 +19,7 @@ const ChooseRoom = () => {
   }
 
   const selectHandler = (room: Room) => {
-    console.log(room);
+    // TODO: Impl
   }
 
   // When the component is mounted
