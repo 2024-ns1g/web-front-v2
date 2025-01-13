@@ -4,7 +4,7 @@ import IndexPage from "@/pages/index";
 import { Login } from "./pages/auth/login";
 import { Register } from "./pages/auth/register";
 import DebugPage from "./pages/debug";
-import { RouterGuard, AccessCheck } from "./pages/router-guard";
+import { RouterGuard } from "./pages/router-guard";
 import { useAuth } from "./contexts/auth-context";
 import { useStateContext } from "./contexts/state-context";
 
