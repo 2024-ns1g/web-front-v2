@@ -6,6 +6,7 @@ import { Button } from "@nextui-org/button";
 import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/modal";
 import { z } from "zod";
 import { useApis } from "@/hooks/use-api";
+import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 interface CreateRoomModalProps {
   isOpen: boolean;
@@ -58,7 +59,7 @@ const CreateRoomModal: React.FC<CreateRoomModalProps> = ({ isOpen, onClose, comp
           {/* フォーム */}
           <Formik
             initialValues={{ displayName: "新しいルーム" }}
-            validationSchema={createRoomFormSchema}
+            validationSchema={toFormikValidationSchema(createRoomFormSchema)}
             onSubmit={handle}
           >
             {({
