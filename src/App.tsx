@@ -7,6 +7,7 @@ import DebugPage from "./pages/debug";
 import { RouterGuard } from "./pages/router-guard";
 import { useAuth } from "./contexts/auth-context";
 import { useStateContext } from "./contexts/state-context";
+import ChooseRoom from "./pages/choose/room";
 
 function App() {
   const auth = useAuth();
@@ -25,7 +26,7 @@ function App() {
         component={component}
         checkAccess={[
           { check: isAuthenticated, redirectPath: "/auth/login" },
-          { check: activeSlideSelectedAndRoomSelected, redirectPath: "/auth/register" },
+          { check: activeSlideSelectedAndRoomSelected, redirectPath: "/choose/room" },
         ]}
       />
     );
@@ -35,6 +36,14 @@ function App() {
     <Routes>
       <Route element={<IndexPage />} path="/" />
       <Route element={makeCommonPrivateRoute(<DebugPage />)} path="/debug" />
+
+      <Route element={<RouterGuard
+        component={<ChooseRoom />}
+        checkAccess={[
+          { check: isAuthenticated, redirectPath: "/auth/loign" },
+        ]}
+      />
+      } path="/choose/room" />
 
       <Route element={<Login />} path="/auth/login" />
       <Route element={<Register />} path="/auth/register" />
