@@ -27,6 +27,9 @@ export const useApis = (): UseApis => {
       getJoinedRoomList: createApiMethod(apiEndpoints.room.getJoinedRoomList),
       createRoom: createApiMethod(apiEndpoints.room.createRoom)
     },
-    // Add other namespaces and methods as needed
+    slide: {
+      getLinkedSlideList: createApiMethod(apiEndpoints.slide.getLinkedSlideList),
+      createSlide: createApiMethod(apiEndpoints.slide.createSlide)
+    },
   };
 };
