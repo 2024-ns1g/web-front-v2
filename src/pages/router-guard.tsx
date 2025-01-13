@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useLogger } from "@/hooks/use-logger";
 
-type AccessCheck = {
+export type AccessCheck = {
   check: () => boolean;
   redirectPath?: string;
 };
@@ -13,7 +13,7 @@ type Props = {
   defaultRedirectPath?: string; // 全体のデフォルトリダイレクト先
 };
 
-export const RouteAuthGuard: React.FC<Props> = ({ component, checkAccess, defaultRedirectPath = "/auth/login" }) => {
+export const RouterGuard: React.FC<Props> = ({ component, checkAccess, defaultRedirectPath = "/auth/login" }) => {
   const log = useLogger("RouteAuthGuard");
   const location = useLocation();
 
