@@ -5,6 +5,8 @@ import { useHref, useNavigate } from "react-router-dom";
 import ToastProvider from "./contexts/toast-context";
 import { ApiClientProvider } from "./contexts/api-client-context";
 import { AuthProvider } from "./contexts/auth-context";
+import { CacheProvider } from "./contexts/cache-context";
+import { StateProvider } from "./contexts/state-context";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -20,7 +22,11 @@ export function Provider({ children }: { children: React.ReactNode }) {
       <ToastProvider>
         <AuthProvider>
           <ApiClientProvider>
-              {children}
+            <CacheProvider>
+              <StateProvider>
+                {children}
+              </StateProvider>
+            </CacheProvider>
           </ApiClientProvider>
         </AuthProvider>
       </ToastProvider>
