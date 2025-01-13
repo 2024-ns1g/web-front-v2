@@ -1,6 +1,3 @@
-import { Page } from "@/types/object/page";
-import { Room } from "@/types/object/room";
-import { Slide } from "@/types/object/slide";
 import { createContext, useContext, useState } from "react";
 
 type StateContextType = {
@@ -11,17 +8,36 @@ type StateContextType = {
   setActiveSlideId: (slideId: string) => void;
   activePageId: string;
   setActivePageId: (pageId: string) => void;
-
-  // Cache
-  roomCache: Record<string, Room>;
-  setRoomCache: (room: Room) => void;
-  setRoomCacheList: (rooms: Room[]) => void;
-  
-  slideCache: Record<string, Slide>;
-  setSlideCache: (slide: Slide) => void;
-  setSlideCacheList: (slides: Slide[]) => void;
-
-  pageCache: Record<string, Page>;
-  setPageCache: (page: Page) => void;
-  setPageCacheList: (pages: Page[]) => void;
 };
+
+const StateContext = createContext<StateContextType>({
+  activeRoomId: "",
+  setActiveRoomId: () => { },
+  activeSlideId: "",
+  setActiveSlideId: () => { },
+  activePageId: "",
+  setActivePageId: () => { },
+});
+
+interface StateProviderProps {
+  children: React.ReactNode;
+}
+
+export const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
+  const [activeRoomId, setActiveRoomId] = useState<string>("");
+  const [activeSlideId, setActiveSlideId] = useState<string>("");
+  const [activePageId, setActivePageId] = useState<string>("");
+  return (
+    <StateContext.Provider value={{ activeRoomId, setActiveRoomId, activeSlideId, setActiveSlideId, activePageId, setActivePageId }}>
+      {children}
+    </StateContext.Provider>
+  );
+}
+
+export const useStateContext = () => {
+  const context = useContext(StateContext);
+  if (!context) {
+    throw new Error("useStateContext must be used within a StateProvider");
+  }
+  return context;
+}
