@@ -1,8 +1,9 @@
+import { StateContextType } from "@/contexts/state-context";
 import { getRoomListResponseSchema } from "@/types/endpoints/room/getRoomList";
 import { AxiosInstance } from "axios";
 import { z } from "zod";
 
-export const getJoinedRoomList = async (apiClient: AxiosInstance, log: any, _params: null) => {
+export const getJoinedRoomList = async (apiClient: AxiosInstance, log: any, _state: StateContextType, _params: null) => {
   const response = await apiClient.get('/room');
   try {
     const parsed = getRoomListResponseSchema.parse(response.data);
