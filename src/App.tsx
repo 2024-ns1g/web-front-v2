@@ -8,7 +8,6 @@ import AboutPage from "@/pages/about";
 import { Login } from "./pages/auth/login";
 import { Register } from "./pages/auth/register";
 import DebugPage from "./pages/debug";
-import { RouteAuthGuard } from "./pages/router-auth-guard";
 import { RouterGuard } from "./pages/router-guard"; 
 
 function App() {
