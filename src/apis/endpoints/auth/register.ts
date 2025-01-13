@@ -1,8 +1,6 @@
-import { RegisterResponseSchema } from "@/types/endpoints/auth/register";
+import { RegisterRequest, RegisterResponseSchema } from "@/types/endpoints/auth/register";
 import { AxiosInstance } from "axios";
 import { z } from "zod";
-
-export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 
 export const register = async (apiClient: AxiosInstance, log: any, params: RegisterRequest) => {
   const response = await apiClient.post('/auth/username/register', params);
