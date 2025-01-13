@@ -1,4 +1,3 @@
-import { RegisterRequest } from "@/apis/endpoints/auth/register"; // 登録用のリクエスト型をインポート
 import { registerFormSchema } from "@/types/validate/registerFormSchema"; // 登録用のバリデーションスキーマ
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
@@ -9,8 +8,8 @@ import { toast } from "react-toastify";
 import { useLogger } from "@/hooks/use-logger";
 import { AuthLayout } from "@/layouts/authLayout";
 import { useAuth } from "@/contexts/auth-context";
-import { RegisterResponseSchema } from "@/types/responses/auth/register";
 import { useApis } from "@/hooks/use-api";
+import { RegisterRequest, RegisterResponseSchema } from "@/types/endpoints/auth/register";
 
 export const Register = () => {
 
