@@ -2,7 +2,7 @@ import { getRoomListResponseSchema } from "@/types/endpoints/room/getRoomList";
 import { AxiosInstance } from "axios";
 import { z } from "zod";
 
-export const getJoinedRoomList = async (apiClient: AxiosInstance, log: any) => {
+export const getJoinedRoomList = async (apiClient: AxiosInstance, log: any, _params: null) => {
   const response = await apiClient.get('/room');
   try {
     const parsed = getRoomListResponseSchema.parse(response.data);
