@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-type StateContextType = {
+export type StateContextType = {
   // Active
   activeRoomId: string;
   setActiveRoomId: (roomId: string) => void;
