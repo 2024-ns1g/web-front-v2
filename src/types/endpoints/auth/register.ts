@@ -1,8 +1,13 @@
-import zod from 'zod';
+import z from 'zod';
 
-export const RegisterResponseSchema = zod.object({
-  token: zod.string(),
+export const RegisterResponseSchema = z.object({
+  token: z.string(),
 });
 
-export type RegisterRequest = zod.infer<typeof RegisterResponseSchema>;
+export const RegisterRequestSchema = z.object({
+  username: z.string(),
+  password: z.string(),
+});
 
+export type RegisterResponse = z.infer<typeof RegisterResponseSchema>;
+export type RegisterRequest = z.infer<typeof RegisterRequestSchema>;

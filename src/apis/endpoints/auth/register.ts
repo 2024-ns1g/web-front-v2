@@ -2,11 +2,6 @@ import { RegisterResponseSchema } from "@/types/endpoints/auth/register";
 import { AxiosInstance } from "axios";
 import { z } from "zod";
 
-const registerRequestSchema = z.object({
-  username: z.string(),
-  password: z.string(),
-});
-
 export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 
 export const register = async (apiClient: AxiosInstance, log: any, params: RegisterRequest) => {
