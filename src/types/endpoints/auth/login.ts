@@ -1,7 +1,13 @@
-import zod from 'zod';
+import z from 'zod';
 
-export const LoginResponseSchema = zod.object({
-  token: zod.string(),
+export const LoginResponseSchema = z.object({
+  token: z.string(),
 });
 
-export type LoginResponse = zod.infer<typeof LoginResponseSchema>;
+export const LoginRequestSchema = z.object({
+  username: z.string(),
+  password: z.string(),
+});
+
+export type LoginResponse = z.infer<typeof LoginResponseSchema>;
+export type LoginRequest = z.infer<typeof LoginRequestSchema>;
