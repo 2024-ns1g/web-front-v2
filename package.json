@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"@nextui-org/button": "2.2.8",
+		"@nextui-org/card": "^2.2.9",
 		"@nextui-org/code": "2.2.5",
 		"@nextui-org/dropdown": "2.3.3",
 		"@nextui-org/image": "^2.2.5",
