@@ -26,7 +26,7 @@ const CreateRoomModal: React.FC<CreateSlideModalProps> = ({ isOpen, onClose, com
 
   const handle = async (values: CreateSlideFromType) => {
     try {
-      await api.slide.createSlide({ displayName: values.displayName }).then(() => {
+      await api.slide.createSlide({ displayName: values.displayName, summary: values.summary }).then(() => {
         completedCallback();
         onClose();
       });
