@@ -28,6 +28,7 @@
 		"@nextui-org/tooltip": "^2.2.7",
 		"@react-aria/visually-hidden": "3.8.12",
 		"@react-types/shared": "3.26.0",
+		"@uiw/react-md-editor": "^4.0.5",
 		"axios": "^1.7.9",
 		"clsx": "2.1.1",
 		"formik": "^2.4.6",
