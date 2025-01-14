@@ -8,6 +8,7 @@ import { RouterGuard } from "./pages/router-guard";
 import { useAuth } from "./contexts/auth-context";
 import { useStateContext } from "./contexts/state-context";
 import ChooseRoom from "./pages/choose/room";
+import ChooseSlide from "./pages/choose/slide";
 
 function App() {
   const auth = useAuth();
@@ -44,6 +45,15 @@ function App() {
         ]}
       />
       } path="/choose/room" />
+
+      <Route element={<RouterGuard
+        component={<ChooseSlide />}
+        checkAccess={[
+          { check: isAuthenticated, redirectPath: "/auth/login" },
+          { check: activeRoomSelected, redirectPath: "/choose/room" },
+        ]}
+      />
+      } path="/choose/slide" />
 
       <Route element={<Login />} path="/auth/login" />
       <Route element={<Register />} path="/auth/register" />
