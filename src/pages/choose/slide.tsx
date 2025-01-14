@@ -1,3 +1,4 @@
+import CreateSlideModal from "@/components/modal/create-slide-modal";
 import { useApis } from "@/hooks/use-api";
 import { Slide } from "@/types/object/slide";
 import { Button } from "@nextui-org/button";
@@ -13,10 +14,13 @@ const ChooseSlide = () => {
   const [slides, setSlides] = useState<Slide[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const updateRooms = () => {
+  const updateSlides = () => {
+    api.slide.getLinkedSlideList(null).then((res) => {
+      setSlides(res!.slides);
+    });
   }
 
-  const selectHandler = (room: Room) => {
+  const selectHandler = (slide: Slide) => {
     // TODO: Impl
   }
 
@@ -24,14 +28,14 @@ const ChooseSlide = () => {
     setIsOpen(false);
   }
 
-  const roomCreateCompleted = () => {
+  const slideCreateCompleted = () => {
     toast.success("ルームを作成しました");
-    updateRooms();
+    updateSlides();
   }
 
   // When the component is mounted
   useEffect(() => {
-    updateRooms();
+    updateSlides();
   }, []);
 
   return (
@@ -45,41 +49,42 @@ const ChooseSlide = () => {
 
       <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
         <div
-          className={`flex flex-wrap gap-6 justify-center items-center ${rooms.length < 3 ? "h-full" : ""}`}
+          className={`flex flex-wrap gap-6 justify-center items-center ${slides.length < 3 ? "h-full" : ""}`}
         >
-          {rooms.map((room) => (
+          {slides.map((slide) => (
             <Card
-              key={room.roomId}
+              key={slide.slideId}
               className="max-w-sm w-full transform transition duration-300 hover:scale-105 hover:shadow-lg border border-gray-300"
               isPressable
-              onPress={() => selectHandler(room)}
+              onPress={() => selectHandler(slide)}
             >
               <CardHeader>
                 <div className="flex flex-col items-start">
-                  <Tooltip content={room.displayName} placement="top">
-                    <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap max-w-full" title={room.displayName}>
-                      {room.displayName}
+                  <Tooltip content={slide.displayName} placement="top">
+                    <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap max-w-full" title={slide.displayName}>
+                      {slide.displayName}
                     </h3>
                   </Tooltip>
                   <br />
-                  <p className="text-sm text-gray-500 mt-1">
-                    所有者: {room.owner.displayName}
-                  </p>
+                  {/* TODO: Impl here */}
+                  {/* <p className="text-sm text-gray-500 mt-1"> */}
+                  {/*   所有者: {slide.owner.displayName} */}
+                  {/* </p> */}
                 </div>
               </CardHeader>
               <Divider />
               <CardBody>
                 <p className="text-gray-700">
-                  作成日時: {new Date(room.createdAt).toLocaleString()}
+                  {slide.isPublic ? "公開" : "非公開"}
                 </p>
               </CardBody>
             </Card>
           ))}
         </div>
       </div>
-      <CreateRoomModal isOpen={isOpen} onClose={onClose} completedCallback={roomCreateCompleted} />
+      <CreateSlideModal isOpen={isOpen} onClose={onClose} completedCallback={slideCreateCompleted} />
     </>
   );
 }
 
-export default ChooseRoom;
+export default ChooseSlide;
