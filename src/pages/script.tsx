@@ -1,8 +1,23 @@
+import { useLogger } from "@/hooks/use-logger";
 import { Button } from "@nextui-org/button";
 import { Switch } from "@nextui-org/switch";
 import MDEditor from "@uiw/react-md-editor";
+import { useState } from "react";
 
 export default function EditScript() {
+  const log = useLogger("EditScript");
+
+  const [value, setValue] = useState("");
+  const [autoSave, setAutoSave] = useState(false);
+
+  const handleChange = (value?: string) => {
+    log.debug("handleChange", value);
+  };
+
+  const handleSave = () => {
+    log.debug("handleSave");
+  };
+
   return (
     <div className="h-full flex flex-col">
       <MDEditor
