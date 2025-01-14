@@ -16,7 +16,7 @@ interface CreateSlideModalProps {
 
 type CreateSlideFromType = z.infer<typeof createSlideFormSchema>;
 
-const CreateRoomModal: React.FC<CreateSlideModalProps> = ({ isOpen, onClose, completedCallback }) => {
+const CreateSlideModal: React.FC<CreateSlideModalProps> = ({ isOpen, onClose, completedCallback }) => {
   const api = useApis();
 
   const [message, setMessage] = useState<{ message: string; isError: boolean }>({
@@ -108,4 +108,4 @@ const CreateRoomModal: React.FC<CreateSlideModalProps> = ({ isOpen, onClose, com
   );
 };
 
-export default CreateRoomModal;
+export default CreateSlideModal;
