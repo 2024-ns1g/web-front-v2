@@ -1,4 +1,5 @@
 import CreateSlideModal from "@/components/modal/create-slide-modal";
+import { useStateContext } from "@/contexts/state-context";
 import { useApis } from "@/hooks/use-api";
 import { Slide } from "@/types/object/slide";
 import { Button } from "@nextui-org/button";
@@ -6,10 +7,13 @@ import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
 import { Tooltip } from "@nextui-org/tooltip";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ChooseSlide = () => {
   const api = useApis();
+  const state = useStateContext();
+  const navigate = useNavigate();
 
   const [slides, setSlides] = useState<Slide[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +25,9 @@ const ChooseSlide = () => {
   }
 
   const selectHandler = (slide: Slide) => {
-    // TODO: Impl
+    state.setActiveSlideId(slide.slideId);
+
+    navigate("/");
   }
 
   const onClose = () => {
