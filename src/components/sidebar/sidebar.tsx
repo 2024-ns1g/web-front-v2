@@ -1,61 +1,36 @@
 import { useLayoutContext } from "@/contexts/layout-context";
+import { useStateContext } from "@/contexts/state-context";
 import React, { useEffect, useState } from "react";
+import { Sidebar } from "./sidebar.styles";
+import { SidebarItem } from "./sidebar-item";
+import { SidebarMenu } from "./sidebar-menu";
+import { Tooltip } from "@nextui-org/tooltip";
 
 export const SidebarWrapper = () => {
-  const { isSidebarOpen, toggleSidebar } = useLayoutContext();
+  const { activePageId, setActivePageId } = useStateContext();
 
-  const { activePage, setActivePage } = useStateContext();
-
-  useEffect(() => {
-    const parsed = pageListSchema.safeParse(cachedPages);
-
-    if (
-      parsed.success &&
-      parsed.data &&
-      parsed.data.pages &&
-      parsed.data.pages.length > 0) {
-      setPages(parsed.data.pages);
-    }
-  }, [cachedPages]);
-
-
-  const handleCreatePage = async () => {
-    createPage().then(() => {
-      updateCacheForce();
-    });
-  }
-
-  const handleSelectPage = (pageId: string, displayName: string) => {
-    setActivePage({
-      id: pageId,
-      displayName: displayName,
-    });
-  }
-
-  useEffect(() => {
-    updateCacheIfNeeded();
-  }, []);
-
+  const { isSidebarOpen, setSidebarOpen } = useLayoutContext();
 
   return (
     <aside className="h-screen z-[20] sticky top-0">
-      {collapsed ? (
-        <div className={Sidebar.Overlay()} onClick={setCollapsed} />
+      {!isSidebarOpen ? (
+        <div className={Sidebar.Overlay()} onClick={() => setSidebarOpen(!isSidebarOpen)}></div>
       ) : null}
       <div
         className={Sidebar({
-          collapsed: collapsed,
+          collapsed: isSidebarOpen,
         })}
       >
-        <div className={Sidebar.Header()}>
-          <CompaniesDropdown />
-        </div>
+        {/* <div className={Sidebar.Header()}> */}
+        {/*   <CompaniesDropdown /> */}
+        {/* </div> */}
         <div className="flex flex-col justify-between h-full">
           <div className={Sidebar.Body()}>
             <SidebarItem
               title="Home"
-              icon={<HomeIcon />}
-              isActive={pathname === "/"}
+              icon={<p>あ</p>}
+              // isActive={pathname === "/"}
+              isActive={false}
               href="/"
             />
             <SidebarMenu title="全体">
@@ -64,54 +39,56 @@ export const SidebarWrapper = () => {
             <SidebarMenu title="アクション">
               <SidebarItem
                 title="ページを追加"
-                icon={<CustomersIcon />}
-                onClick={handleCreatePage}
+                icon={<p>あ</p>}
+                // onClick={handleCreatePage}
               />
               <SidebarItem
                 title="デバッグ1"
-                icon={<CustomersIcon />}
-                onClick={() => {
-                  console.log(pages);
-                }}
+                icon={<p>あ</p>}
+                // onClick={() => {
+                //   console.log(pages);
+                // }}
               />
               <SidebarItem
                 title="デバッグ2"
-                icon={<CustomersIcon />}
-                onClick={() => {
-                  console.log(cachedPages);
-                }}
+                icon={<p>あ</p>}
+                // onClick={() => {
+                //   console.log(cachedPages);
+                // }}
               />
             </SidebarMenu>
-            <SidebarMenu title="ページ一覧">
-              {
-                pages.map((item) => (
-                  <SidebarItem
-                    key={item.pageId}
-                    title={item.title || "無名のページ"}
-                    icon={<HomeIcon />}
-                    isActive={(activePage && activePage.id === item.pageId) || false}
-                    onClick={() => handleSelectPage(item.pageId, item.title || "無名のページ")}
-                  />
-                ))
-              }
-            </SidebarMenu>
+            {/* <SidebarMenu title="ページ一覧"> */}
+            {/*   { */}
+            {/*     pages.map((item) => ( */}
+            {/*       <SidebarItem */}
+            {/*         key={item.pageId} */}
+            {/*         title={item.title || "無名のページ"} */}
+            {/*         icon={<HomeIcon />} */}
+            {/*         isActive={(activePage && activePage.id === item.pageId) || false} */}
+            {/*         onClick={() => handleSelectPage(item.pageId, item.title || "無名のページ")} */}
+            {/*       /> */}
+            {/*     )) */}
+            {/*   } */}
+            {/* </SidebarMenu> */}
           </div>
           <div className={Sidebar.Footer()}>
             <Tooltip content={"Settings"} color="primary">
               <div className="max-w-fit">
-                <SettingsIcon />
+                {/* <SettingsIcon /> */}
+                <p>あ</p>
               </div>
             </Tooltip>
             <Tooltip content={"Adjustments"} color="primary">
               <div className="max-w-fit">
-                <FilterIcon />
+                {/* <FilterIcon /> */}
+                <p>あ</p>
               </div>
             </Tooltip>
             <Tooltip content={"Profile"} color="primary">
-              <Avatar
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                size="sm"
-              />
+              {/* <Avatar */}
+              {/*   src="https://i.pravatar.cc/150?u=a042581f4e29026704d" */}
+              {/*   size="sm" */}
+              {/* /> */}
             </Tooltip>
           </div>
         </div>
