@@ -22,7 +22,7 @@ const ChooseRoom = () => {
     api.room.getJoinedRoomList(null).then((res) => {
       setRooms(res!.rooms);
 
-      navigate("/choose/room");
+      navigate("/choose/slide");
     });
   }
 
