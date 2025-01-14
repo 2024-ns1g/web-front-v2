@@ -26,7 +26,7 @@ const ChooseSlide = () => {
 
   const selectHandler = (slide: Slide) => {
     state.setActiveSlideId(slide.slideId);
-
+    
     navigate("/");
   }
 
@@ -35,7 +35,7 @@ const ChooseSlide = () => {
   }
 
   const slideCreateCompleted = () => {
-    toast.success("ルームを作成しました");
+    toast.success("スライドを作成しました");
     updateSlides();
   }
 
