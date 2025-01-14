@@ -9,7 +9,8 @@ import { useAuth } from "./contexts/auth-context";
 import { useStateContext } from "./contexts/state-context";
 import ChooseRoom from "./pages/choose/room";
 import ChooseSlide from "./pages/choose/slide";
-import ScriptEditor from "./pages/script";
+import ScriptEditor from "./pages/script-editor";
+
 
 function App() {
   const auth = useAuth();
