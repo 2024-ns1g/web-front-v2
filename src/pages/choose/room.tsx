@@ -1,4 +1,5 @@
 import CreateRoomModal from "@/components/modal/create-room-modal";
+import { useStateContext } from "@/contexts/state-context";
 import { useApis } from "@/hooks/use-api";
 import { Room } from "@/types/object/room";
 import { Button } from "@nextui-org/button";
@@ -6,10 +7,13 @@ import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
 import { Tooltip } from "@nextui-org/tooltip";
 import { useEffect, useState } from "react";
+import { useNavigate, useNavigation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ChooseRoom = () => {
   const api = useApis();
+  const state = useStateContext();
+  const navigate = useNavigate();
 
   const [rooms, setRooms] = useState<Room[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -17,11 +21,15 @@ const ChooseRoom = () => {
   const updateRooms = () => {
     api.room.getJoinedRoomList(null).then((res) => {
       setRooms(res!.rooms);
+
+      navigate("/choose/room");
     });
   }
 
   const selectHandler = (room: Room) => {
-    // TODO: Impl
+    state.setActiveRoomId(room.roomId);
+
+
   }
 
   const onClose = () => {
