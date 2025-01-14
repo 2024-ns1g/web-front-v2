@@ -4,8 +4,8 @@ import { Switch } from "@nextui-org/switch";
 import MDEditor from "@uiw/react-md-editor";
 import { useState } from "react";
 
-export default function EditScript() {
-  const log = useLogger("EditScript");
+export default function ScriptEditor() {
+  const log = useLogger("ScriptEditor");
 
   const [value, setValue] = useState("");
   const [autoSave, setAutoSave] = useState(false);
