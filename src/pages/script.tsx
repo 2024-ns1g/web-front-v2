@@ -22,7 +22,7 @@ export default function ScriptEditor() {
     <div className="h-full flex flex-col">
       <MDEditor
         className="flex-grow"
-        height="auto"
+        height="100%"
         value={value}
         onChange={handleChange}
       />
