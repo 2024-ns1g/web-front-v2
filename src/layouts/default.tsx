@@ -1,6 +1,7 @@
 import { Link } from "@nextui-org/link";
 
 import { Navbar } from "@/components/navbar";
+import { SidebarWrapper } from "@/components/sidebar/sidebar";
 
 export default function DefaultLayout({
   children,
@@ -9,6 +10,7 @@ export default function DefaultLayout({
 }) {
   return (
     <div className="relative flex flex-col h-screen">
+      <SidebarWrapper />
       <Navbar />
       <main className="container mx-auto max-w-7xl px-6 flex-grow pt-16">
         {children}
@@ -24,6 +26,6 @@ export default function DefaultLayout({
           <p className="text-primary">NextUI</p>
         </Link>
       </footer>
-    </div>
+    </div >
   );
 }
