@@ -3,12 +3,11 @@ import { SidebarItem } from "./sidebar-item";
 import { SidebarMenu } from "./sidebar-menu";
 import { useLayoutContext } from "@/contexts/layout-context";
 import { Sidebar } from "./sidebar.styles";
+import { useLocation } from "react-router-dom";
 
 export const SidebarWrapper = () => {
-  // const pathname = usePathname();
-  // With react-router-dom v6, you can use useRoutes
-  const pathname = "/"; // useRoutes().pathname;
-  // const { collapsed, setCollapsed } = useSidebarContext();
+  const location = useLocation();
+  const pathname = location.pathname;
   const { isSidebarOpen, setSidebarOpen } = useLayoutContext();
 
   return (
