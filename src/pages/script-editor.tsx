@@ -12,7 +12,7 @@ export default function ScriptEditor() {
   const [autoSave, setAutoSave] = useState(false);
 
   const handleChange = (value?: string) => {
-    log.debug("handleChange", value);
+    setValue(value || "");
   };
 
   const handleSave = () => {
@@ -24,7 +24,6 @@ export default function ScriptEditor() {
       <div className="h-full flex flex-col">
         <MDEditor
           className="flex-grow"
-          height="100%"
           value={value}
           onChange={handleChange}
         />
