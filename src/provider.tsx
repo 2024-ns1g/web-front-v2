@@ -7,6 +7,7 @@ import { ApiClientProvider } from "./contexts/api-client-context";
 import { AuthProvider } from "./contexts/auth-context";
 import { CacheProvider } from "./contexts/cache-context";
 import { StateProvider } from "./contexts/state-context";
+import { LayoutProvider } from "./contexts/layout-context";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -24,7 +25,9 @@ export function Provider({ children }: { children: React.ReactNode }) {
           <ApiClientProvider>
             <CacheProvider>
               <StateProvider>
-                {children}
+                <LayoutProvider>
+                  {children}
+                </LayoutProvider>
               </StateProvider>
             </CacheProvider>
           </ApiClientProvider>
