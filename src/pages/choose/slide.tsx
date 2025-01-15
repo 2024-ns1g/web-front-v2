@@ -47,7 +47,7 @@ const ChooseSlide = () => {
   return (
     <>
       <header className="flex justify-between items-center p-4 bg-white shadow z-50 sticky top-0 h-16">
-        <h1 className="text-2xl font-bold">スライドを選択</h1>
+        <h1 className="text-2xl">スライドを選択</h1>
         <Button color="primary" variant="shadow" onPress={() => setIsOpen(true)}>
           新規作成
         </Button>
