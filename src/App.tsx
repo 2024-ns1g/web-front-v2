@@ -10,6 +10,7 @@ import { useStateContext } from "./contexts/state-context";
 import ChooseRoom from "./pages/choose/room";
 import ChooseSlide from "./pages/choose/slide";
 import ScriptEditor from "./pages/script-editor";
+import AudienceEntrancePage from "./pages/audience/entrance";
 
 
 function App() {
@@ -58,6 +59,8 @@ function App() {
       } path="/choose/slide" />
 
       <Route element={makeCommonPrivateRoute(<ScriptEditor />)} path="/script" />
+
+      <Route element={<AudienceEntrancePage />} path="/audience/entrance" />
 
       <Route element={<Login />} path="/auth/login" />
       <Route element={<Register />} path="/auth/register" />
