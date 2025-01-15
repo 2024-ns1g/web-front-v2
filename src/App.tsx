@@ -11,6 +11,7 @@ import ChooseRoom from "./pages/choose/room";
 import ChooseSlide from "./pages/choose/slide";
 import ScriptEditor from "./pages/script-editor";
 import AudienceEntrancePage from "./pages/audience/entrance";
+import AudienceIndexPage from "./pages/audience";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
       <Route element={makeCommonPrivateRoute(<ScriptEditor />)} path="/script" />
 
       <Route element={<AudienceEntrancePage />} path="/audience/entrance" />
+      <Route element={<AudienceIndexPage />} path="/audience" />
 
       <Route element={<Login />} path="/auth/login" />
       <Route element={<Register />} path="/auth/register" />
