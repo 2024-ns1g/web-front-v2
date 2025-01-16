@@ -1,7 +1,10 @@
+import { useAudienceContext } from "@/contexts/audience-context";
 import { InputOtp } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
 export default function AudienceEntrancePage() {
+
+  const audience = useAudienceContext();
 
   const [value, setValue] = useState("");
 
@@ -17,7 +20,7 @@ export default function AudienceEntrancePage() {
   }, [sessionId]);
 
   const handleWorkaroundSubmit = () => {
-    // 暫定: セッションIDを直接入力
+    audience.setJoinedSessionId(sessionId);
   };
 
   return (
