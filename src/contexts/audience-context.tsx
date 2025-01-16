@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type AudienceContextType = {
   joinedSessionId: string;
@@ -12,7 +12,16 @@ interface AudienceProviderProps {
 }
 
 export const AudienceProvider = ({ children }: AudienceProviderProps) => {
-  const [joinedSessionId, setJoinedSessionId] = useState("");
+  const [joinedSessionId, setJoinedSessionId] = useState(() => {
+    const sessionId = localStorage.getItem("joinedSessionId");
+    return sessionId || "";
+  });
+
+  // Cache to local storage
+  useEffect(() => {
+    localStorage.setItem("joinedSessionId", joinedSessionId);
+  }, [joinedSessionId]);
+
   return (
     <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId }}>
       {children}
