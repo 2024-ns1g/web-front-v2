@@ -5,10 +5,7 @@ type AudienceContextType = {
   setJoinedSessionId: (id: string) => void;
 }
 
-const AudienceContext = createContext<AudienceContextType>({
-  joinedSessionId: "",
-  setJoinedSessionId: () => { }
-});
+const AudienceContext = createContext<AudienceContextType | null>(null);
 
 interface AudienceProviderProps {
   children: React.ReactNode;
@@ -28,5 +25,6 @@ export const useAudienceContext = () => {
   if (!context) {
     throw new Error("useAudienceContext must be used within a AudienceProvider");
   }
+  return context;
 }
 
