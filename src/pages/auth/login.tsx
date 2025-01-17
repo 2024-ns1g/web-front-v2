@@ -1,6 +1,4 @@
 import { loginFormSchema } from "@/types/validate/loginFormSchema";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { toFormikValidationSchema } from 'zod-formik-adapter';
@@ -10,6 +8,7 @@ import { AuthLayout } from "@/layouts/authLayout";
 import { useAuth } from "@/contexts/auth-context";
 import { useApis } from "@/hooks/use-api";
 import { LoginRequest, LoginResponseSchema } from "@/types/endpoints/auth/login";
+import { Button, Input } from "@nextui-org/react";
 
 export const Login = () => {
 
