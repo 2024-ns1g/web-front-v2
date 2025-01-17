@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
-import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
 import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/modal";
 import { z } from "zod";
 import { useApis } from "@/hooks/use-api";
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { createSlideFormSchema } from "@/types/validate/createSlideFormSchema";
+import { Button, Input } from "@nextui-org/react";
 
 interface CreateSlideModalProps {
   isOpen: boolean;
