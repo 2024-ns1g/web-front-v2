@@ -1,7 +1,6 @@
 import { useLogger } from "@/hooks/use-logger";
 import DefaultLayout from "@/layouts/default";
-import { Button } from "@nextui-org/button";
-import { Switch } from "@nextui-org/switch";
+import { Button, Switch } from "@nextui-org/react";
 import MDEditor from "@uiw/react-md-editor";
 import { useState } from "react";
 
