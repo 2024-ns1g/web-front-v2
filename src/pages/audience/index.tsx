@@ -24,14 +24,11 @@ export default function AudienceIndexPage() {
   // WS
   useEffect(() => {
     audience.connectWs().then(() => {
-      audience.setWsMessageHandler((message) => {
-        switch (message.type) {
-          // TODO: Implement message handling
-        }
-      });
 
-      // test message send
-      audience.sendWsMessage({ type: "PING" });
+      audience.setWsMessageHandler((message) => {
+        console.log("Message received: ", message);
+      });
+      audience.sendWsMessage({ requestType: "PING" });
     });
   }, []);
 
