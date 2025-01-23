@@ -185,12 +185,10 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   };
 
   const updateState = (newState: Partial<SessionState>) => {
-    setState((prev) => {
-      return {
-        ...prev,
-        ...newState,
-      };
-    });
+    console.log("Updating state: ", newState);
+    const updatedState = { ...state, ...newState };
+    console.log("Updated state: ", updatedState);
+    setState(updatedState);
   };
 
   return (
