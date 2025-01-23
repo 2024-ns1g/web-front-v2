@@ -1,3 +1,4 @@
+import { Header } from "@/components/audience/header";
 import { useAudienceContext } from "@/contexts/audience-context";
 import { Card, Tab, Tabs } from "@nextui-org/react";
 import { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ export default function AudienceIndexPage() {
 
   return (
     <>
+      <Header totalSlides={10} currentSlideIndex={3} sessionName="Session Name" currentSlideName="Current Slide Name" />
     </>
   );
 }
