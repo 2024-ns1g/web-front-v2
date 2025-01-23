@@ -22,23 +22,18 @@ export default function AudienceIndexPage() {
   }, []);
 
   // WS
-
-  const connectToWs = async () => {
-    await audience.connectWs();
-  }
-
   useEffect(() => {
-    connectToWs();
-  }, []);
+    audience.connectWs().then(() => {
+      audience.setWsMessageHandler((message) => {
+        switch (message.type) {
+          // TODO: Implement message handling
+        }
+      });
 
-  useEffect(() => {
-    audience.setWsMessageHandler((message) => {
-      console.log("Received message:", message);
+      // test message send
+      audience.sendWsMessage({ type: "PING" });
     });
-
-    // ping
-    audience.sendWsMessage({ type: "PING" });
-  }, [audience.ws]);
+  }, []);
 
   return (
     <>
