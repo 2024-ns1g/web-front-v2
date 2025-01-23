@@ -16,17 +16,17 @@ export const HeaderActions: FC<HeaderActionsProps> = ({
   voteClickedHandler,
 }) => {
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center gap-6">
       {/* Ws status */}
       {isWsConnected ? (
-        <FaPlugCircleCheck onClick={wsClickedHandler} />
+        <FaPlugCircleCheck onClick={wsClickedHandler} color="#333" size="1.5em" />
       ) : (
-        <FaPlugCircleExclamation onClick={wsClickedHandler} color="#BB3333" />
+        <FaPlugCircleExclamation onClick={wsClickedHandler} color="#BB3333" size="1.5em" />
       )}
       {/* Vote count */}
       {/* {voteCount > 0 && ( */}
-        <Badge color="primary" onClick={voteClickedHandler} content={voteCount}>
-          <FaSquarePollVertical />
+        <Badge color="primary" content={voteCount}>
+          <FaSquarePollVertical onClick={voteClickedHandler} color="#333" size="1.5em" />
         </Badge>
       {/* )} */}
       {/* Vote button */}

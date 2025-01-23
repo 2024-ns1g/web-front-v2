@@ -18,9 +18,9 @@ export const Header: FC<HeaderProps> = ({
 }) => {
   return (
     <>
-      <div className="flex flex-row gap-4 w-full justify-center px-4">
+      <div className="flex flex-row gap-4 w-full justify-center px-4 py-4">
         <div className="container flex flex-row">
-          <div className="flex flex-col flex-grow">
+          <div className="flex flex-col flex-grow pr-6">
             <HeaderBreadcrumb sessionName={sessionName} currentSlideName={currentSlideName} />
             <HeaderProgressBar totalSlides={totalSlides} currentSlideIndex={currentSlideIndex} />
           </div>
