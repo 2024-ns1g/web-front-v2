@@ -25,7 +25,7 @@ const ChoiceSchema = z.object({
 const AvailableVoteSchema = z.object({
   voteId: z.string(),
   title: z.string(),
-  description: z.string(),
+  question: z.string(),
   choices: z.array(ChoiceSchema),
 });
 
