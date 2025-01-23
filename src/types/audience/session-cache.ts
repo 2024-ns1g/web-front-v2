@@ -29,7 +29,7 @@ const AvailableVoteSchema = z.object({
 });
 
 // Combine all parts into the main SessionCache schema
-export const SessionCacheSchema = z.object({
+export const SessionInfoSchema = z.object({
   sessionId: z.string(),
   slideId: z.string(),
   title: z.string(),
@@ -38,4 +38,4 @@ export const SessionCacheSchema = z.object({
 });
 
 // Optionally, you can export the inferred TypeScript type from the schema
-export type SessionCache = z.infer<typeof SessionCacheSchema>;
+export type SessionInfo = z.infer<typeof SessionInfoSchema>;
