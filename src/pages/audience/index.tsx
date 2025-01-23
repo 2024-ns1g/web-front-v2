@@ -1,6 +1,7 @@
 import { Header } from "@/components/audience/header";
+import { VoteDrawerBody } from "@/components/audience/vote";
 import { useAudienceContext } from "@/contexts/audience-context";
-import { Button, Drawer, DrawerContent, DrawerFooter, DrawerHeader } from "@nextui-org/react";
+import { Button, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
 export default function AudienceIndexPage() {
@@ -31,6 +32,9 @@ export default function AudienceIndexPage() {
           {(onClose) => (
             <>
               <DrawerHeader>てすと</DrawerHeader>
+              <DrawerBody>
+                <VoteDrawerBody voteTitle="てすと" voteSummary="てすと" choices={[]} stats={[]} />
+              </DrawerBody>
               <DrawerFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
