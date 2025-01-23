@@ -81,18 +81,11 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   }
 
   const getSessionInfo = async () => {
-    // if (!sessionInfo) {
-    //   await updateSessionInfo().catch((error) => {
-    //     console.error("Failed to update session info", error);
-    //     return Promise.reject(error);
-    //   });
-    // }
-    // if (!sessionInfo) { // Type guard
-    //   return Promise.reject("Session info is not available");
-    // }
-    // return Promise.resolve(sessionInfo);
     if (!sessionInfo) {
-      return updateSessionInfo();
+      return updateSessionInfo().catch((error) => {
+        console.error("Failed to get session info", error);
+        return Promise.reject(error);
+      });
     }
     return Promise.resolve(sessionInfo);
   }
