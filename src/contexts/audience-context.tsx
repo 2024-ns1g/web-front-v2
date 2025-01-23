@@ -1,3 +1,5 @@
+import { SessionInfo, SessionInfoSchema } from "@/types/audience/session-info-schema";
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type AudienceContextType = {
@@ -10,6 +12,8 @@ type AudienceContextType = {
   setWsMessageHandler: (handler: (message: any) => void) => void;
   connectWs: () => Promise<void>;
   sendWsMessage: (message: any) => void;
+  sessionInfo: Promise<SessionInfo>;
+  updateSessionInfo: () => Promise<void>;
 }
 
 const AudienceContext = createContext<AudienceContextType | null>(null);
@@ -33,6 +37,8 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     const url = localStorage.getItem("aggregatorUrl");
     return url || "";
   });
+
+  const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
 
   // Cache to local storage
   useEffect(() => {
@@ -72,6 +78,30 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
       throw new Error("WebSocket is not connected");
     }
     ws.send(JSON.stringify(message));
+  }
+
+  const getSessionInfo = async () => {
+    if (sessionInfo) {
+      // update
+    }
+    return sessionInfo;
+  }
+
+  const updateSessionInfo = async () => {
+    await axios.get(`${aggregatorUrl}/api/session/${joinedSessionId}/info`, {
+      headers: {
+        Authorization: `Bearer ${attachedToken}`
+      }
+    }).then((response) => {
+      try {
+        const parsed = SessionInfoSchema.parse(response.data);
+        setSessionInfo(parsed);
+        Promise.resolve();
+      } catch (error) {
+        console.error("Failed to parse response", error);
+        Promise.reject(error);
+      }
+    });
   }
 
   return (
