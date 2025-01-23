@@ -1,5 +1,6 @@
 import { Button } from "@nextui-org/react";
 import { FC, useState } from "react";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 interface BodyPageSelectorProps {
   defaultPageIndex: number; // インデックスでデフォルトページを指定
@@ -43,16 +44,20 @@ export const BodyPageSelector: FC<BodyPageSelectorProps> = ({
   };
 
   return (
-    <div className="flex justify-center items-center gap-4 w-full">
-      <Button onPress={prevPageHandler} isDisabled={currentPageIndex === 0}>
-        ←
+    <div className="flex justify-center items-center gap-4 w-full py-2">
+      <Button 
+        onPress={prevPageHandler} 
+        variant="bordered"
+        isDisabled={currentPageIndex === 0}>
+        <FaAngleLeft />
       </Button>
       <p className="text-lg font-bold flex-grow text-center">{currentPage?.title || "No Title"}</p>
       <Button
         onPress={nextPageHandler}
+        variant="bordered"
         isDisabled={currentPageIndex === pages.length - 1}
       >
-        →
+        <FaAngleRight />
       </Button>
     </div>
   );
