@@ -17,7 +17,8 @@ const ChoiceSchema = z.object({
   choiceId: z.string(),
   title: z.string(),
   description: z.string().nullable(),
-  color: z.string().nullable(),
+  backgroundColor: z.string().nullable(),
+  borderColor: z.string().nullable(),
 });
 
 // Define the schema for a single available vote
