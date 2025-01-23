@@ -34,7 +34,7 @@ export default function AudienceIndexPage() {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col h-full">
       <Header
         totalSlides={sessionInfo?.pages.length ?? 0}
         currentSlideIndex={state.currentPage}
@@ -66,9 +66,11 @@ export default function AudienceIndexPage() {
         </DrawerContent>
       </Drawer>
 
-      <BodyMarkdownViewer content="# テス
-
+      <div className="flex flex-grow">
+        <BodyMarkdownViewer content="# テス
 ## テスト"/>
-    </>
+      </div>
+    </div>
+
   );
 }
