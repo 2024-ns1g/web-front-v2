@@ -17,7 +17,7 @@ export default function AudienceIndexPage() {
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
 
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
-  
+
   const [showingVote, setShowingVote] = useState<SharedSelection>(new Set());
 
   useEffect(() => {
@@ -116,8 +116,19 @@ export default function AudienceIndexPage() {
                 >
                   {(item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>}
                 </Select>
-
-                <p>{showingVote}</p>
+                <VoteDrawerBody
+                  voteTitle={sessionInfo?.availableVotes?.find((v) => v.voteId === showingVote)?.title ?? "Loading..."}
+                  voteQuestion={sessionInfo?.availableVotes?.find((v) => v.voteId === showingVote.valueOf())?.question ?? "Loading..."}
+                  choices={sessionInfo?.availableVotes?.find((v) => v.voteId === showingVote)?.choices ?? []}
+                  stats={[
+                    { choiceId: "1", count: 10 },
+                    { choiceId: "2", count: 20 },
+                    { choiceId: "3", count: 30 },
+                  ]}
+                  votedHandler={(voteId, choiceId) => {
+                    console.log("Voted: ", voteId, choiceId);
+                  }}
+                />
               </DrawerBody>
               <DrawerFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
