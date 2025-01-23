@@ -82,9 +82,12 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
 
   const getSessionInfo = async () => {
     if (sessionInfo) {
-      // update
+      await updateSessionInfo().catch((error) => {
+        console.error("Failed to update session info", error);
+        return Promise.reject(error);
+      });
     }
-    return sessionInfo;
+    return Promise.resolve(sessionInfo);
   }
 
   const updateSessionInfo = async () => {
@@ -96,10 +99,10 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
       try {
         const parsed = SessionInfoSchema.parse(response.data);
         setSessionInfo(parsed);
-        Promise.resolve();
+        return Promise.resolve();
       } catch (error) {
         console.error("Failed to parse response", error);
-        Promise.reject(error);
+        return Promise.reject(error);
       }
     });
   }
