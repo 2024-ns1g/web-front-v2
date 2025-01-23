@@ -33,6 +33,7 @@ export default function AudienceIndexPage() {
       }
       case "ACTIVATE_VOTE": {
         audience.updateState({ activeVoteIds: [...audience.state.activeVoteIds, message.data.voteId] });
+        toast.info(`新しい投票が開始されました`);
         break;
       }
     }
