@@ -94,7 +94,7 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   }
 
   const updateSessionInfo = async () => {
-    await axios.get(`${aggregatorUrl}/api/session/${joinedSessionId}/info`, {
+    await axios.get(`${aggregatorUrl}/api/session/${joinedSessionId}/audience/info`, {
       headers: {
         Authorization: `Bearer ${attachedToken}`
       }
