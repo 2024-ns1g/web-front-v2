@@ -96,7 +96,7 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
 
   const setWsMessageHandler = (handler: (message: any) => void) => {
     if (!ws) {
-      throw new Error("WebSocket is not connected");
+      throw new Error("WebSocket is not connected(dbg: handler)");
     }
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
@@ -106,7 +106,7 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
 
   const sendWsMessage = (message: any) => {
     if (!ws) {
-      throw new Error("WebSocket is not connected");
+      throw new Error("WebSocket is not connected(dbg: send)");
     }
     ws.send(JSON.stringify(message));
   }
