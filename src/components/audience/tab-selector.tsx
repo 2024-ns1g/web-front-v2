@@ -26,7 +26,7 @@ export const BodyPageSelector: FC<BodyPageSelectorProps> = ({
     if (pages[defaultPageIndex]) {
       onSelectedPageChanged(pages[defaultPageIndex].pageId);
     }
-  }, [defaultPageIndex, onSelectedPageChanged, pages]);
+  }, [defaultPageIndex, onSelectedPageChanged]);
 
   const currentPageIndex = pages.findIndex(
     (page) => page.pageId === currentPageId
