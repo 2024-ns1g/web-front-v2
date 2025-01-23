@@ -2,7 +2,7 @@ import { Header } from "@/components/audience/header";
 import { VoteDrawerBody } from "@/components/audience/vote";
 import { useAudienceContext } from "@/contexts/audience-context";
 import { SessionInfo } from "@/types/audience/session-info-schema";
-import { Button, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from "@nextui-org/react";
+import { Button, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, Select } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
 export default function AudienceIndexPage() {
@@ -15,10 +15,23 @@ export default function AudienceIndexPage() {
 
   const [state, setState] = useState(audience.state);
 
-  // debug, when the page is loaded, show the session info
   useEffect(() => {
     audience.sessionInfo.then((info) => {
       setSessionInfo(info);
+    });
+  }, []);
+
+  // WS
+  useEffect(() => {
+    audience.connectWs().then(() => {
+      audience.setWsMessageHandler((message) => {
+        switch (message.type) {
+          // TODO: Implement message handling
+        }
+      });
+
+      // test message send
+      audience.sendWsMessage({ type: "PING" });
     });
   }, []);
 
@@ -36,9 +49,9 @@ export default function AudienceIndexPage() {
         <DrawerContent>
           {(onClose) => (
             <>
+              {/* いまActiveなVoteから選択させる */}
               <DrawerHeader>てすと</DrawerHeader>
               <DrawerBody>
-                <VoteDrawerBody voteTitle="てすと" voteSummary="てすと" choices={[]} stats={[]} />
               </DrawerBody>
               <DrawerFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
