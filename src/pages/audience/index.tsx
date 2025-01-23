@@ -13,6 +13,8 @@ export default function AudienceIndexPage() {
 
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
 
+  const [state, setState] = useState(audience.state);
+
   // debug, when the page is loaded, show the session info
   useEffect(() => {
     audience.sessionInfo.then((info) => {
@@ -23,10 +25,10 @@ export default function AudienceIndexPage() {
   return (
     <>
       <Header
-        totalSlides={10}
-        currentSlideIndex={3}
-        sessionName="Session Name"
-        currentSlideName="Current Slide Name" />
+        totalSlides={sessionInfo?.pages.length ?? 0}
+        currentSlideIndex={state.currentPage}
+        sessionName={sessionInfo?.title ?? "Loading..."}
+        currentSlideName={sessionInfo?.pages[state.currentPage].title ?? "Loading..."} />
 
       <Button color="primary" onClick={() => setIsVoteDrawerOpen(true)}>test</Button>
 
