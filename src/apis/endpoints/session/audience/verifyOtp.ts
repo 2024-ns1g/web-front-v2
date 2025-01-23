@@ -3,7 +3,7 @@ import { VerifyOtpRequest, verifyOtpResponseSchema } from "@/types/endpoints/ses
 import { AxiosInstance } from "axios";
 import { z } from "zod";
 
-export const getJoinedRoomList = async (apiClient: AxiosInstance, log: any, _state: StateContextType, params: VerifyOtpRequest) => {
+export const verifyAudienceOtp = async (apiClient: AxiosInstance, log: any, _state: StateContextType, params: VerifyOtpRequest) => {
   const response = await apiClient.post('/session/audience/verify', params);
 
   try {
