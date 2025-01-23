@@ -12,6 +12,7 @@ type AudienceContextType = {
   setWsMessageHandler: (handler: (message: any) => void) => void;
   connectWs: () => Promise<void>;
   sendWsMessage: (message: any) => void;
+  ws: WebSocket | null;
   sessionInfo: Promise<SessionInfo>;
   updateSessionInfo: () => Promise<SessionInfo>;
   state: SessionState;
@@ -156,7 +157,7 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   };
 
   return (
-    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken, aggregatorUrl, setAggregatorUrl, setWsMessageHandler, connectWs, sendWsMessage, sessionInfo: getSessionInfo(), updateSessionInfo, state, setState, updateState }}>
+    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken, aggregatorUrl, setAggregatorUrl, setWsMessageHandler, connectWs, sendWsMessage, ws, sessionInfo: getSessionInfo(), updateSessionInfo, state, setState, updateState }}>
       {children}
     </AudienceContext.Provider>
   );
