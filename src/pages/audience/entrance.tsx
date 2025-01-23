@@ -1,5 +1,5 @@
 import { useAudienceContext } from "@/contexts/audience-context";
-import { InputOtp } from "@nextui-org/react";
+import { Button, InputOtp } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
 export default function AudienceEntrancePage() {
@@ -8,20 +8,8 @@ export default function AudienceEntrancePage() {
 
   const [value, setValue] = useState("");
 
-  const [sessionId, setSessionId] = useState("");
-
-  const handleSessionIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSessionId(e.target.value);
+  const handleJoinToSession = () => {
   }
-
-  // Debug
-  useEffect(() => {
-    console.log(sessionId);
-  }, [sessionId]);
-
-  const handleWorkaroundSubmit = () => {
-    audience.setJoinedSessionId(sessionId);
-  };
 
   return (
     <>
@@ -31,6 +19,10 @@ export default function AudienceEntrancePage() {
           <p className="text-center text-gray-500">認証コードを入力してください。</p>
         </div>
         <InputOtp length={6} value={value} onValueChange={setValue} />
+        <Button
+          onPress={handleJoinToSession}
+          variant="bordered"
+        >参加</Button>
       </div>
     </>
   );
