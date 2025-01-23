@@ -165,14 +165,6 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     };
   }, []);
 
-  // セッション情報の取得
-  const getSessionInfo = async () => {
-    if (!sessionInfo) {
-      return updateSessionInfo();
-    }
-    return sessionInfo;
-  };
-
   const updateSessionInfo = async () => {
     const response = await axios.get(
       `${aggregatorUrl}/api/session/${joinedSessionId}/audience/info`,
