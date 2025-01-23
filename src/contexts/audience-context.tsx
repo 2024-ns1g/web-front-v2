@@ -5,8 +5,11 @@ type AudienceContextType = {
   setJoinedSessionId: (id: string) => void;
   attachedToken: string;
   setAttachedToken: (token: string) => void;
+  aggregatorUrl: string;
+  setAggregatorUrl: (url: string) => void;
   setWsMessageHandler: (handler: (message: any) => void) => void;
   connectWs: () => Promise<void>;
+  sendWsMessage: (message: any) => void;
 }
 
 const AudienceContext = createContext<AudienceContextType | null>(null);
@@ -26,6 +29,11 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     return token || "";
   });
 
+  const [aggregatorUrl, setAggregatorUrl] = useState(() => {
+    const url = localStorage.getItem("aggregatorUrl");
+    return url || "";
+  });
+
   // Cache to local storage
   useEffect(() => {
     localStorage.setItem("joinedSessionId", joinedSessionId);
@@ -35,11 +43,17 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     localStorage.setItem("attachedToken", attachedToken);
   }, [attachedToken]);
 
+  useEffect(() => {
+    localStorage.setItem("aggregatorUrl", aggregatorUrl);
+  }, [aggregatorUrl]);
+
   // connection
   const [ws, setWs] = useState<WebSocket | null>(null);
 
   const connectWs = async () => {
-    const ws = new WebSocket("ws://localhost:8081/ws");
+    console.log("Connecting to WebSocket server...");
+    console.debug("aggregatorUrl: " + aggregatorUrl + "replaced: " + aggregatorUrl.replace("http", "ws"));
+    const ws = new WebSocket(aggregatorUrl.replace("http", "ws"));
     setWs(ws);
   };
 
@@ -53,8 +67,15 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     }
   };
 
+  const sendWsMessage = (message: any) => {
+    if (!ws) {
+      throw new Error("WebSocket is not connected");
+    }
+    ws.send(JSON.stringify(message));
+  }
+
   return (
-    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken }}>
+    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken, aggregatorUrl, setAggregatorUrl, setWsMessageHandler, connectWs, sendWsMessage }}>
       {children}
     </AudienceContext.Provider>
   );
