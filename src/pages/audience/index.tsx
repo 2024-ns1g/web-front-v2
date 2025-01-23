@@ -44,7 +44,7 @@ export default function AudienceIndexPage() {
         wsClickedHandler={() => { }}
         voteClickedHandler={() => setIsVoteDrawerOpen(true)}
       />
-      <Drawer isOpen={isVoteDrawerOpen} >
+      <Drawer isOpen={isVoteDrawerOpen} onClose={() => setIsVoteDrawerOpen(false)}>
         <DrawerContent>
           {(onClose) => (
             <>
