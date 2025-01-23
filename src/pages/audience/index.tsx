@@ -6,6 +6,7 @@ import { useAudienceContext } from "@/contexts/audience-context";
 import { SessionInfo } from "@/types/audience/session-info-schema";
 import { Button, CardBody, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, Select, Tab, Tabs } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AudienceIndexPage() {
   const audience = useAudienceContext();
@@ -27,6 +28,7 @@ export default function AudienceIndexPage() {
     switch (message.requestType) {
       case "CHANGE_CURRENT_PAGE": {
         audience.updateState({ currentPage: message.data.newPageIndex });
+        toast.info(`スライドが${message.data.newPageIndex + 1}枚目に変更されました`);
         break;
       }
       case "VOTE_ACTIVATED": {
