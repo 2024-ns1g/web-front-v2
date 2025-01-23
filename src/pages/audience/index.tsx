@@ -1,3 +1,4 @@
+import { BodyMarkdownViewer } from "@/components/audience/body/markdown-viewer";
 import { Header } from "@/components/audience/header";
 import { VoteDrawerBody } from "@/components/audience/vote";
 import { useAudienceContext } from "@/contexts/audience-context";
@@ -64,6 +65,10 @@ export default function AudienceIndexPage() {
           )}
         </DrawerContent>
       </Drawer>
+
+      <BodyMarkdownViewer content="# テス
+
+## テスト"/>
     </>
   );
 }
