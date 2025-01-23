@@ -8,13 +8,21 @@ interface HeaderProps {
   currentSlideIndex: number;
   sessionName: string;
   currentSlideName: string;
+  activeVoteCount: number;
+  isWsConnected: boolean;
+  wsClickedHandler: () => void;
+  voteClickedHandler: () => void;
 };
 
 export const Header: FC<HeaderProps> = ({
   totalSlides,
   currentSlideIndex,
   sessionName,
-  currentSlideName
+  currentSlideName,
+  activeVoteCount,
+  isWsConnected,
+  wsClickedHandler,
+  voteClickedHandler
 }) => {
   return (
     <>
@@ -24,7 +32,7 @@ export const Header: FC<HeaderProps> = ({
             <HeaderBreadcrumb sessionName={sessionName} currentSlideName={currentSlideName} />
             <HeaderProgressBar totalSlides={totalSlides} currentSlideIndex={currentSlideIndex} />
           </div>
-          <HeaderActions isWsConnected={true} voteCount={0} wsClickedHandler={() => { }} voteClickedHandler={() => { }} />
+          <HeaderActions isWsConnected={isWsConnected} voteCount={activeVoteCount} wsClickedHandler={wsClickedHandler} voteClickedHandler={voteClickedHandler} />
         </div>
       </div>
     </>
