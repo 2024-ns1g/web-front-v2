@@ -4,7 +4,7 @@ import { BodyPageSelector } from "@/components/audience/tab-selector";
 import { VoteDrawerBody } from "@/components/audience/vote";
 import { useAudienceContext } from "@/contexts/audience-context";
 import { SessionInfo } from "@/types/audience/session-info-schema";
-import { Button, CardBody, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, Select, Tab, Tabs } from "@nextui-org/react";
+import { Button, CardBody, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, Select, SelectItem, Tab, Tabs } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -99,9 +99,21 @@ export default function AudienceIndexPage() {
         <DrawerContent>
           {(onClose) => (
             <>
-              {/* いまActiveなVoteから選択させる */}
-              <DrawerHeader>てすと</DrawerHeader>
+              <DrawerHeader>投票</DrawerHeader>
               <DrawerBody>
+                <Select
+                  placeholder="選択してください"
+                  items={audience.state.activeVoteIds.map((voteId) => {
+                    const vote = sessionInfo?.availableVotes?.find((v) => v.voteId === voteId);
+                    return {
+                      label: vote?.title,
+                      value: voteId,
+                    };
+                  })}
+                >
+                  {(item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>}
+
+                </Select>
               </DrawerBody>
               <DrawerFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
