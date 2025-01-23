@@ -1,3 +1,4 @@
+import 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
 import { FC } from "react";
 import { VoteChoice } from '@/types/audience/vote-choice';
