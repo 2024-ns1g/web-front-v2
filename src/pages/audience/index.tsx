@@ -4,7 +4,7 @@ import { BodyPageSelector } from "@/components/audience/tab-selector";
 import { VoteDrawerBody } from "@/components/audience/vote";
 import { useAudienceContext } from "@/contexts/audience-context";
 import { SessionInfo } from "@/types/audience/session-info-schema";
-import { Button, CardBody, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, Select, SelectItem, Tab, Tabs } from "@nextui-org/react";
+import { Button, CardBody, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, Select, SelectItem, SharedSelection, Tab, Tabs } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -17,6 +17,8 @@ export default function AudienceIndexPage() {
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
 
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
+  
+  const [showingVote, setShowingVote] = useState<SharedSelection>(new Set());
 
   useEffect(() => {
     audience.sessionInfo.then((info) => {
@@ -110,10 +112,12 @@ export default function AudienceIndexPage() {
                       value: voteId,
                     };
                   })}
+                  onSelectionChange={setShowingVote}
                 >
                   {(item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>}
-
                 </Select>
+
+                <p>{showingVote}</p>
               </DrawerBody>
               <DrawerFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
