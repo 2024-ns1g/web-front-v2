@@ -38,7 +38,12 @@ export default function AudienceIndexPage() {
         totalSlides={sessionInfo?.pages.length ?? 0}
         currentSlideIndex={state.currentPage}
         sessionName={sessionInfo?.title ?? "Loading..."}
-        currentSlideName={sessionInfo?.pages[state.currentPage].title ?? "Loading..."} />
+        currentSlideName={sessionInfo?.pages[state.currentPage].title ?? "Loading..."}
+        activeVoteCount={state.activeVoteIds.length}
+        isWsConnected={audience.isWsConnected}
+        wsClickedHandler={() => { }}
+        voteClickedHandler={() => setIsVoteDrawerOpen(true)}
+      />
 
       <Button color="primary" onClick={() => setIsVoteDrawerOpen(true)}>test</Button>
 
