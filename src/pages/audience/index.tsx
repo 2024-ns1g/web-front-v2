@@ -25,12 +25,26 @@ export default function AudienceIndexPage() {
     });
   }, []);
 
+  const wsMessageHandler = (message: any) => {
+    switch (message.requestType) {
+      case "CHANGE_CURRENT_PAGE": {
+        audience.updateState({ currentPage: message.newPageIndex });
+        break;
+      }
+      case "VOTE_ACTIVATED": {
+        audience.updateState({ activeVoteIds: [...state.activeVoteIds, message.voteId] });
+        break;
+      }
+    }
+  };
+
   // WS
   useEffect(() => {
     audience.connectWs().then(() => {
 
       audience.setWsMessageHandler((message) => {
         console.log("Message received: ", message);
+        wsMessageHandler(message);
       });
       audience.sendWsMessage({ requestType: "PING" });
     });
