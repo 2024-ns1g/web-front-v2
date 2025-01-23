@@ -23,6 +23,7 @@ export default function AudienceEntrancePage() {
       console.log("OTP verified");
       audience.setJoinedSessionId(response.sessionId);
       audience.setAttachedToken(response.token);
+      audience.setAggregatorUrl(response.aggregatorUrl);
 
       navigate("/audience");
     });
