@@ -51,7 +51,7 @@ export const BodyPageSelector: FC<BodyPageSelectorProps> = ({
         isDisabled={currentPageIndex === 0}>
         <FaAngleLeft />
       </Button>
-      <p className="text-lg font-bold flex-grow text-center">{currentPage?.title || "No Title"}</p>
+      <p className="text-lg font-bold flex-grow text-center text-slate-800">{currentPage?.title || "No Title"}</p>
       <Button
         onPress={nextPageHandler}
         variant="bordered"
