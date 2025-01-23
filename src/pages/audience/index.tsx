@@ -1,6 +1,7 @@
 import { Header } from "@/components/audience/header";
 import { VoteDrawerBody } from "@/components/audience/vote";
 import { useAudienceContext } from "@/contexts/audience-context";
+import { SessionInfo } from "@/types/audience/session-info-schema";
 import { Button, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
@@ -10,10 +11,12 @@ export default function AudienceIndexPage() {
   // State
   const [isVoteDrawerOpen, setIsVoteDrawerOpen] = useState(false);
 
+  const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
+
   // debug, when the page is loaded, show the session info
   useEffect(() => {
     audience.sessionInfo.then((info) => {
-      console.log(info);
+      setSessionInfo(info);
     });
   }, []);
 
