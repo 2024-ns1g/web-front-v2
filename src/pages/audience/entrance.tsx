@@ -1,7 +1,7 @@
 import { useAudienceContext } from "@/contexts/audience-context";
 import { useApis } from "@/hooks/use-api";
 import { Button, InputOtp } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function AudienceEntrancePage() {
 
