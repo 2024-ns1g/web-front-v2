@@ -3,6 +3,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 type AudienceContextType = {
   joinedSessionId: string;
   setJoinedSessionId: (id: string) => void;
+  attachedToken: string;
+  setAttachedToken: (token: string) => void;
 }
 
 const AudienceContext = createContext<AudienceContextType | null>(null);
@@ -17,13 +19,22 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     return sessionId || "";
   });
 
+  const [attachedToken, setAttachedToken] = useState(() => {
+    const token = localStorage.getItem("attachedToken");
+    return token || "";
+  });
+
   // Cache to local storage
   useEffect(() => {
     localStorage.setItem("joinedSessionId", joinedSessionId);
   }, [joinedSessionId]);
 
+  useEffect(() => {
+    localStorage.setItem("attachedToken", attachedToken);
+  }, [attachedToken]);
+
   return (
-    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId }}>
+    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken }}>
       {children}
     </AudienceContext.Provider>
   );
