@@ -1,7 +1,8 @@
 import 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { VoteChoice } from '@/types/audience/vote-choice';
+import { Radio, RadioGroup } from '@nextui-org/react';
 
 type VoteStatsType = {
   choiceId: string;
@@ -11,10 +12,9 @@ type VoteStatsType = {
 interface VoteDrawerBodyProps {
   voteTitle: string;
   voteQuestion: string;
-
   choices: VoteChoice[];
-
   stats: VoteStatsType[];
+  votedHandler: (voteId: string, choiceId: string) => void;
 };
 
 export const VoteDrawerBody: FC<VoteDrawerBodyProps> = ({
@@ -22,7 +22,13 @@ export const VoteDrawerBody: FC<VoteDrawerBodyProps> = ({
   voteQuestion: voteSummary,
   choices,
   stats,
+  votedHandler
 }) => {
+
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const [summary, setSummary] = useState([]);
+
   // Generate and set color when it is not set
   choices.forEach((c) => {
     if (!c.backgroundColor || !c.borderColor) {
@@ -44,8 +50,19 @@ export const VoteDrawerBody: FC<VoteDrawerBodyProps> = ({
 
   return (
     <>
-      <p className="text-lg font-bold">{voteTitle}</p>
-      <Doughnut data={data} />
+      {/* <p className="text-lg font-bold">{voteTitle}</p> */}
+      {/* <Doughnut data={data} /> */}
+      <RadioGroup
+        name="vote"
+        value={selected}
+        onValueChange={(value) => setSelected(value)}
+      >
+        {choices.map((c) => (
+          <Radio key={c.choiceId} value={c.choiceId}>
+            {c.title}
+          </Radio>
+        ))}
+      </RadioGroup>
     </>
   );
 };
