@@ -15,8 +15,6 @@ export default function AudienceIndexPage() {
 
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
 
-  const [state, setState] = useState(audience.state);
-
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,7 +30,7 @@ export default function AudienceIndexPage() {
         break;
       }
       case "VOTE_ACTIVATED": {
-        audience.updateState({ activeVoteIds: [...state.activeVoteIds, message.voteId] });
+        audience.updateState({ activeVoteIds: [...audience.state.activeVoteIds, message.voteId] });
         break;
       }
     }
@@ -86,10 +84,10 @@ export default function AudienceIndexPage() {
     <div className="flex flex-col h-full">
       <Header
         totalSlides={sessionInfo?.pages.length ?? 0}
-        currentSlideIndex={state.currentPage}
+        currentSlideIndex={audience.state.currentPage}
         sessionName={sessionInfo?.title ?? "Loading..."}
-        currentSlideName={sessionInfo?.pages[state.currentPage].title ?? "Loading..."}
-        activeVoteCount={state.activeVoteIds.length}
+        currentSlideName={sessionInfo?.pages[audience.state.currentPage].title ?? "Loading..."}
+        activeVoteCount={audience.state.activeVoteIds.length}
         isWsConnected={audience.isWsConnected}
         wsClickedHandler={() => { }}
         voteClickedHandler={() => setIsVoteDrawerOpen(true)}
