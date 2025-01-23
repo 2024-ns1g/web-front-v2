@@ -10,7 +10,7 @@ export const BodyMarkdownViewer: FC<BodyMarkdownViewerProps> = ({
   content
 }) => {
   return (
-    <Card className="p-4">
+    <Card className="p-4 h-full">
       <Markdown className="markdown">{content}</Markdown>
     </Card>
   );
