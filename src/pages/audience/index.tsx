@@ -31,8 +31,8 @@ export default function AudienceIndexPage() {
         toast.info(`スライドが${message.data.newPageIndex + 1}枚目に変更されました`);
         break;
       }
-      case "VOTE_ACTIVATED": {
-        audience.updateState({ activeVoteIds: [...audience.state.activeVoteIds, message.voteId] });
+      case "ACTIVATE_VOTE": {
+        audience.updateState({ activeVoteIds: [...audience.state.activeVoteIds, message.data.voteId] });
         break;
       }
     }
