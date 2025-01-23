@@ -1,6 +1,5 @@
 import { Doughnut } from 'react-chartjs-2';
 import { FC } from "react";
-import { SessionInfo } from '@/types/audience/session-info-schema';
 import { VoteChoice } from '@/types/audience/vote-choice';
 
 type VoteStatsType = {
@@ -36,8 +35,8 @@ export const VoteDrawerBody: FC<VoteDrawerBodyProps> = ({
     labels: choices.map((c) => c.title),
     datasets: [{
       data: stats.map((s) => s.count),
-      backgroundColor: choices.map((c) => c.backgroundColor),
-      borderColor: choices.map((c) => c.borderColor),
+      backgroundColor: choices.map((c) => c.backgroundColor!),
+      borderColor: choices.map((c) => c.borderColor!),
       borderWidth: 1,
     }],
   };
@@ -45,6 +44,7 @@ export const VoteDrawerBody: FC<VoteDrawerBodyProps> = ({
   return (
     <>
       <p className="text-lg font-bold">{voteTitle}</p>
+      <Doughnut data={data} />
     </>
   );
 };
