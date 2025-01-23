@@ -26,7 +26,7 @@ export default function AudienceIndexPage() {
   const wsMessageHandler = (message: any) => {
     switch (message.requestType) {
       case "CHANGE_CURRENT_PAGE": {
-        audience.updateState({ currentPage: message.newPageIndex });
+        audience.updateState({ currentPage: message.data.newPageIndex });
         break;
       }
       case "VOTE_ACTIVATED": {
