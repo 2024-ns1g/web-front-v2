@@ -2,7 +2,7 @@ import { useAudienceContext } from "@/contexts/audience-context";
 import { useApis } from "@/hooks/use-api";
 import { Button, InputOtp } from "@nextui-org/react";
 import { useState } from "react";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function AudienceEntrancePage() {
 
