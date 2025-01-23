@@ -100,7 +100,12 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
       }
     }).then((response) => {
       try {
-        const parsed = SessionInfoSchema.parse(response.data);
+        let data = response.data;
+        console.log("data: " + data);
+        if (typeof response.data === "string") {
+          data = JSON.parse(response.data);
+        }
+        const parsed = SessionInfoSchema.parse(data)
         setSessionInfo(parsed);
         return Promise.resolve();
       } catch (error) {
