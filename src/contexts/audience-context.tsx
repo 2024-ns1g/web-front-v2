@@ -5,6 +5,8 @@ type AudienceContextType = {
   setJoinedSessionId: (id: string) => void;
   attachedToken: string;
   setAttachedToken: (token: string) => void;
+  setWsMessageHandler: (handler: (message: any) => void) => void;
+  connectWs: () => Promise<void>;
 }
 
 const AudienceContext = createContext<AudienceContextType | null>(null);
@@ -32,6 +34,24 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   useEffect(() => {
     localStorage.setItem("attachedToken", attachedToken);
   }, [attachedToken]);
+
+  // connection
+  const [ws, setWs] = useState<WebSocket | null>(null);
+
+  const connectWs = async () => {
+    const ws = new WebSocket("ws://localhost:8081/ws");
+    setWs(ws);
+  };
+
+  const setWsMessageHandler = (handler: (message: any) => void) => {
+    if (!ws) {
+      throw new Error("WebSocket is not connected");
+    }
+    ws.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      handler(message);
+    }
+  };
 
   return (
     <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken }}>
