@@ -44,9 +44,6 @@ export default function AudienceIndexPage() {
         wsClickedHandler={() => { }}
         voteClickedHandler={() => setIsVoteDrawerOpen(true)}
       />
-
-      <Button color="primary" onClick={() => setIsVoteDrawerOpen(true)}>test</Button>
-
       <Drawer isOpen={isVoteDrawerOpen} >
         <DrawerContent>
           {(onClose) => (
