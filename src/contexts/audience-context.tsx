@@ -86,9 +86,11 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
 
   const connectWs = async () => {
-    console.log("Connecting to WebSocket server...");
-    console.debug("aggregatorUrl: " + aggregatorUrl + "replaced: " + aggregatorUrl.replace("http", "ws"));
-    const ws = new WebSocket(aggregatorUrl.replace("http", "ws"));
+    // console.log("Connecting to WebSocket server...");
+    // console.debug("aggregatorUrl: " + aggregatorUrl + "replaced: " + aggregatorUrl.replace("http", "ws"));
+    const wsUrl = aggregatorUrl.replace("http", "ws") + "/audience?sessionId=" + joinedSessionId;
+    console.log("wsUrl: " + wsUrl);
+    const ws = new WebSocket(wsUrl);
     setWs(ws);
   };
 
