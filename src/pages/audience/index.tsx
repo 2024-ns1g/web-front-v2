@@ -66,9 +66,11 @@ export default function AudienceIndexPage() {
         </DrawerContent>
       </Drawer>
 
-      <div className="flex flex-grow">
-        <BodyMarkdownViewer content="# テス
+      <div className="flex-grow flex items-center justify-center">
+        <div className="container h-full">
+          <BodyMarkdownViewer content="# テス
 ## テスト"/>
+        </div>
       </div>
     </div>
 
