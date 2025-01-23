@@ -1,6 +1,6 @@
 import { SessionInfo, SessionInfoSchema } from "@/types/audience/session-info-schema";
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 type AudienceContextType = {
   joinedSessionId: string;
@@ -11,7 +11,7 @@ type AudienceContextType = {
   setAggregatorUrl: (url: string) => void;
   setWsMessageHandler: (handler: (message: any) => void) => void;
   connectWs: () => Promise<void>;
-  sendWsMessage: (message: any) => void;
+  sendWsMessage: (message: any) => Promise<void>;
   sessionInfo: Promise<SessionInfo>;
   updateSessionInfo: () => Promise<SessionInfo>;
   state: SessionState;
@@ -33,7 +33,6 @@ export type Vote = {
 
 export type VoteSummary = {
   voteId: string;
-  // 各選択肢の得票数
   choiceVotes: {
     [choiceId: string]: number;
   };
@@ -69,7 +68,12 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
 
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
 
-  // Cache to local storage
+  // WebSocket関連のリファレンス
+  const ws = useRef<WebSocket | null>(null);
+  const messageHandlerRef = useRef<(message: any) => void>(() => { });
+  const connectionPromiseRef = useRef<Promise<void> | null>(null);
+
+  // ローカルストレージのキャッシュ
   useEffect(() => {
     localStorage.setItem("joinedSessionId", joinedSessionId);
   }, [joinedSessionId]);
@@ -82,85 +86,139 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     localStorage.setItem("aggregatorUrl", aggregatorUrl);
   }, [aggregatorUrl]);
 
-  // connection
-  const [ws, setWs] = useState<WebSocket | null>(null);
-
+  // WebSocket接続管理
   const connectWs = async () => {
-    // console.log("Connecting to WebSocket server...");
-    // console.debug("aggregatorUrl: " + aggregatorUrl + "replaced: " + aggregatorUrl.replace("http", "ws"));
+    if (!joinedSessionId || !aggregatorUrl) {
+      throw new Error("Missing session ID or aggregator URL");
+    }
+
+    // 既に接続済みの場合
+    if (ws.current?.readyState === WebSocket.OPEN) {
+      return;
+    }
+
+    // 接続中の場合は既存のPromiseを返す
+    if (connectionPromiseRef.current) {
+      return connectionPromiseRef.current;
+    }
+
+    // 既存の接続があれば閉じる
+    if (ws.current) {
+      ws.current.close();
+    }
+
     const wsUrl = aggregatorUrl.replace("http", "ws") + "/audience?sessionId=" + joinedSessionId;
-    console.log("wsUrl: " + wsUrl);
-    const ws = new WebSocket(wsUrl);
-    setWs(ws);
+
+    const promise = new Promise<void>((resolve, reject) => {
+      const newWs = new WebSocket(wsUrl);
+
+      newWs.onopen = () => {
+        ws.current = newWs;
+        // メッセージハンドラを設定
+        newWs.onmessage = (event) => {
+          const message = JSON.parse(event.data);
+          messageHandlerRef.current(message);
+        };
+        resolve();
+      };
+
+      newWs.onerror = (error) => {
+        connectionPromiseRef.current = null;
+        reject(error);
+      };
+
+      newWs.onclose = () => {
+        ws.current = null;
+        connectionPromiseRef.current = null;
+      };
+    });
+
+    connectionPromiseRef.current = promise;
+    return promise;
   };
 
   const setWsMessageHandler = (handler: (message: any) => void) => {
-    if (!ws) {
-      throw new Error("WebSocket is not connected");
-    }
-    ws.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      handler(message);
+    messageHandlerRef.current = handler;
+    // 既存の接続がある場合は即時適用
+    if (ws.current) {
+      ws.current.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        handler(message);
+      };
     }
   };
 
-  const sendWsMessage = (message: any) => {
-    if (!ws) {
+  const sendWsMessage = async (message: any) => {
+    await connectWs();
+    if (!ws.current || ws.current.readyState !== WebSocket.OPEN) {
       throw new Error("WebSocket is not connected");
     }
-    ws.send(JSON.stringify(message));
-  }
+    ws.current.send(JSON.stringify(message));
+  };
 
+  // クリーンアップ
+  useEffect(() => {
+    return () => {
+      if (ws.current) {
+        ws.current.close();
+      }
+    };
+  }, []);
+
+  // セッション情報の取得
   const getSessionInfo = async () => {
     if (!sessionInfo) {
-      return updateSessionInfo().catch((error) => {
-        console.error("Failed to get session info", error);
-        return Promise.reject(error);
-      });
+      return updateSessionInfo();
     }
-    return Promise.resolve(sessionInfo);
-  }
+    return sessionInfo;
+  };
 
   const updateSessionInfo = async () => {
-    return axios.get(`${aggregatorUrl}/api/session/${joinedSessionId}/audience/info`, {
-      headers: {
-        Authorization: `Bearer ${attachedToken}`
+    const response = await axios.get(
+      `${aggregatorUrl}/api/session/${joinedSessionId}/audience/info`,
+      {
+        headers: {
+          Authorization: `Bearer ${attachedToken}`,
+        },
       }
-    }).then((response) => {
-      try {
-        let data = response.data;
-        console.log("data: " + data);
-        if (typeof response.data === "string") {
-          data = JSON.parse(response.data);
-        }
-        const parsed = SessionInfoSchema.parse(data)
-        if (!parsed) {
-          return Promise.reject("Failed to parse response");
-        }
-        setSessionInfo(parsed);
-        return Promise.resolve(parsed);
-      } catch (error) {
-        console.error("Failed to parse response", error);
-        return Promise.reject(error);
-      }
-    });
-  }
+    );
+
+    const data = typeof response.data === "string" ? JSON.parse(response.data) : response.data;
+    const parsed = SessionInfoSchema.parse(data);
+    setSessionInfo(parsed);
+    return parsed;
+  };
 
   const updateState = (newState: Partial<SessionState>) => {
-    setState((prev) => {
-      return {
-        ...prev,
-        ...newState,
-      };
-    });
+    setState((prev) => ({
+      ...prev,
+      ...newState,
+    }));
   };
 
   return (
-    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken, aggregatorUrl, setAggregatorUrl, setWsMessageHandler, connectWs, sendWsMessage, sessionInfo: getSessionInfo(), updateSessionInfo, state, setState, updateState }}>
+    <AudienceContext.Provider
+      value={{
+        joinedSessionId,
+        setJoinedSessionId,
+        attachedToken,
+        setAttachedToken,
+        aggregatorUrl,
+        setAggregatorUrl,
+        setWsMessageHandler,
+        connectWs,
+        sendWsMessage,
+        sessionInfo: sessionInfo ? Promise.resolve(sessionInfo) : updateSessionInfo(),
+        updateSessionInfo,
+        state,
+        setState,
+        updateState,
+      }}
+    >
       {children}
     </AudienceContext.Provider>
   );
-}
+};
 
 export const useAudienceContext = () => {
   const context = useContext(AudienceContext);
@@ -168,5 +226,4 @@ export const useAudienceContext = () => {
     throw new Error("useAudienceContext must be used within a AudienceProvider");
   }
   return context;
-}
-
+};
