@@ -3,7 +3,7 @@ import { Header } from "@/components/audience/header";
 import { VoteDrawerBody } from "@/components/audience/vote";
 import { useAudienceContext } from "@/contexts/audience-context";
 import { SessionInfo } from "@/types/audience/session-info-schema";
-import { Button, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, Select } from "@nextui-org/react";
+import { Button, CardBody, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, Select, Tab, Tabs } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
 export default function AudienceIndexPage() {
@@ -68,8 +68,79 @@ export default function AudienceIndexPage() {
 
       <div className="flex-grow flex items-center justify-center">
         <div className="container h-full px-4 py-8">
-          <BodyMarkdownViewer content="# テス
-## テスト"/>
+
+          {/*高さはfullに*/}
+          <Tabs items={sessionInfo?.pages ?? []} classNames={{ tab: "h-full", tabContent: "h-full", panel: "h-full" }}>
+            {(item) => (
+              <Tab key={item.pageId} title={item.title}>
+                <div className="h-full">
+                  {/* <BodyMarkdownViewer content={item.scripts[0].content} /> */}
+                  <BodyMarkdownViewer content={`
+# あああああああああああ
+## あああああ
+ああ
+
+あああ
+
+ｓださｄｄだｄｓｄ
+
+ｆｄｓｆｓｄｆｓｄｆ
+
+
+ｆｄｓｆｓｄｆｄｆｓ
+
+
+ｆｓｄｆｓｄｆｓｄｆｓｆ
+
+
+
+
+ｆｄｓｆｄｆｓｆｄｆ
+# あああああああああああ
+## あああああ
+ああ
+
+あああ
+
+ｓださｄｄだｄｓｄ
+
+ｆｄｓｆｓｄｆｓｄｆ
+
+
+ｆｄｓｆｓｄｆｄｆｓ
+
+
+ｆｓｄｆｓｄｆｓｄｆｓｆ
+
+
+
+
+ｆｄｓｆｄｆｓｆｄｆ
+# あああああああああああ
+## あああああ
+ああ
+
+あああ
+
+ｓださｄｄだｄｓｄ
+
+ｆｄｓｆｓｄｆｓｄｆ
+
+
+ｆｄｓｆｓｄｆｄｆｓ
+
+
+ｆｓｄｆｓｄｆｓｄｆｓｆ
+
+
+
+
+ｆｄｓｆｄｆｓｆｄｆ
+                    `}/>
+                </div>
+              </Tab>
+            )}
+          </Tabs>
         </div>
       </div>
     </div>
