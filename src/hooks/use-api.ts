@@ -11,7 +11,7 @@ export const useApis = (): UseApis => {
 
   // 共通処理を抽象化
   const createApiMethod = <P, R>(
-    apiFunction: (client: any, log: any, state:any, params: P) => Promise<R>
+    apiFunction: (client: any, log: any, state: any, params: P) => Promise<R>
   ): (params: P) => Promise<R> => {
     return (params: P): Promise<R> => {
       return apiFunction(apiClient, log, state, params);
@@ -31,5 +31,10 @@ export const useApis = (): UseApis => {
       getLinkedSlideList: createApiMethod(apiEndpoints.slide.getLinkedSlideList),
       createSlide: createApiMethod(apiEndpoints.slide.createSlide)
     },
+    session: {
+      audience: {
+        verifyAudienceOtp: createApiMethod(apiEndpoints.session.audience.verifyAudienceOtp)
+      }
+    }
   };
 };
