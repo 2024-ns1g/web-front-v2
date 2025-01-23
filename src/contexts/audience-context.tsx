@@ -14,6 +14,9 @@ type AudienceContextType = {
   sendWsMessage: (message: any) => void;
   sessionInfo: Promise<SessionInfo>;
   updateSessionInfo: () => Promise<SessionInfo>;
+  state: SessionState;
+  setState: (state: SessionState) => void;
+  updateState: (state: Partial<SessionState>) => void;
 }
 
 const AudienceContext = createContext<AudienceContextType | null>(null);
@@ -21,6 +24,26 @@ const AudienceContext = createContext<AudienceContextType | null>(null);
 interface AudienceProviderProps {
   children: React.ReactNode;
 }
+
+export type Vote = {
+  voteId: string;
+  choiceId: string;
+  voterId: string;
+};
+
+export type VoteSummary = {
+  voteId: string;
+  // 各選択肢の得票数
+  choiceVotes: {
+    [choiceId: string]: number;
+  };
+};
+
+export type SessionState = {
+  currentPage: number;
+  activeVoteIds: string[];
+  votes: Vote[];
+};
 
 export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   const [joinedSessionId, setJoinedSessionId] = useState(() => {
@@ -36,6 +59,12 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   const [aggregatorUrl, setAggregatorUrl] = useState(() => {
     const url = localStorage.getItem("aggregatorUrl");
     return url || "";
+  });
+
+  const [state, setState] = useState<SessionState>({
+    currentPage: 0,
+    activeVoteIds: [],
+    votes: [],
   });
 
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
@@ -115,8 +144,17 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     });
   }
 
+  const updateState = (newState: Partial<SessionState>) => {
+    setState((prev) => {
+      return {
+        ...prev,
+        ...newState,
+      };
+    });
+  };
+
   return (
-    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken, aggregatorUrl, setAggregatorUrl, setWsMessageHandler, connectWs, sendWsMessage, sessionInfo: getSessionInfo(), updateSessionInfo }}>
+    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken, aggregatorUrl, setAggregatorUrl, setWsMessageHandler, connectWs, sendWsMessage, sessionInfo: getSessionInfo(), updateSessionInfo, state, setState, updateState }}>
       {children}
     </AudienceContext.Provider>
   );
