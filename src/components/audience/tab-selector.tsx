@@ -43,11 +43,11 @@ export const BodyPageSelector: FC<BodyPageSelectorProps> = ({
   };
 
   return (
-    <div className="flex justify-center items-center gap-4">
+    <div className="flex justify-center items-center gap-4 w-full">
       <Button onPress={prevPageHandler} isDisabled={currentPageIndex === 0}>
         ←
       </Button>
-      <p className="text-lg font-bold">{currentPage?.title || "No Title"}</p>
+      <p className="text-lg font-bold flex-grow text-center">{currentPage?.title || "No Title"}</p>
       <Button
         onPress={nextPageHandler}
         isDisabled={currentPageIndex === pages.length - 1}
