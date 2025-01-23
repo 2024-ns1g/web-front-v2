@@ -81,11 +81,14 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   }
 
   const getSessionInfo = async () => {
-    if (sessionInfo) {
+    if (!sessionInfo) {
       await updateSessionInfo().catch((error) => {
         console.error("Failed to update session info", error);
         return Promise.reject(error);
       });
+    }
+    if (!sessionInfo) { // Type guard
+      return Promise.reject("Session info is not available");
     }
     return Promise.resolve(sessionInfo);
   }
@@ -108,7 +111,7 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   }
 
   return (
-    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken, aggregatorUrl, setAggregatorUrl, setWsMessageHandler, connectWs, sendWsMessage }}>
+    <AudienceContext.Provider value={{ joinedSessionId, setJoinedSessionId, attachedToken, setAttachedToken, aggregatorUrl, setAggregatorUrl, setWsMessageHandler, connectWs, sendWsMessage, sessionInfo: getSessionInfo(), updateSessionInfo }}>
       {children}
     </AudienceContext.Provider>
   );
