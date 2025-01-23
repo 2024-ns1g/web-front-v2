@@ -13,7 +13,7 @@ type AudienceContextType = {
   connectWs: () => Promise<void>;
   sendWsMessage: (message: any) => void;
   sessionInfo: Promise<SessionInfo>;
-  updateSessionInfo: () => Promise<void>;
+  updateSessionInfo: () => Promise<SessionInfo>;
 }
 
 const AudienceContext = createContext<AudienceContextType | null>(null);
@@ -91,7 +91,7 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   }
 
   const updateSessionInfo = async () => {
-    await axios.get(`${aggregatorUrl}/api/session/${joinedSessionId}/audience/info`, {
+    return axios.get(`${aggregatorUrl}/api/session/${joinedSessionId}/audience/info`, {
       headers: {
         Authorization: `Bearer ${attachedToken}`
       }
@@ -103,8 +103,10 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
           data = JSON.parse(response.data);
         }
         const parsed = SessionInfoSchema.parse(data)
+        if (!parsed) {
+          return Promise.reject("Failed to parse response");
+        }
         setSessionInfo(parsed);
-        console.log("Session info updated: " + JSON.stringify(sessionInfo));
         return Promise.resolve(parsed);
       } catch (error) {
         console.error("Failed to parse response", error);
