@@ -11,6 +11,7 @@ type AudienceContextType = {
   setAggregatorUrl: (url: string) => void;
   setWsMessageHandler: (handler: (message: any) => void) => void;
   connectWs: () => Promise<void>;
+  isWsConnected: boolean;
   sendWsMessage: (message: any) => Promise<void>;
   sessionInfo: Promise<SessionInfo>;
   updateSessionInfo: () => Promise<SessionInfo>;
@@ -148,6 +149,8 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     }
   };
 
+  const isWsConnected = ws.current?.readyState === WebSocket.OPEN;
+
   const sendWsMessage = async (message: any) => {
     await connectWs();
     if (!ws.current || ws.current.readyState !== WebSocket.OPEN) {
@@ -199,6 +202,7 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
         setAggregatorUrl,
         setWsMessageHandler,
         connectWs,
+        isWsConnected,
         sendWsMessage,
         sessionInfo: sessionInfo ? Promise.resolve(sessionInfo) : updateSessionInfo(),
         updateSessionInfo,
