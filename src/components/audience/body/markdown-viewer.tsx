@@ -9,6 +9,6 @@ export const BodyMarkdownViewer: FC<BodyMarkdownViewerProps> = ({
   content
 }) => {
   return (
-    <Markdown>{content}</Markdown>
+    <Markdown className="markdown">{content}</Markdown>
   );
 };
