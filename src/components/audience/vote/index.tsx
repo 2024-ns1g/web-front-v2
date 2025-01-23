@@ -10,7 +10,7 @@ type VoteStatsType = {
 
 interface VoteDrawerBodyProps {
   voteTitle: string;
-  voteSummary: string;
+  voteQuestion: string;
 
   choices: VoteChoice[];
 
@@ -19,7 +19,7 @@ interface VoteDrawerBodyProps {
 
 export const VoteDrawerBody: FC<VoteDrawerBodyProps> = ({
   voteTitle,
-  voteSummary,
+  voteQuestion: voteSummary,
   choices,
   stats,
 }) => {
