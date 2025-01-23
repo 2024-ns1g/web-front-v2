@@ -7,6 +7,7 @@ export const verifyOtpRequestSchema = z.object({
 export const verifyOtpResponseSchema = z.object({
   sessionId: z.string(),
   token: z.string(),
+  aggregatorUrl: z.string(),
 });
 
 export type VerifyOtpRequest = z.infer<typeof verifyOtpRequestSchema>;
