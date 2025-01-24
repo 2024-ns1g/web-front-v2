@@ -1,11 +1,10 @@
 import { useAudienceContext } from "@/contexts/audience-context";
-import { InputOtp } from "@nextui-org/react";
+import { useApis } from "@/hooks/use-api";
+import { Button, InputOtp } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function AudienceEntrancePage() {
-  const navigate = useNavigate();
-
   const api = useApis();
   const audience = useAudienceContext();
   const navigate = useNavigate();
