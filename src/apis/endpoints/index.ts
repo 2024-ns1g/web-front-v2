@@ -2,6 +2,7 @@ import { login } from "./auth/login";
 import { register } from "./auth/register";
 import { createRoom } from "./room/createRoom";
 import { getJoinedRoomList } from "./room/getJoinedRoomList";
+import { verifyAudienceOtp } from "./session/audience/verifyOtp";
 import { createSlide } from "./slide/createSlide";
 import { getLinkedSlideList } from "./slide/getLinkedSlideList";
 
@@ -17,5 +18,10 @@ export const apiEndpoints = {
   slide: {
     getLinkedSlideList,
     createSlide,
+  },
+  session: {
+    audience: {
+      verifyAudienceOtp,
+    },
   }
 }
