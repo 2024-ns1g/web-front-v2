@@ -24,3 +24,7 @@ export const usePresenter = () => {
   }
   return context;
 }
+
+function getKey(key: string) {
+  return `presenter_session.${key}`;
+}
