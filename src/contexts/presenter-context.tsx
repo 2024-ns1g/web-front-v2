@@ -1,6 +1,21 @@
 import { createContext, useContext } from "react";
 
 type PresenterContextType = {
+  joinedSessionId: string;
+  setJoinedSessionId: (id: string) => void;
+  attachedToken: string;
+  setAttachedToken: (token: string) => void;
+  aggregatorUrl: string;
+  setAggregatorUrl: (url: string) => void;
+  setWsMessageHandler: (handler: (message: any) => void) => void;
+  connectWs: () => Promise<void>;
+  isWsConnected: boolean;
+  sendWsMessage: (message: any) => Promise<void>;
+  sessionInfo: Promise<SessionInfo>;
+  updateSessionInfo: () => Promise<SessionInfo>;
+  state: SessionState;
+  setState: (state: SessionState) => void;
+  updateState: (state: Partial<SessionState>) => void;
 };
 
 const PresenterContext = createContext<PresenterContextType | null>(null);
