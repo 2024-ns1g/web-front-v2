@@ -26,25 +26,6 @@ interface AudienceProviderProps {
   children: React.ReactNode;
 }
 
-export type Vote = {
-  voteId: string;
-  choiceId: string;
-  voterId: string;
-};
-
-export type VoteSummary = {
-  voteId: string;
-  choiceVotes: {
-    [choiceId: string]: number;
-  };
-};
-
-export type SessionState = {
-  currentPage: number;
-  activeVoteIds: string[];
-  votes: Vote[];
-};
-
 export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   const [joinedSessionId, setJoinedSessionId] = useState(() => {
     const sessionId = localStorage.getItem("joinedSessionId");
