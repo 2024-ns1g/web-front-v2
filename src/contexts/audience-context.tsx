@@ -227,5 +227,5 @@ export const useAudienceContext = () => {
 };
 
 function getKey(key: string) {
-  return `audience__${key}`;
+  return `audience_session__${key}`;
 }
