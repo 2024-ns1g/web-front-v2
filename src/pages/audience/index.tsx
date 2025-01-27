@@ -53,38 +53,6 @@ export default function AudienceIndexPage() {
     });
   }, []);
 
-  // Too many pages for debug
-  const debugPages = [
-    {
-      pageId: "1",
-      title: "Page 1",
-      scripts: [
-        {
-          content: "# Page 1\n\nThis is page 1.",
-        },
-      ],
-    },
-    {
-      pageId: "2",
-      title: "Page 2",
-      scripts: [
-        {
-          content: "# Page 2\n\nThis is page 2.",
-        },
-      ],
-    },
-    {
-      pageId: "3",
-      title: "Page 3",
-      scripts: [
-        {
-          content: "# Page 3\n\nThis is page 3.",
-        },
-      ],
-    },
-
-  ]
-
   return (
     <div className="flex flex-col h-full">
       <Header
