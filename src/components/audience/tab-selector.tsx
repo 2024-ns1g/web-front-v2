@@ -23,10 +23,11 @@ export const BodyPageSelector: FC<BodyPageSelectorProps> = ({
   );
 
   useEffect(() => {
+    console.log("defaultPageIndex: ", defaultPageIndex);
     if (pages[defaultPageIndex]) {
       onSelectedPageChanged(pages[defaultPageIndex].pageId);
     }
-  }, [defaultPageIndex, onSelectedPageChanged]);
+  }, [defaultPageIndex]);
 
   const currentPageIndex = pages.findIndex(
     (page) => page.pageId === currentPageId
