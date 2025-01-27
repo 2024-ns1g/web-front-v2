@@ -76,15 +76,15 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
 
   // ローカルストレージのキャッシュ
   useEffect(() => {
-    localStorage.setItem("joinedSessionId", joinedSessionId);
+    localStorage.setItem(getKey("joinedSessionId"), joinedSessionId);
   }, [joinedSessionId]);
 
   useEffect(() => {
-    localStorage.setItem("attachedToken", attachedToken);
+    localStorage.setItem(getKey("attachedToken"), attachedToken);
   }, [attachedToken]);
 
   useEffect(() => {
-    localStorage.setItem("aggregatorUrl", aggregatorUrl);
+    localStorage.setItem(getKey("aggregatorUrl"), aggregatorUrl);
   }, [aggregatorUrl]);
 
   // WebSocket接続管理
@@ -225,3 +225,7 @@ export const useAudienceContext = () => {
   }
   return context;
 };
+
+function getKey(key: string) {
+  return `audience__${key}`;
+}
