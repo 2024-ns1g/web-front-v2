@@ -145,9 +145,9 @@ export default function AudienceIndexPage() {
 
       <div className="flex-grow h-full w-full flex justify-center">
         <div className="flex flex-col container px-4 py-8 h-full">
-          <BodyPageSelector defaultPageIndex={0} onSelectedPageChanged={(pageId) => { setSelectedPageId(pageId) }} pages={debugPages} />
+          <BodyPageSelector defaultPageIndex={0} onSelectedPageChanged={(pageId) => { setSelectedPageId(pageId) }} pages={sessionInfo?.pages ?? []} />
 
-          <BodyMarkdownViewer content={debugPages.find((p) => p.pageId === selectedPageId)?.scripts[0].content ?? ""} />
+          <BodyMarkdownViewer content={(sessionInfo?.pages ?? []).find((p) => p.pageId === selectedPageId)?.scripts[0].content ?? ""} />
         </div>
       </div>
 
