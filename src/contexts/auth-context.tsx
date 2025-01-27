@@ -52,3 +52,7 @@ export const useAuth = () => {
   }
   return context;
 }
+
+function getKey(key: string) {
+  return `primary.${key}`;
+}
