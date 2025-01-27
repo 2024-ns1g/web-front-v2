@@ -15,7 +15,7 @@ type AuthProviderProps = {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const [token, setToken] = useState<string>(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(getKey('token'));
     return token || '';
   });
 
@@ -23,9 +23,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     if (token) {
-      localStorage.setItem('token', token);
+      localStorage.setItem(getKey('token'), token);
     } else {
-      localStorage.removeItem('token');
+      localStorage.removeItem(getKey('token'));
     }
   }, [token]);
 
