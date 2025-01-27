@@ -111,3 +111,6 @@ export const CacheProvider: React.FC<CacheProviderProps> = ({ children }) => {
   );
 }
 
+function getKey(key: string) {
+  return `primary_cache.${key}`;
+}
