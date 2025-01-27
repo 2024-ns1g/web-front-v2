@@ -3,6 +3,7 @@ import { useApis } from "@/hooks/use-api";
 import { Button, InputOtp } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function AudienceEntrancePage() {
   const api = useApis();
@@ -17,6 +18,7 @@ export default function AudienceEntrancePage() {
     }).then((response) => {
       if (!response || !response.sessionId) { // TODO: Improve handling
         console.log("OTP verification failed");
+        toast.error("認証コードが正しくありません");
         return
       }
       console.log("OTP verified");
