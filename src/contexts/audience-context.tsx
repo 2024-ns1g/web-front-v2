@@ -1,4 +1,5 @@
-import { SessionInfo, SessionInfoSchema } from "@/types/audience/session-info-schema";
+import { SessionInfo, SessionInfoSchema } from "@/types/session/session-info";
+import { SessionState } from "@/types/session/session-state";
 import axios from "axios";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
