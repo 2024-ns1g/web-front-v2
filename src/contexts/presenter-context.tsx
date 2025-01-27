@@ -1,3 +1,5 @@
+import { SessionInfo } from "@/types/session/session-info";
+import { SessionState } from "@/types/session/session-state";
 import { createContext, useContext } from "react";
 
 type PresenterContextType = {
