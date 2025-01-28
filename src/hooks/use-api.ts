@@ -34,7 +34,10 @@ export const useApis = (): UseApis => {
     session: {
       audience: {
         verifyAudienceOtp: createApiMethod(apiEndpoints.session.audience.verifyAudienceOtp)
-      }
+      },
+      presenter: {
+        verifyPresenterOtp: createApiMethod(apiEndpoints.session.presenter.verifyPresenterOtp)
+      },
     }
   };
 };

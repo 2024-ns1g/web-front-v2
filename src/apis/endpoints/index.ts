@@ -3,6 +3,7 @@ import { register } from "./auth/register";
 import { createRoom } from "./room/createRoom";
 import { getJoinedRoomList } from "./room/getJoinedRoomList";
 import { verifyAudienceOtp } from "./session/audience/verifyOtp";
+import { verifyPresenterOtp } from "./session/presenter/verifyOtp";
 import { createSlide } from "./slide/createSlide";
 import { getLinkedSlideList } from "./slide/getLinkedSlideList";
 
@@ -22,6 +23,9 @@ export const apiEndpoints = {
   session: {
     audience: {
       verifyAudienceOtp,
+    },
+    presenter: {
+      verifyPresenterOtp,
     },
   }
 }
