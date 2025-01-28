@@ -104,9 +104,39 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
         connectionPromiseRef.current = null;
       };
     });
+
+    connectionPromiseRef.current = promise;
+    return promise;
   }
 
+  const setWsMessageHandler = (handler: (message: any) => void) => {
+    messageHandlerRef.current = handler;
+    if (ws.current) {
+      ws.current.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        messageHandlerRef.current(message);
+      };
+    }
+  }
 
+  const isWsConnected = ws.current?.readyState === WebSocket.OPEN;
+
+  const sendWsMessage = async (message: any) => {
+    await connectWs();
+    if (!ws.current || ws.current.readyState !== WebSocket.OPEN) {
+      throw new Error("WebSocket is not connected");
+    }
+    ws.current.send(JSON.stringify(message));
+  };
+
+  // Do cleanup
+  useEffect(() => {
+    return () => {
+      if (ws.current) {
+        ws.current.close();
+      }
+    }
+  }, []);
 
   return (
     <PresenterContext.Provider value={{
