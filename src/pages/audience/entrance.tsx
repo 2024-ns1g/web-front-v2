@@ -1,7 +1,7 @@
 import { useAudienceContext } from "@/contexts/audience-context";
 import { useApis } from "@/hooks/use-api";
 import { Button, InputOtp } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
