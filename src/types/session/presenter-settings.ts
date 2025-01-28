@@ -36,20 +36,22 @@ export const GestureClassification = {
   },
 } as const;
 
-const PresenterSettingsSchema = z.object({
-  const gesture = z.object({
-    threshold: z.number(),
-    stableTime: z.number(),
-    actionMap: z.record(z.object({
-      gesture: z.union([
-        z.literal(GestureClassification.Closed_Fist.key),
-        z.literal(GestureClassification.Open_Palm.key),
-        z.literal(GestureClassification.Pointing_Up.key),
-        z.literal(GestureClassification.Thumbs_Down.key),
-        z.literal(GestureClassification.Thumbs_Up.key),
-        z.literal(GestureClassification.Victory.key),
-        z.literal(GestureClassification.ILoveYou.key),
-      ]),
-      action: z.string(),
-    })),
+export const PresenterSettingsSchema = z.object({
+  threshold: z.number(),
+  stableTime: z.number(),
+  actionMap: z.record(z.object({
+    gesture: z.union([
+      z.literal(GestureClassification.Closed_Fist.key),
+      z.literal(GestureClassification.Open_Palm.key),
+      z.literal(GestureClassification.Pointing_Up.key),
+      z.literal(GestureClassification.Thumbs_Down.key),
+      z.literal(GestureClassification.Thumbs_Up.key),
+      z.literal(GestureClassification.Victory.key),
+      z.literal(GestureClassification.ILoveYou.key),
+    ]),
+    action: z.string(),
+  })),
+});
+
+export type PresenterSettings = z.infer<typeof PresenterSettingsSchema>;
 
