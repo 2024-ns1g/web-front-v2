@@ -9,6 +9,7 @@ import { CacheProvider } from "./contexts/cache-context";
 import { StateProvider } from "./contexts/state-context";
 import { LayoutProvider } from "./contexts/layout-context";
 import { AudienceProvider } from "./contexts/audience-context";
+import { PresenterProvider } from "./contexts/presenter-context";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -28,7 +29,9 @@ export function Provider({ children }: { children: React.ReactNode }) {
               <StateProvider>
                 <LayoutProvider>
                   <AudienceProvider>
-                    {children}
+                    <PresenterProvider>
+                      {children}
+                    </PresenterProvider>
                   </AudienceProvider>
                 </LayoutProvider>
               </StateProvider>
