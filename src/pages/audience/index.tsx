@@ -3,7 +3,7 @@ import { Header } from "@/components/audience/header";
 import { BodyPageSelector } from "@/components/audience/tab-selector";
 import { VoteDrawerBody } from "@/components/audience/vote";
 import { useAudienceContext } from "@/contexts/audience-context";
-import { SessionInfo } from "@/types/audience/session-info-schema";
+import { SessionInfo } from "@/types/session/session-info";
 import { Button, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, Select, SelectItem, SharedSelection } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
