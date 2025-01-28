@@ -16,7 +16,7 @@ type PresenterContextType = {
   sendWsMessage: (message: any) => Promise<void>;
   sessionInfo: Promise<SessionInfo>;
   updateSessionInfo: () => Promise<SessionInfo>;
-  state: SessionState;
+  state: SessionState | null;
   setState: (state: SessionState) => void;
   updateState: (state: Partial<SessionState>) => void;
 };
@@ -177,6 +177,11 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
       connectWs,
       isWsConnected,
       sendWsMessage,
+      sessionInfo: sessionInfo ? Promise.resolve(sessionInfo) : updateSessionInfo(),
+      updateSessionInfo,
+      state,
+      setState,
+      updateState,
     }}>
       {children}
     </PresenterContext.Provider>
