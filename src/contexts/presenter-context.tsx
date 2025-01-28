@@ -1,6 +1,6 @@
 import { SessionInfo } from "@/types/session/session-info";
 import { SessionState } from "@/types/session/session-state";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 type PresenterContextType = {
   joinedSessionId: string;
@@ -28,8 +28,90 @@ interface PresenterProviderProps {
 
 export const PresenterProvider = ({ children }: PresenterProviderProps) => {
 
+  const [joinedSessionId, setJoinedSessionId] = useState(() => {
+    const sessionId = localStorage.getItem(getKey("sessionId"));
+    return sessionId || "";
+  });
+
+  const [attachedToken, setAttachedToken] = useState(() => {
+    const token = localStorage.getItem(getKey("token"));
+    return token || "";
+  });
+
+  const [aggregatorUrl, setAggregatorUrl] = useState(() => {
+    const url = localStorage.getItem(getKey("aggregatorUrl"));
+    return url || "";
+  });
+
+  useEffect(() => {
+    localStorage.setItem(getKey("sessionId"), joinedSessionId);
+  }, [joinedSessionId]);
+
+  useEffect(() => {
+    localStorage.setItem(getKey("token"), attachedToken);
+  }, [attachedToken]);
+
+  useEffect(() => {
+    localStorage.setItem(getKey("aggregatorUrl"), aggregatorUrl);
+  }, [aggregatorUrl]);
+
+  const [state, setState] = useState<SessionState | null>(null);
+
+  const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
+
+  // WebSocket
+  const ws = useRef<WebSocket | null>(null);
+  const messageHandlerRef = useRef<(message: any) => void>(() => { });
+  const connectionPromiseRef = useRef<Promise<void> | null>(null);
+
+  const connectWs = async () => {
+    if (!joinedSessionId || !aggregatorUrl) {
+      throw new Error("Missing session ID or aggregator URL");
+    }
+
+    if (ws.current?.readyState === WebSocket.OPEN) {
+      return;
+    }
+
+    if (connectionPromiseRef.current) {
+      return connectionPromiseRef.current;
+    }
+
+    if (ws.current) {
+      ws.current.close();
+    }
+
+    const wsUrl = aggregatorUrl.replace("http", "ws") + "/presenter?sessionId=" + joinedSessionId;
+
+    const promise = new Promise<void>((resolve, reject) => {
+      const newWs = new WebSocket(wsUrl);
+
+      newWs.onopen = () => {
+        // set message handler
+        newWs.onmessage = (event) => {
+          const message = JSON.parse(event.data);
+          messageHandlerRef.current(message);
+        };
+        resolve();
+      };
+
+      newWs.onerror = (event) => {
+        connectionPromiseRef.current = null;
+        reject(event);
+      };
+
+      newWs.onclose = () => {
+        connectionPromiseRef.current = null;
+      };
+    });
+  }
+
+
+
   return (
-    <PresenterContext.Provider value={{}}>
+    <PresenterContext.Provider value={{
+
+    }}>
       {children}
     </PresenterContext.Provider>
   );
