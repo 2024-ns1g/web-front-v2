@@ -7,6 +7,7 @@ export const Header: FC<HeaderProps> = ({
 }) => {
   return (
     <>
+      <p>Placeholder</p>
     </>
   );
 }
