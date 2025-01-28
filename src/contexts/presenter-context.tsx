@@ -1,5 +1,6 @@
-import { SessionInfo } from "@/types/session/session-info";
+import { SessionInfo, SessionInfoSchema } from "@/types/session/session-info";
 import { SessionState } from "@/types/session/session-state";
+import axios from "axios";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 type PresenterContextType = {
@@ -138,9 +139,44 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
     }
   }, []);
 
+  const updateSessionInfo = async () => {
+    const response = await axios.get(
+      `${aggregatorUrl}/api/session/${joinedSessionId}/audience/info`,
+      {
+        headers: {
+          Authorization: `Bearer ${attachedToken}`,
+        },
+      }
+    );
+
+    const data = typeof response.data === "string" ? JSON.parse(response.data) : response.data;
+    const parsed = SessionInfoSchema.parse(data);
+    setSessionInfo(parsed);
+    return parsed;
+  };
+
+  const updateState = (newState: Partial<SessionState>) => {
+    if (!state) {
+      throw new Error("State is not initialized");
+    }
+    setState({
+      ...state,
+      ...newState,
+    });
+  };
+
   return (
     <PresenterContext.Provider value={{
-
+      joinedSessionId,
+      setJoinedSessionId,
+      attachedToken,
+      setAttachedToken,
+      aggregatorUrl,
+      setAggregatorUrl,
+      setWsMessageHandler,
+      connectWs,
+      isWsConnected,
+      sendWsMessage,
     }}>
       {children}
     </PresenterContext.Provider>
