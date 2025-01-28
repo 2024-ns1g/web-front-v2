@@ -12,6 +12,8 @@ import ChooseSlide from "./pages/choose/slide";
 import ScriptEditor from "./pages/script-editor";
 import AudienceEntrancePage from "./pages/audience/entrance";
 import AudienceIndexPage from "./pages/audience";
+import PresenterEntrancePage from "./pages/presenter/entrance";
+import PresenterIndexPage from "./pages/presenter";
 
 
 function App() {
@@ -63,6 +65,9 @@ function App() {
 
       <Route element={<AudienceEntrancePage />} path="/audience/entrance" />
       <Route element={<AudienceIndexPage />} path="/audience" />
+
+      <Route element={<PresenterEntrancePage />} path="/presenter/entrance" />
+      <Route element={<PresenterIndexPage />} path="/presenter" />
 
       <Route element={<Login />} path="/auth/login" />
       <Route element={<Register />} path="/auth/register" />
