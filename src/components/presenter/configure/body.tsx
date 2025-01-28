@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-type HeaderProps = {
+type PresenterSettingsBodyProps = {
 };
 
-export const Header: FC<HeaderProps> = ({
+export const PresenterSettingsBody: FC<PresenterSettingsBodyProps> = ({
 }) => {
   return (
     <>
