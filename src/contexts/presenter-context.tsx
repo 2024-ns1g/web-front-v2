@@ -35,7 +35,7 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
   );
 }
 
-export const usePresenter = () => {
+export const usePresenterContext = () => {
   const context = useContext(PresenterContext);
   if (!context) {
     throw new Error("usePresenter must be used within a PresenterProvider");
