@@ -14,6 +14,20 @@ export default function AudienceEntrancePage() {
   const [value, setValue] = useState("");
 
   const handleJoinToSession = () => {
+    api.session.presenter.verifyPresenterOtp({
+      otp: value
+    }).then((response) => {
+      if (!response || !response.sessionId) { // TODO: Improve handling
+        console.log("OTP verification failed");
+        toast.error("認証コードが正しくありません");
+        return
+      }
+      console.log("OTP verified");
+      presenter.setJoinedSessionId(response.sessionId);
+      presenter.setAttachedToken(response.token);
+      presenter.setAggregatorUrl(response.aggregatorUrl);
+      navigate("/presenter");
+    });
   }
 
   return (
