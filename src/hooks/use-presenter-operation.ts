@@ -29,6 +29,18 @@ export const usePresenterOperation = (
   };
 
   /**
+  * 次のイベントをトリガー
+  */
+  const triggerNextEvent = () => {
+  };
+
+  /**
+  * 前のイベントをトリガー
+  */
+  const triggerPrevEvent = () => {
+  };
+
+  /**
   * 指定したスライドにジャンプ
   *
   * @param slideIndex スライドのインデックス
