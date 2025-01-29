@@ -7,7 +7,7 @@ export default function PresenterIndexPage() {
       <h1 className="text-4xl">Presenter</h1>
       <PresenterBlockDirectSeekSlide
         canSeekPrev={false}
-        canSeekNext={false}
+        canSeekNext={true}
         onSeekPrev={() => { }}
         onSeekNext={() => { }}
       ></PresenterBlockDirectSeekSlide>
