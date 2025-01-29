@@ -43,7 +43,13 @@ export const usePresenterOperation = (
       data: {}
     } as presenterWsTriggerNextEventMessage;
 
-    wsSender(message);
+    try {
+      presenterWsTriggerNextEventMessageSchema.parse(message);
+      wsSender(message);
+    } catch (e) {
+      log.error(`Failed to send message: ${e}`);
+      toast.error("イベントのトリガーに失敗しました");
+    }
   };
 
   /**
@@ -55,7 +61,13 @@ export const usePresenterOperation = (
       data: {}
     } as presenterWsTriggerPrevEventMessage;
 
-    wsSender(message);
+    try {
+      presenterWsTriggerPrevEventMessageSchema.parse(message);
+      wsSender(message);
+    } catch (e) {
+      log.error(`Failed to send message: ${e}`);
+      toast.error("イベントのトリガーに失敗しました");
+    }
   };
 
   /**
@@ -101,7 +113,13 @@ export const usePresenterOperation = (
       data: {}
     } as presenterWsMoveToFirstSlideMessage;
 
-    wsSender(message);
+    try {
+      presenterWsMoveToFirstSlideMessageSchema.parse(message);
+      wsSender(message);
+    } catch (e) {
+      log.error(`Failed to send message: ${e}`);
+      toast.error("スライドの移動に失敗しました");
+    }
   };
 
   /**
@@ -113,7 +131,13 @@ export const usePresenterOperation = (
       data: {}
     } as presenterWsMoveToLastSlideMessage;
 
-    wsSender(message);
+    try {
+      presenterWsMoveToLastSlideMessageSchema.parse(message);
+      wsSender(message);
+    } catch (e) {
+      log.error(`Failed to send message: ${e}`);
+      toast.error("スライドの移動に失敗しました");
+    }
   };
 
   return {
