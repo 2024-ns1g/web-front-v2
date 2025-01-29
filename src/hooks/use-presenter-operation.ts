@@ -1,4 +1,4 @@
-import { SessionState } from "http2";
+import { SessionState } from "@/types/session/session-state";
 
 export const usePresenterOperation = (
   wsSender: (message: any) => void,
