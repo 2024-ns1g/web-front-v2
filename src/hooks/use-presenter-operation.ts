@@ -107,6 +107,8 @@ export const usePresenterOperation = (
   return {
     changeToNextSlide,
     changeToPreviousSlide,
+    triggerNextEvent,
+    triggerPrevEvent,
     jumpToSlide,
     jumpToFistSlide,
     jumpToLastSlide
