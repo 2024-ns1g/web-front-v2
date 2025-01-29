@@ -2,6 +2,11 @@ import { SessionInfo } from "@/types/session/session-info";
 import { SessionState } from "@/types/session/session-state";
 import { toast } from "react-toastify";
 import { useLogger } from "./use-logger";
+import { presenterWsMoveToFirstSlideMessageSchema } from "@/types/session/ws-message/presenter/move-to-first-slide-message";
+import { presenterWsMoveToLastSlideMessageSchema } from "@/types/session/ws-message/presenter/move-to-last-slide-message";
+import { presenterWsChangeCurrentPageMessageSchema } from "@/types/session/ws-message/presenter/change-current-page-message";
+import { presenterWsTriggerNextEventMessageSchema } from "@/types/session/ws-message/presenter/trigger-next-event-message";
+import { presenterWsTriggerPrevEventMessageSchema } from "@/types/session/ws-message/presenter/trigger-prev-event-message";
 
 export const usePresenterOperation = (
   wsSender: (message: any) => void,
