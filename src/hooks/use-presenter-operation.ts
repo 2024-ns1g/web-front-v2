@@ -6,18 +6,35 @@ export const usePresenterOperation = (
   updateState: (state: Partial<SessionState>) => void,
 ) => {
 
+  /**
+  * 次のスライドに移動
+  */
   const changeToNextSlide = () => {
   };
 
+  /**
+  * 前のスライドに移動
+  */
   const changeToPreviousSlide = () => {
   };
 
-  const jumpToSlide = (slideIndex: number, smart: boolean = true) => {
+  /**
+  * 指定したスライドにジャンプ
+  *
+  * @param slideIndex スライドのインデックス
+  */
+  const jumpToSlide = (slideIndex: number) => {
   };
 
+  /**
+  * 最初のスライドにジャンプ
+  */
   const jumpToFistSlide = () => {
   };
 
+  /**
+  * 最後のスライドにジャンプ
+  */
   const jumpToLastSlide = () => {
   };
 
