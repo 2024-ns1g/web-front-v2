@@ -83,7 +83,13 @@ export const usePresenterOperation = (
       }
     } as presenterWsChangeCurrentPageMessage;
 
-    wsSender(message);
+    try {
+      presenterWsChangeCurrentPageMessageSchema.parse(message);
+      wsSender(message);
+    } catch (e) {
+      log.error(`Failed to send message: ${e}`);
+      toast.error("スライドの移動に失敗しました");
+    }
   };
 
   /**
