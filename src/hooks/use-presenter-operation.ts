@@ -20,12 +20,18 @@ export const usePresenterOperation = (
   * 次のスライドに移動
   */
   const changeToNextSlide = () => {
+    const currentSlideIndex = getCurrentSlideIndex(state);
+    const nextSlideIndex = currentSlideIndex + 1;
+    jumpToSlide(nextSlideIndex);
   };
 
   /**
   * 前のスライドに移動
   */
   const changeToPreviousSlide = () => {
+    const currentSlideIndex = getCurrentSlideIndex(state);
+    const prevSlideIndex = currentSlideIndex - 1;
+    jumpToSlide(prevSlideIndex);
   };
 
   /**
