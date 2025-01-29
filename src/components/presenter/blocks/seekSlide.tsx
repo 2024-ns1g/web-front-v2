@@ -3,8 +3,6 @@
 import { FC } from "react";
 
 type PresenterBlockSeekSlideProps = {
-  canSeekPrev: boolean;
-  canSeekNext: boolean;
   onSeekPrev: () => void;
   onSeekNext: () => void;
 };
