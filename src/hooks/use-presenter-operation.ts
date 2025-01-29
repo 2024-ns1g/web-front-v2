@@ -1,7 +1,9 @@
+import { SessionInfo } from "@/types/session/session-info";
 import { SessionState } from "@/types/session/session-state";
 
 export const usePresenterOperation = (
   wsSender: (message: any) => void,
+  sessionInfo: SessionInfo | null,
   state: SessionState | null,
   updateState: (state: Partial<SessionState>) => void,
 ) => {
@@ -46,3 +48,22 @@ export const usePresenterOperation = (
     jumpToLastSlide
   };
 };
+
+
+const getCurrentSlideIndex = (state: SessionState | null) => {
+  if (!state) {
+    throw new Error("state is not initialized");
+  } else {
+    return state.currentPage;
+  }
+}
+
+const validateSlideIndex = (sessionInfo: SessionInfo | null, slideIndex: number) => {
+  if (!sessionInfo) {
+    throw new Error("sessionInfo is not initialized");
+  } else if (slideIndex < 0 || slideIndex >= sessionInfo.pages.length) {
+    return false;
+  } else {
+    return true;
+  }
+}
