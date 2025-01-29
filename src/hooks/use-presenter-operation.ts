@@ -1,12 +1,15 @@
 import { SessionInfo } from "@/types/session/session-info";
 import { SessionState } from "@/types/session/session-state";
+import { toast } from "react-toastify";
+import { useLogger } from "./use-logger";
 
 export const usePresenterOperation = (
   wsSender: (message: any) => void,
   sessionInfo: SessionInfo | null,
   state: SessionState | null,
-  updateState: (state: Partial<SessionState>) => void,
 ) => {
+
+  const log = useLogger("presenter-operation");
 
   /**
   * 次のスライドに移動
@@ -26,6 +29,20 @@ export const usePresenterOperation = (
   * @param slideIndex スライドのインデックス
   */
   const jumpToSlide = (slideIndex: number) => {
+    if (!validateSlideIndex(sessionInfo, slideIndex)) {
+      log.error(`Invalid slide index: ${slideIndex}`);
+      toast.error("指定されたスライドが存在しません");
+      return;
+    }
+
+    if (getCurrentSlideIndex(state) === slideIndex) {
+      log.info(`Already at slide ${slideIndex}`);
+      return;
+    }
+
+    log.info(`Jump to slide ${slideIndex}`);
+    wsSender({
+    });
   };
 
   /**
