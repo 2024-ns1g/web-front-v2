@@ -2,6 +2,7 @@
 
 import { Card, CardBody } from "@nextui-org/react";
 import { FC } from "react";
+import Markdown from "react-markdown";
 
 type PresenterBlockPageScriptProps = {
   script: string;
@@ -12,9 +13,7 @@ export const PresenterBlockPageScript: FC<PresenterBlockPageScriptProps> = ({
 }) => {
   return (
     <Card className="w-full">
-      <CardBody>
-        {script}
-      </CardBody>
+      <Markdown className="markdown">{script}</Markdown>
     </Card>
   );
 }
