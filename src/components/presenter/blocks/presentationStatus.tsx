@@ -27,11 +27,26 @@ export const PresenterBlockSessionStatus: FC<PresenterBlockSessionStatusProps> =
         <div>
           <Progress value={(currentPageIndexNumber / totalPageNumber) * 100} />
         </div>
-        <div className="flex items-center pt-3">
-          <p className="text-sm text-gray-600">{slideTitle}</p>
-          <FaAngleRight size={12}/>
-          <p className="text-lg text-gray-900">{currentPageTitle}</p>
+
+        <div className="flex flex-row items-center justify-between pt-3">
+          <div className="flex flex-col items-left pt-3">
+            <div className="flex flex-row items-center">
+              <p className="text-sm text-gray-600">{slideTitle}</p>
+              <FaAngleRight size={12} className="text-gray-600 ml-2" />
+            </div>
+            <p className="text-lg ml-8 text-gray-900">{currentPageTitle}</p>
+          </div>
+
+          <div className="flex flex-col items-center justify-between pt-3">
+            <div>
+              <p className="text-sm text-gray-600">{currentPageIndexNumber} / {totalPageNumber}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">{currentPageCurrentStepNumber} / {currentPageTotalStepNumber}</p>
+            </div>
+          </div>
         </div>
+
       </CardBody>
     </Card>
   );
