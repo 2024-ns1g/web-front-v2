@@ -29,13 +29,12 @@ export const PresenterBlockSessionStatus: FC<PresenterBlockSessionStatusProps> =
           <FaAngleRight size={12} />
           <p className="text-lg text-gray-900">{currentPageTitle}</p>
         </div>
-        <div className="grid grid-cols-[1fr_max-content] items-center">
-          <Progress className="" value={(currentPageIndexNumber / totalPageNumber) * 100} />
+        <div className="grid grid-cols-[1fr_max-content] items-center gap-2">
+          <Progress className="" size="lg" value={(currentPageIndexNumber / totalPageNumber) * 100} />
           <p className="text-sm text-gray-600 ml-3 text-right">{currentPageIndexNumber} / {totalPageNumber}</p>
-          <Progress className="" value={(currentPageCurrentStepNumber / currentPageTotalStepNumber) * 100} />
+          <Progress className="" size="md" value={(currentPageCurrentStepNumber / currentPageTotalStepNumber) * 100} />
           <p className="text-sm text-gray-600 ml-3 text-right">{currentPageCurrentStepNumber} / {currentPageTotalStepNumber}</p>
         </div>
-
       </CardBody>
     </Card>
   );
