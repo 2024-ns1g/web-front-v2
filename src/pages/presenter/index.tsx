@@ -26,7 +26,9 @@ export default function PresenterIndexPage() {
             currentPageTitle="あああ"
           ></PresenterBlockSessionStatus>
           <PresenterBlockPageScript
-            script="console.log('Hello, world!')">
+            script="
+# あいう 
+## えお">
           </PresenterBlockPageScript>
         </Masonry>
       </ResponsiveMasonry>
