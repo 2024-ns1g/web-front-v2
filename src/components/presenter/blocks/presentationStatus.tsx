@@ -8,6 +8,8 @@ type PresenterBlockSessionStatusProps = {
   slideTitle: string;
   totalPageNumber: number;
   currentPageIndexNumber: number;
+  currentPageTotalStepNumber: number;
+  currentPageCurrentStepNumber: number;
   currentPageTitle: string;
 };
 
@@ -15,6 +17,8 @@ export const PresenterBlockSessionStatus: FC<PresenterBlockSessionStatusProps> =
   slideTitle,
   totalPageNumber,
   currentPageIndexNumber,
+  currentPageTotalStepNumber,
+  currentPageCurrentStepNumber,
   currentPageTitle
 }) => {
   return (
