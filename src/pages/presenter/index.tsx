@@ -1,4 +1,5 @@
 import { PresenterBlockDirectSeekSlide } from "@/components/presenter/blocks/directSeekSlide";
+import { PresenterBlockPageScript } from "@/components/presenter/blocks/pageScript";
 import { PresenterBlockSessionStatus } from "@/components/presenter/blocks/presentationStatus";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 
@@ -24,6 +25,9 @@ export default function PresenterIndexPage() {
             currentPageIndexNumber={1}
             currentPageTitle="あああ"
           ></PresenterBlockSessionStatus>
+          <PresenterBlockPageScript
+            script="console.log('Hello, world!')">
+          </PresenterBlockPageScript>
         </Masonry>
       </ResponsiveMasonry>
     </>
