@@ -29,9 +29,8 @@ export const PresenterBlockDirectSeekSlide: FC<PresenterBlockDirectSeekSlideProp
               <FaAngleLeft />
             </Button>
           </div>
-          <div className="h-full flex flex-col items-center">
-              <p className="text-xl">1/20</p>
-              <p>1/4</p>
+          <div>
+
           </div>
           <div className="flex gap-4">
             <Button isIconOnly disabled={!canSeekNext} onPress={onSeekNext} size="lg">
