@@ -21,7 +21,7 @@ export const PresenterBlockDirectSeekSlide: FC<PresenterBlockDirectSeekSlideProp
     <Card className="w-full">
       <CardBody>
         <div className="flex justify-between">
-          <div className="flex gap-4 flex-grow justify-start">
+          <div className="flex gap-4 flex-grow justify-center">
             <Button isIconOnly disabled={!canSeekPrev} onPress={onSeekPrev} size="lg">
               <FaAnglesLeft />
             </Button>
@@ -32,7 +32,7 @@ export const PresenterBlockDirectSeekSlide: FC<PresenterBlockDirectSeekSlideProp
           <div className="flex items-center h-full shrink">
             <Divider className="h-4/5" orientation="vertical"/>
           </div>
-          <div className="flex gap-4 flex-grow justify-end">
+          <div className="flex gap-4 flex-grow justify-center">
             <Button isIconOnly disabled={!canSeekNext} onPress={onSeekNext} size="lg">
               <FaAngleRight />
             </Button>
