@@ -5,8 +5,11 @@ export default function PresenterIndexPage() {
 
   return (
     <>
-      <ResponsiveMasonry>
-        <Masonry>
+      <ResponsiveMasonry
+        className="flex justify-center">
+        <Masonry
+          className="container"
+        >
           <PresenterBlockDirectSeekSlide
             canSeekPrev={false}
             canSeekNext={true}
