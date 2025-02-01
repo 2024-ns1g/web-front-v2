@@ -9,6 +9,7 @@ const ScriptSchema = z.object({
 const PageSchema = z.object({
   pageId: z.string(),
   title: z.string(),
+  step: z.number(),
   scripts: z.array(ScriptSchema),
 });
 
