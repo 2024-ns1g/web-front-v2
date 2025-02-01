@@ -160,6 +160,14 @@ const getCurrentSlideIndex = (state: SessionState | null) => {
   }
 }
 
+const getCurrentStepIndex = (state: SessionState | null) => {
+  if (!state) {
+    throw new Error("state is not initialized");
+  } else {
+    return state.currentStep;
+  }
+}
+
 const validateSlideIndex = (sessionInfo: SessionInfo | null, slideIndex: number) => {
   if (!sessionInfo) {
     throw new Error("sessionInfo is not initialized");
