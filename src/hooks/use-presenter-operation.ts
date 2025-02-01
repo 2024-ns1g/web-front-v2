@@ -37,11 +37,11 @@ export const usePresenterOperation = (
   /**
   * 次のイベントをトリガー
   */
-  const triggerNextEvent = () => {
+  const triggerNextStep = () => {
     const message = {
-      requestType: "TRIGGER_NEXT_EVENT",
+      requestType: "TRIGGER_NEXT_STEP",
       data: {}
-    } as presenterWsTriggerNextEventMessage;
+    } as presenterWsTriggerStepEventMessage;
 
     try {
       presenterWsTriggerNextEventMessageSchema.parse(message);
@@ -55,11 +55,11 @@ export const usePresenterOperation = (
   /**
   * 前のイベントをトリガー
   */
-  const triggerPrevEvent = () => {
+  const triggerPrevStep = () => {
     const message = {
-      requestType: "TRIGGER_PREV_EVENT",
+      requestType: "TRIGGER_PREV_Step",
       data: {}
-    } as presenterWsTriggerPrevEventMessage;
+    } as presenterWsTriggerStepEventMessage;
 
     try {
       presenterWsTriggerPrevEventMessageSchema.parse(message);
@@ -143,14 +143,13 @@ export const usePresenterOperation = (
   return {
     changeToNextSlide,
     changeToPreviousSlide,
-    triggerNextEvent,
-    triggerPrevEvent,
+    triggerNextEvent: triggerNextStep,
+    triggerPrevEvent: triggerPrevStep,
     jumpToSlide,
     jumpToFistSlide,
     jumpToLastSlide
   };
 };
-
 
 const getCurrentSlideIndex = (state: SessionState | null) => {
   if (!state) {
