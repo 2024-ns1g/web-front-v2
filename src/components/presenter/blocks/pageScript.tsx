@@ -13,7 +13,9 @@ export const PresenterBlockPageScript: FC<PresenterBlockPageScriptProps> = ({
 }) => {
   return (
     <Card className="w-full">
-      <Markdown className="markdown">{script}</Markdown>
+      <CardBody>
+        <Markdown className="markdown">{script}</Markdown>
+      </CardBody>
     </Card>
   );
 }
