@@ -18,7 +18,7 @@ export const PresenterBlockDirectSeekSlide: FC<PresenterBlockDirectSeekSlideProp
   onSeekNext
 }) => {
   return (
-    <Card>
+    <Card className="w-full">
       <CardBody>
         <div className="flex justify-between">
           <Button isIconOnly disabled={!canSeekPrev} onPress={onSeekPrev}>
