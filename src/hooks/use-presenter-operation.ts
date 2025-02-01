@@ -5,8 +5,8 @@ import { useLogger } from "./use-logger";
 import { presenterWsMoveToFirstSlideMessage, presenterWsMoveToFirstSlideMessageSchema } from "@/types/session/ws-message/presenter/move-to-first-slide-message";
 import { presenterWsMoveToLastSlideMessage, presenterWsMoveToLastSlideMessageSchema } from "@/types/session/ws-message/presenter/move-to-last-slide-message";
 import { presenterWsChangeCurrentPageMessage, presenterWsChangeCurrentPageMessageSchema } from "@/types/session/ws-message/presenter/change-current-page-message";
-import { presenterWsTriggerNextEventMessage, presenterWsTriggerNextEventMessageSchema } from "@/types/session/ws-message/presenter/trigger-next-event-message";
-import { presenterWsTriggerPrevEventMessage, presenterWsTriggerPrevEventMessageSchema } from "@/types/session/ws-message/presenter/trigger-prev-event-message";
+import { presenterWsTriggerPrevStepMessage, presenterWsTriggerPrevStepMessageSchema } from "@/types/session/ws-message/presenter/trigger-prev-step-message";
+import { presenterWsTriggerNextStepMessage, presenterWsTriggerNextStepMessageSchema } from "@/types/session/ws-message/presenter/trigger-next-step-message";
 
 export const usePresenterOperation = (
   wsSender: (message: any) => void,
@@ -41,10 +41,10 @@ export const usePresenterOperation = (
     const message = {
       requestType: "TRIGGER_NEXT_STEP",
       data: {}
-    } as presenterWsTriggerStepEventMessage;
+    } as presenterWsTriggerNextStepMessage;
 
     try {
-      presenterWsTriggerNextEventMessageSchema.parse(message);
+      presenterWsTriggerNextStepMessageSchema.parse(message);
       wsSender(message);
     } catch (e) {
       log.error(`Failed to send message: ${e}`);
@@ -57,12 +57,12 @@ export const usePresenterOperation = (
   */
   const triggerPrevStep = () => {
     const message = {
-      requestType: "TRIGGER_PREV_Step",
+      requestType: "TRIGGER_PREV_STEP",
       data: {}
-    } as presenterWsTriggerStepEventMessage;
+    } as presenterWsTriggerPrevStepMessage;
 
     try {
-      presenterWsTriggerPrevEventMessageSchema.parse(message);
+      presenterWsTriggerPrevStepMessageSchema.parse(message);
       wsSender(message);
     } catch (e) {
       log.error(`Failed to send message: ${e}`);
