@@ -180,7 +180,11 @@ export const usePresenterOperation = (
     triggerPrevEvent: triggerPrevStep,
     jumpToSlide,
     jumpToFistSlide,
-    jumpToLastSlide
+    jumpToLastSlide,
+    canChangeToNextPage,
+    canChangeToPrevPage,
+    canChangeToNextStep,
+    canChangeToPrevStep
   };
 };
 
