@@ -3,36 +3,41 @@ import { PresenterBlockPageScript } from "@/components/presenter/blocks/pageScri
 import { PresenterBlockSessionStatus } from "@/components/presenter/blocks/presentationStatus";
 import { usePresenterContext } from "@/contexts/presenter-context";
 import { usePresenterOperation } from "@/hooks/use-presenter-operation";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { useState, useEffect } from "react";
 import { SessionInfo } from "@/types/session/session-info";
+import { useEffect, useState } from "react";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 
 export default function PresenterIndexPage() {
-  // コンテキストやWS送信用関数を呼び出し
   const presenterContext = usePresenterContext();
-  const wsSender = presenterContext.sendWsMessage;
-
-  // sessionInfo は Promise の可能性があるので、Stateに落とし込む
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // state も後ほど参照するので取得
+  const wsSender = presenterContext.sendWsMessage;
   const sessionState = presenterContext.state;
 
-  // 初期マウント時に sessionInfo を async で取得して setState
   useEffect(() => {
-    (async () => {
-      const info = await presenterContext.sessionInfo;
-      setSessionInfo(info);
-    })();
-  }, [presenterContext]);
+    let isMounted = true;
+    const initialize = async () => {
+      try {
+        const data = await presenterContext.sessionInfo;
+        if (isMounted) {
+          setSessionInfo(data);
+          setLoading(false);
+        }
+      } catch (err) {
+      }
+    };
+    initialize();
+    return () => { isMounted = false; };
+  }, []);
 
-  // sessionInfo や sessionState がまだ準備できていない場合はガード
-  if (!sessionInfo || !sessionState) {
-    return <div>Loading...</div>;
-  }
+  const presenterOperation = usePresenterOperation(
+    wsSender,
+    sessionInfo,
+    sessionState
+  );
 
-  // 準備ができたらPresenter機能を呼び出す
-  const presenterOperation = usePresenterOperation(wsSender, sessionInfo, sessionState);
+  if (loading) return <div>Loading presentation data...</div>;
 
   return (
     <>
@@ -40,10 +45,10 @@ export default function PresenterIndexPage() {
       <ResponsiveMasonry className="flex justify-center px-4">
         <Masonry className="container">
           <PresenterBlockDirectSeekSlide
-            canSeekNextPage={presenterOperation.canChangeToNextPage()}
-            canSeekPrevPage={presenterOperation.canChangeToPrevPage()}
-            canSeekNextStep={presenterOperation.canChangeToNextStep()}
-            canSeekPrevStep={presenterOperation.canChangeToPrevStep()}
+            canSeekNextPage={presenterOperation.canChangeToNextPage?.()}
+            canSeekPrevPage={presenterOperation.canChangeToPrevPage?.()}
+            canSeekNextStep={presenterOperation.canChangeToNextStep?.()}
+            canSeekPrevStep={presenterOperation.canChangeToPrevStep?.()}
             onSeekNextPage={presenterOperation.changeToNextPage}
             onSeekPrevPage={presenterOperation.changeToPrevPage}
             onSeekNextStep={presenterOperation.seekToNextStep}
@@ -54,13 +59,20 @@ export default function PresenterIndexPage() {
             slideTitle={sessionInfo.title}
             totalPageNumber={sessionInfo.pages.length}
             currentPageIndexNumber={sessionState?.currentPage ?? 0}
-            currentPageTotalStepNumber={sessionInfo.pages[sessionState?.currentPage ?? 0]?.step ?? 0}
+            currentPageTotalStepNumber={
+              sessionInfo.pages[sessionState?.currentPage]?.steps?.length ?? 0
+            }
             currentPageCurrentStepNumber={sessionState?.currentStep ?? 0}
-            currentPageTitle={sessionInfo.pages[sessionState?.currentPage ?? 0]?.title ?? ""}
+            currentPageTitle={
+              sessionInfo.pages[sessionState?.currentPage]?.title ?? ""
+            }
           />
 
           <PresenterBlockPageScript
-            script={sessionInfo.pages[sessionState?.currentPage ?? 0]?.scripts[0].content ?? ""}
+            script={
+              sessionInfo.pages[sessionState?.currentPage]?.scripts?.[0]
+                ?.content ?? ""
+            }
           />
         </Masonry>
       </ResponsiveMasonry>
