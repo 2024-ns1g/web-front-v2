@@ -140,6 +140,39 @@ export const usePresenterOperation = (
     }
   };
 
+  // 可否判定系
+
+
+  /**
+  * 次のスライドに移動できるか
+  */
+  const canChangeToNextPage = () => {
+    return getCurrentSlideIndex(state) < sessionInfo!.pages.length - 1;
+  };
+
+  /**
+  * 前のスライドに移動できるか
+  */
+  const canChangeToPrevPage = () => {
+    return getCurrentSlideIndex(state) > 0;
+  }
+
+  /**
+  * 前のステップに移動できるか
+  * このページのステップ数が0ではない かつ 現在のステップが0より大きい or 前のスライドに移動できる
+  */
+  const canChangeToPrevStep = () => {
+    return sessionInfo!.pages[getCurrentSlideIndex(state)].step > 0 && getCurrentStepIndex(state) > 0 || canChangeToPrevPage();
+  };
+
+  /**
+  * 次のステップに移動できるか
+  * このページのステップ数が0ではない かつ 現在のステップがこのページのステップ数より小さい or 次のスライドに移動できる
+  */
+  const canChangeToNextStep = () => {
+    return sessionInfo!.pages[getCurrentSlideIndex(state)].step > 0 && getCurrentStepIndex(state) < sessionInfo!.pages[getCurrentSlideIndex(state)].step - 1 || canChangeToNextPage();
+  }
+
   return {
     changeToNextSlide,
     changeToPreviousSlide,
