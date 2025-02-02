@@ -44,9 +44,7 @@ export default async function PresenterIndexPage() {
           ></PresenterBlockSessionStatus>
 
           <PresenterBlockPageScript
-            script="
-# あいう 
-## えお">
+            script={sessionInfo.pages[sessionState?.currentPage ?? 0]?.scripts[0].content ?? ""}>
           </PresenterBlockPageScript>
         </Masonry>
       </ResponsiveMasonry>
