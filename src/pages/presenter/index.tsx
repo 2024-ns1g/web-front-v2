@@ -33,14 +33,16 @@ export default async function PresenterIndexPage() {
             onSeekNextStep={presenterOperation.seekToNextStep}
             onSeekPrevStep={presenterOperation.seekToPrevStep}
           ></PresenterBlockDirectSeekSlide>
+
           <PresenterBlockSessionStatus
-            slideTitle="スライドタイトル"
-            totalPageNumber={10}
-            currentPageIndexNumber={1}
-            currentPageTotalStepNumber={4}
-            currentPageCurrentStepNumber={2}
-            currentPageTitle="あああ"
+            slideTitle={sessionInfo.title}
+            totalPageNumber={sessionInfo.pages.length}
+            currentPageIndexNumber={sessionState?.currentPage ?? 0}
+            currentPageTotalStepNumber={sessionInfo.pages[sessionState?.currentPage ?? 0]?.step ?? 0}
+            currentPageCurrentStepNumber={sessionState?.currentStep ?? 0}
+            currentPageTitle={sessionInfo.pages[sessionState?.currentPage ?? 0]?.title ?? ""}
           ></PresenterBlockSessionStatus>
+
           <PresenterBlockPageScript
             script="
 # あいう 
