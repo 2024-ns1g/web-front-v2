@@ -16,7 +16,7 @@ type PresenterContextType = {
   sendWsMessage: (message: any) => Promise<void>;
   sessionInfo: Promise<SessionInfo>;
   updateSessionInfo: () => Promise<SessionInfo>;
-  state: SessionState | null;
+  state: SessionState;
   setState: (state: SessionState) => void;
   updateState: (state: Partial<SessionState>) => void;
 };
@@ -59,7 +59,12 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
     localStorage.setItem(getKey("aggregatorUrl"), url);
   };
 
-  const [state, setState] = useState<SessionState | null>(null);
+  const [state, setState] = useState<SessionState>({
+    currentPage: 0,
+    activeVoteIds: [],
+    currentStep: 0,
+    votes: [],
+  });
 
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
 
