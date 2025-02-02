@@ -46,12 +46,12 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
 
   const setJoinedSessionIdAndStore = (id: string) => {
     setJoinedSessionId(id);
-    localStorage.setItem(getKey("joinedSessionId"), id);
+    localStorage.setItem(getKey("sessionId"), id);
   };
 
   const setAttachedTokenAndStore = (token: string) => {
     setAttachedToken(token);
-    localStorage.setItem(getKey("attachedToken"), token);
+    localStorage.setItem(getKey("token"), token);
   };
 
   const setAggregatorUrlAndStore = (url: string) => {
