@@ -57,18 +57,20 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   const messageHandlerRef = useRef<(message: any) => void>(() => { });
   const connectionPromiseRef = useRef<Promise<void> | null>(null);
 
-  // ローカルストレージのキャッシュ
-  useEffect(() => {
-    localStorage.setItem(getKey("joinedSessionId"), joinedSessionId);
-  }, [joinedSessionId]);
+  const setJoinedSessionIdAndStore = (id: string) => {
+    setJoinedSessionId(id);
+    localStorage.setItem(getKey("sessionId"), id);
+  };
 
-  useEffect(() => {
-    localStorage.setItem(getKey("attachedToken"), attachedToken);
-  }, [attachedToken]);
+  const setAttachedTokenAndStore = (token: string) => {
+    setAttachedToken(token);
+    localStorage.setItem(getKey("token"), token);
+  };
 
-  useEffect(() => {
-    localStorage.setItem(getKey("aggregatorUrl"), aggregatorUrl);
-  }, [aggregatorUrl]);
+  const setAggregatorUrlAndStore = (url: string) => {
+    setAggregatorUrl(url);
+    localStorage.setItem(getKey("aggregatorUrl"), url);
+  };
 
   // WebSocket接続管理
   const connectWs = async () => {
@@ -180,11 +182,11 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     <AudienceContext.Provider
       value={{
         joinedSessionId,
-        setJoinedSessionId,
+        setJoinedSessionId: setJoinedSessionIdAndStore,
         attachedToken,
-        setAttachedToken,
+        setAttachedToken: setAttachedTokenAndStore,
         aggregatorUrl,
-        setAggregatorUrl,
+        setAggregatorUrl: setAggregatorUrlAndStore,
         setWsMessageHandler,
         connectWs,
         isWsConnected,
