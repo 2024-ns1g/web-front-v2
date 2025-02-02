@@ -56,22 +56,23 @@ export default function PresenterIndexPage() {
           />
 
           <PresenterBlockSessionStatus
-            slideTitle={sessionInfo.title}
-            totalPageNumber={sessionInfo.pages.length}
+            slideTitle={sessionInfo?.title ?? ""}
+            totalPageNumber={sessionInfo?.pages?.length ?? 0}
             currentPageIndexNumber={sessionState?.currentPage ?? 0}
             currentPageTotalStepNumber={
-              sessionInfo.pages[sessionState?.currentPage]?.steps?.length ?? 0
+              sessionInfo?.pages[sessionState?.currentPage]?.scripts?.length ?? 0
             }
             currentPageCurrentStepNumber={sessionState?.currentStep ?? 0}
             currentPageTitle={
-              sessionInfo.pages[sessionState?.currentPage]?.title ?? ""
+              sessionInfo?.pages[sessionState?.currentPage]?.title ?? ""
             }
           />
 
           <PresenterBlockPageScript
             script={
-              sessionInfo.pages[sessionState?.currentPage]?.scripts?.[0]
-                ?.content ?? ""
+              sessionInfo?.pages[sessionState?.currentPage]?.scripts[
+                sessionState?.currentStep
+              ]?.content ?? ""
             }
           />
         </Masonry>
