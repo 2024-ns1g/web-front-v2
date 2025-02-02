@@ -29,12 +29,12 @@ interface AudienceProviderProps {
 
 export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   const [joinedSessionId, setJoinedSessionId] = useState(() => {
-    const sessionId = localStorage.getItem("joinedSessionId");
+    const sessionId = localStorage.getItem("sessionId");
     return sessionId || "";
   });
 
   const [attachedToken, setAttachedToken] = useState(() => {
-    const token = localStorage.getItem("attachedToken");
+    const token = localStorage.getItem("token");
     return token || "";
   });
 
