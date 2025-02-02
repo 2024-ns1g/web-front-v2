@@ -5,27 +5,35 @@ import { FC } from "react";
 import { FaAngleLeft, FaAngleRight, FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 
 type PresenterBlockDirectSeekSlideProps = {
-  canSeekPrev: boolean;
-  canSeekNext: boolean;
-  onSeekPrev: () => void;
-  onSeekNext: () => void;
+  canSeekPrevStep: boolean;
+  canSeekNextStep: boolean;
+  canSeekPrevPage: boolean;
+  canSeekNextPage: boolean;
+  onSeekPrevStep: () => void;
+  onSeekNextStep: () => void;
+  onSeekPrevPage: () => void;
+  onSeekNextPage: () => void;
 };
 
 export const PresenterBlockDirectSeekSlide: FC<PresenterBlockDirectSeekSlideProps> = ({
-  canSeekPrev,
-  canSeekNext,
-  onSeekPrev,
-  onSeekNext
+  canSeekPrevStep,
+  canSeekNextStep,
+  canSeekPrevPage,
+  canSeekNextPage,
+  onSeekPrevStep,
+  onSeekNextStep,
+  onSeekPrevPage,
+  onSeekNextPage,
 }) => {
   return (
     <Card className="w-full">
       <CardBody>
         <div className="flex justify-between">
           <div className="flex gap-4 flex-grow justify-center">
-            <Button isIconOnly disabled={!canSeekPrev} onPress={onSeekPrev} size="lg">
+            <Button isIconOnly disabled={!canSeekPrevPage} onPress={onSeekPrevPage} size="lg">
               <FaAnglesLeft />
             </Button>
-            <Button isIconOnly disabled={!canSeekPrev} onPress={onSeekPrev} size="lg">
+            <Button isIconOnly disabled={!canSeekPrevStep} onPress={onSeekPrevStep} size="lg">
               <FaAngleLeft />
             </Button>
           </div>
@@ -33,10 +41,10 @@ export const PresenterBlockDirectSeekSlide: FC<PresenterBlockDirectSeekSlideProp
             <Divider className="h-4/5" orientation="vertical"/>
           </div>
           <div className="flex gap-4 flex-grow justify-center">
-            <Button isIconOnly disabled={!canSeekNext} onPress={onSeekNext} size="lg">
+            <Button isIconOnly disabled={!canSeekNextStep} onPress={onSeekNextStep} size="lg">
               <FaAngleRight />
             </Button>
-            <Button isIconOnly disabled={!canSeekPrev} onPress={onSeekPrev} size="lg">
+            <Button isIconOnly disabled={!canSeekNextPage} onPress={onSeekNextPage} size="lg">
               <FaAnglesRight />
             </Button>
           </div>
