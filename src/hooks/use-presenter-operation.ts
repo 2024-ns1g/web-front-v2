@@ -37,7 +37,7 @@ export const usePresenterOperation = (
   /**
   * 次のイベントをトリガー
   */
-  const triggerNextStep = () => {
+  const seekToNextStep = () => {
     const message = {
       requestType: "TRIGGER_NEXT_STEP",
       data: {}
@@ -55,7 +55,7 @@ export const usePresenterOperation = (
   /**
   * 前のイベントをトリガー
   */
-  const triggerPrevStep = () => {
+  const seekToPrevStep = () => {
     const message = {
       requestType: "TRIGGER_PREV_STEP",
       data: {}
@@ -176,8 +176,8 @@ export const usePresenterOperation = (
   return {
     changeToNextPage,
     changeToPrevPage,
-    triggerNextEvent: triggerNextStep,
-    triggerPrevEvent: triggerPrevStep,
+    seekToNextStep,
+    seekToPrevStep,
     jumpToSlide,
     jumpToFistSlide,
     jumpToLastSlide,
