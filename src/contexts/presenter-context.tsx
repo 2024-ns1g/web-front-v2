@@ -141,7 +141,7 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
 
   const updateSessionInfo = async () => {
     const response = await axios.get(
-      `${aggregatorUrl}/api/session/${joinedSessionId}/audience/info`,
+      `${aggregatorUrl}/api/session/${joinedSessionId}/presenter/info`,
       {
         headers: {
           Authorization: `Bearer ${attachedToken}`,
