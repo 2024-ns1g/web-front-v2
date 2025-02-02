@@ -44,17 +44,20 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
     return url || "";
   });
 
-  useEffect(() => {
-    localStorage.setItem(getKey("sessionId"), joinedSessionId);
-  }, [joinedSessionId]);
+  const setJoinedSessionIdAndStore = (id: string) => {
+    setJoinedSessionId(id);
+    localStorage.setItem(getKey("joinedSessionId"), id);
+  };
 
-  useEffect(() => {
-    localStorage.setItem(getKey("token"), attachedToken);
-  }, [attachedToken]);
+  const setAttachedTokenAndStore = (token: string) => {
+    setAttachedToken(token);
+    localStorage.setItem(getKey("attachedToken"), token);
+  };
 
-  useEffect(() => {
-    localStorage.setItem(getKey("aggregatorUrl"), aggregatorUrl);
-  }, [aggregatorUrl]);
+  const setAggregatorUrlAndStore = (url: string) => {
+    setAggregatorUrl(url);
+    localStorage.setItem(getKey("aggregatorUrl"), url);
+  };
 
   const [state, setState] = useState<SessionState | null>(null);
 
@@ -168,11 +171,11 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
   return (
     <PresenterContext.Provider value={{
       joinedSessionId,
-      setJoinedSessionId,
+      setJoinedSessionId: setJoinedSessionIdAndStore,
       attachedToken,
-      setAttachedToken,
+      setAttachedToken: setAttachedTokenAndStore,
       aggregatorUrl,
-      setAggregatorUrl,
+      setAggregatorUrl: setAggregatorUrlAndStore,
       setWsMessageHandler,
       connectWs,
       isWsConnected,
