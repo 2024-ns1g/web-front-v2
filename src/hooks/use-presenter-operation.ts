@@ -19,7 +19,7 @@ export const usePresenterOperation = (
   /**
   * 次のスライドに移動
   */
-  const changeToNextSlide = () => {
+  const changeToNextPage = () => {
     const currentSlideIndex = getCurrentSlideIndex(state);
     const nextSlideIndex = currentSlideIndex + 1;
     jumpToSlide(nextSlideIndex);
@@ -28,7 +28,7 @@ export const usePresenterOperation = (
   /**
   * 前のスライドに移動
   */
-  const changeToPreviousSlide = () => {
+  const changeToPrevPage = () => {
     const currentSlideIndex = getCurrentSlideIndex(state);
     const prevSlideIndex = currentSlideIndex - 1;
     jumpToSlide(prevSlideIndex);
@@ -174,8 +174,8 @@ export const usePresenterOperation = (
   }
 
   return {
-    changeToNextSlide,
-    changeToPreviousSlide,
+    changeToNextPage,
+    changeToPrevPage,
     triggerNextEvent: triggerNextStep,
     triggerPrevEvent: triggerPrevStep,
     jumpToSlide,
