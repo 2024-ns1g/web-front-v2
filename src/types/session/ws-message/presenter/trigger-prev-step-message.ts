@@ -1,4 +1,4 @@
-import { custom, z } from "zod";
+import { z } from "zod";
 
 // =左矢印キーに近い挙動
 export const presenterWsTriggerPrevStepMessageSchema = z.object({
