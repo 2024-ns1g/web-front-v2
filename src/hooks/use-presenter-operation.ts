@@ -40,7 +40,10 @@ export const usePresenterOperation = (
   const seekToNextStep = () => {
     const message = {
       requestType: "TRIGGER_NEXT_STEP",
-      data: {}
+      data: {
+        currentPageIndex: getCurrentSlideIndex(state),
+        currentStepIndex: getCurrentStepIndex(state)
+      }
     } as presenterWsTriggerNextStepMessage;
 
     try {
@@ -58,7 +61,10 @@ export const usePresenterOperation = (
   const seekToPrevStep = () => {
     const message = {
       requestType: "TRIGGER_PREV_STEP",
-      data: {}
+      data: {
+        currentPageIndex: getCurrentSlideIndex(state),
+        currentStepIndex: getCurrentStepIndex(state)
+      }
     } as presenterWsTriggerPrevStepMessage;
 
     try {
