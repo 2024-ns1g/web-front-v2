@@ -4,6 +4,8 @@ import { z } from "zod";
 export const presenterWsTriggerNextStepMessageSchema = z.object({
   requestType: z.literal('TRIGGER_NEXT_STEP'),
   data: z.object({
+    currentPageIndex: z.number(),
+    currentStepIndex: z.number(),
   })
 });
 
