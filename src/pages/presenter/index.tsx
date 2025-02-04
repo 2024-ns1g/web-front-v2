@@ -37,6 +37,14 @@ export default function PresenterIndexPage() {
     sessionState
   );
 
+  const wsMessageHandler = (message: any) => {
+    switch (message.requestType) {
+      
+    }
+  };
+
+  presenterContext.setWsMessageHandler(wsMessageHandler);
+
   if (loading) return <div>Loading presentation data...</div>;
 
   return (
