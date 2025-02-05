@@ -57,9 +57,7 @@ export default function AudienceIndexPage() {
         const newVoteId = message.data.voteId;
         const newActiveVotes = [...audience.state.activeVoteIds, newVoteId];
         console.log("Appending newVoteId:", newVoteId, " -> New activeVoteIds:", newActiveVotes);
-        audience.updateState({
-          activeVoteIds: newActiveVotes
-        });
+        audience.addActiveVote(newVoteId);
         toast.info("新しい投票が開始されました");
         break;
       }
