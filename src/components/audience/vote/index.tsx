@@ -15,7 +15,7 @@ interface VoteDrawerBodyProps {
   votedHandler: (voteId: string, choiceId: string) => void;
 }
 
-// シンプルなランダムカラー生成（必要に応じて調整）
+// シンプルなランダムカラー生成
 const generateRandomColorPair = () => {
   const randomColor = () =>
     "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0");
@@ -35,7 +35,7 @@ export const VoteDrawerBody: FC<VoteDrawerBodyProps> = ({
   onChoiceChange,
   votedHandler
 }) => {
-  // 背景色や枠線色が設定されていない場合、ランダムカラーを付与する
+  // 背景色・枠線色の付与
   const processedChoices = useMemo(() => {
     return choices.map((c) => {
       if (!c.backgroundColor || !c.borderColor) {
@@ -46,7 +46,7 @@ export const VoteDrawerBody: FC<VoteDrawerBodyProps> = ({
     });
   }, [choices]);
 
-  // Doughnut チャート用のデータを生成
+  // Doughnut チャート用データ
   const chartData = useMemo(
     () => ({
       labels: processedChoices.map((c) => c.title),
@@ -71,7 +71,7 @@ export const VoteDrawerBody: FC<VoteDrawerBodyProps> = ({
         value={selectedChoice ?? ""}
         onValueChange={(value) => {
           onChoiceChange(value);
-          // 選択が変わった時点で votedHandler を呼び出す（ただし、送信自体は親側の useEffect で行う）
+          // 選択時点で votedHandler を呼び出す
           votedHandler(voteId, value);
         }}
       >
