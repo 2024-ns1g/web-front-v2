@@ -28,11 +28,11 @@ export function Provider({ children }: { children: React.ReactNode }) {
             <CacheProvider>
               <StateProvider>
                 <LayoutProvider>
-                  {/* <AudienceProvider> */}
+                  <AudienceProvider>
                     <PresenterProvider>
                       {children}
                     </PresenterProvider>
-                  {/* </AudienceProvider> */}
+                  </AudienceProvider>
                 </LayoutProvider>
               </StateProvider>
             </CacheProvider>
