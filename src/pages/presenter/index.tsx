@@ -4,7 +4,7 @@ import { PresenterBlockSessionStatus } from "@/components/presenter/blocks/prese
 import { usePresenterContext } from "@/contexts/presenter-context";
 import { usePresenterOperation } from "@/hooks/use-presenter-operation";
 import { SessionInfo } from "@/types/session/session-info";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 
 export default function PresenterIndexPage() {
@@ -14,36 +14,48 @@ export default function PresenterIndexPage() {
 
   const wsSender = presenterContext.sendWsMessage;
   const sessionState = presenterContext.state;
-
-  useEffect(() => {
-    let isMounted = true;
-    const initialize = async () => {
-      try {
-        const data = await presenterContext.sessionInfo;
-        if (isMounted) {
-          setSessionInfo(data);
-          setLoading(false);
-        }
-      } catch (err) {
-      }
-    };
-    initialize();
-    return () => { isMounted = false; };
-  }, []);
-
   const presenterOperation = usePresenterOperation(
     wsSender,
     sessionInfo,
     sessionState
   );
 
-  const wsMessageHandler = (message: any) => {
-    switch (message.requestType) {
-      
-    }
-  };
+  useEffect(() => {
+    let isMounted = true;
+    const initialize = async () => {
+      try {
+        await presenterContext.connectWs();
+        const data = await presenterContext.updateSessionInfo();
+        if (isMounted) {
+          setSessionInfo(data);
+          setLoading(false);
+        }
+      } catch (err) {
+        console.error("Initialization failed:", err);
+        setLoading(false);
+      }
+    };
+    
+    initialize();
+    return () => { isMounted = false; };
+  }, []);
 
-  presenterContext.setWsMessageHandler(wsMessageHandler);
+  const wsMessageHandler = useCallback((message: any) => {
+    console.log("Received message: ", message);
+    switch (message.requestType) {
+      case "CHANGE_CURRENT_PAGE": {
+        presenterContext.updateState({
+          currentPage: message.data.newPageIndex,
+          currentStep: 0,
+        });
+        break;
+      }
+    }
+  }, [presenterContext]);
+
+  useEffect(() => {
+    presenterContext.setWsMessageHandler(wsMessageHandler);
+  }, [wsMessageHandler, presenterContext]);
 
   if (loading) return <div>Loading presentation data...</div>;
 
