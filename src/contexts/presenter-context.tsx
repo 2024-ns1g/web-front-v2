@@ -98,6 +98,7 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
 
     const promise = new Promise<void>((resolve, reject) => {
       const newWs = new WebSocket(wsUrl);
+      ws.current = newWs;
 
       newWs.onopen = () => {
         // set message handler
