@@ -50,34 +50,19 @@ export default function PresenterIndexPage() {
         });
         break;
       }
-      // case "TRIGGER_NEXT_STEP": {
-      //   if (message.data.isPageChanged) {
-      //     console.log("Page changed: ", message.data.newPageIndex);
-      //     presenterContext.updateState({
-      //       currentPage: message.data.newPageIndex,
-      //     });
-      //   }
-      //   presenterContext.updateState({
-      //     currentStep: message.data.newStepIndex,
-      //   });
-      //   break;
-      // }
-      // case "TRIGGER_PREV_STEP": {
-      //   if (message.data.isPageChanged) {
-      //     presenterContext.updateState({
-      //       currentPage: message.data.newPageIndex,
-      //     });
-      //   }
-      //   presenterContext.updateState({
-      //     currentStep: message.data.newStepIndex,
-      //   });
-      //   break;
-      // }
       case "TRIGGER_NEXT_STEP": {
         presenterContext.updateState({
           currentStep: message.data.newStepIndex,
           currentPage: message.data.newPageIndex,
         });
+        break;
+      }
+      case "TRIGGER_PREV_STEP": {
+        presenterContext.updateState({
+          currentStep: message.data.newStepIndex,
+          currentPage: message.data.newPageIndex,
+        });
+        break;
       }
     }
   }, [presenterContext]);
