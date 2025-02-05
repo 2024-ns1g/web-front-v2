@@ -142,6 +142,7 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
   useEffect(() => {
     return () => {
       if (ws.current) {
+        console.log("Closing WebSocket connection");
         ws.current.close();
       }
     }
