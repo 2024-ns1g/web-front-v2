@@ -29,17 +29,17 @@ interface AudienceProviderProps {
 
 export const AudienceProvider = ({ children }: AudienceProviderProps) => {
   const [joinedSessionId, setJoinedSessionId] = useState(() => {
-    const sessionId = localStorage.getItem("sessionId");
+    const sessionId = localStorage.getItem(getKey("sessionId"));
     return sessionId || "";
   });
 
   const [attachedToken, setAttachedToken] = useState(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(getKey("token"));
     return token || "";
   });
 
   const [aggregatorUrl, setAggregatorUrl] = useState(() => {
-    const url = localStorage.getItem("aggregatorUrl");
+    const url = localStorage.getItem(getKey("aggregatorUrl"));
     return url || "";
   });
 
