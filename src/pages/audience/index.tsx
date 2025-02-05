@@ -24,9 +24,10 @@ export default function AudienceIndexPage() {
   const [isVoteDrawerOpen, setIsVoteDrawerOpen] = useState(false);
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
-  // 現在選択中の投票ID（string）と、選択された選択肢（string）
   const [selectedVoteId, setSelectedVoteId] = useState<string | null>(null);
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
+  // 各投票の統計情報を保持（voteId をキーに choiceVotes の配列）
+  const [voteStats, setVoteStats] = useState<Record<string, { choiceId: string; count: number }[]>>({});
 
   // セッション情報の取得
   useEffect(() => {
@@ -48,6 +49,16 @@ export default function AudienceIndexPage() {
           activeVoteIds: [...audience.state.activeVoteIds, message.data.voteId]
         });
         toast.info("新しい投票が開始されました");
+        break;
+      }
+      case "VOTE_PROGRESS_BROADCAST": {
+        // 例: {"requestType":"VOTE_PROGRESS_BROADCAST","data":{"voteId":"xxx","choiceVotes":{"choiceA":1, "choiceB":2}}}
+        const { voteId, choiceVotes } = message.data;
+        const stats = Object.entries(choiceVotes).map(([choiceId, count]) => ({
+          choiceId,
+          count: Number(count)
+        }));
+        setVoteStats(prev => ({ ...prev, [voteId]: stats }));
         break;
       }
       default:
@@ -78,7 +89,7 @@ export default function AudienceIndexPage() {
     }
   }, [audience.state.activeVoteIds, selectedVoteId, sessionInfo]);
 
-  // 選択中の投票が変わったら、キャッシュ（localStorage）から選択済みの選択肢を読み込む
+  // 選択中の投票が変わったら、キャッシュから選択済みの選択肢を読み込む
   useEffect(() => {
     if (selectedVoteId) {
       const cachedChoice = localStorage.getItem(`vote_${selectedVoteId}`);
@@ -92,15 +103,12 @@ export default function AudienceIndexPage() {
 
   // 投票送信処理（選択が変更されたときに即時送信）
   const handleVoteSubmit = async () => {
-    if (!selectedVoteId || !selectedChoice) {
-      return;
-    }
+    if (!selectedVoteId || !selectedChoice) return;
     try {
       await audience.sendWsMessage({
         requestType: "SUBMIT_VOTE",
         data: { voteId: selectedVoteId, choiceId: selectedChoice }
       });
-      // キャッシュに保存
       localStorage.setItem(`vote_${selectedVoteId}`, selectedChoice);
       toast.success("投票が送信されました");
     } catch (error) {
@@ -108,12 +116,11 @@ export default function AudienceIndexPage() {
     }
   };
 
-  // selectedChoice の変更を検知して即時投票送信（既にキャッシュがある場合も再送信可能）
+  // selectedChoice の変更を検知して即時投票送信
   useEffect(() => {
     if (selectedVoteId && selectedChoice) {
       handleVoteSubmit();
     }
-    // selectedChoice の変更のたびに投票を送信
   }, [selectedChoice, selectedVoteId]);
 
   // 現在選択されている投票オブジェクト
@@ -158,10 +165,8 @@ export default function AudienceIndexPage() {
                     selectedVoteId ? new Set([selectedVoteId]) : new Set()
                   }
                   onSelectionChange={(val) => {
-                    // val は Set 型なので先頭要素を取り出し、文字列に変換
                     const voteId = Array.from(val)[0] || null;
                     setSelectedVoteId(voteId !== null ? voteId.toString() : null);
-                    // 投票が変更されたら選択肢もリセット（キャッシュ読み込み用 useEffect が働く）
                     setSelectedChoice(null);
                   }}
                 >
@@ -178,17 +183,12 @@ export default function AudienceIndexPage() {
                     voteTitle={currentVote.title}
                     voteQuestion={currentVote.question}
                     choices={currentVote.choices}
-                    stats={[
-                      { choiceId: "1", count: 10 },
-                      { choiceId: "2", count: 20 },
-                      { choiceId: "3", count: 30 }
-                    ]}
+                    // WS から更新された統計情報を渡す（なければ空配列）
+                    stats={voteStats[selectedVoteId as string] ?? []}
                     selectedChoice={selectedChoice}
                     onChoiceChange={(choiceId) => {
-                      // ラジオボタンで選択されたとき、即座に状態更新
                       setSelectedChoice(choiceId);
                     }}
-                    // votedHandler はここでは単にログ出力（必要に応じて処理を追加）
                     votedHandler={(voteId, choiceId) => {
                       console.log("Voted:", voteId, choiceId);
                     }}
@@ -198,7 +198,6 @@ export default function AudienceIndexPage() {
                 )}
               </DrawerBody>
               <DrawerFooter>
-                {/* Close ボタンのみ残す。投票はラジオ選択時に即時送信される */}
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
@@ -207,7 +206,6 @@ export default function AudienceIndexPage() {
           )}
         </DrawerContent>
       </Drawer>
-
       <div className="flex-grow h-full w-full flex justify-center">
         <div className="flex flex-col container px-4 py-8 h-full">
           <BodyPageSelector
