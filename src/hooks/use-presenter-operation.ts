@@ -8,7 +8,7 @@ import { presenterWsChangeCurrentPageMessage, presenterWsChangeCurrentPageMessag
 import { presenterWsTriggerPrevStepMessage, presenterWsTriggerPrevStepMessageSchema } from "@/types/session/ws-message/presenter/trigger-prev-step-message";
 import { presenterWsTriggerNextStepMessage, presenterWsTriggerNextStepMessageSchema } from "@/types/session/ws-message/presenter/trigger-next-step-message";
 import { presenterWsActivateVoteMessage, presenterWsActivateVoteMessageSchema } from "@/types/session/ws-message/presenter/activate-vote";
-import { presenterWsDeactivateVoteMessage } from "@/types/session/ws-message/presenter/deactivate-vote";
+import { presenterWsDeactivateVoteMessage, presenterWsDeactivateVoteMessageSchema } from "@/types/session/ws-message/presenter/deactivate-vote";
 
 export const usePresenterOperation = (
   wsSender: (message: any) => void,
@@ -173,7 +173,7 @@ export const usePresenterOperation = (
       }
     } as presenterWsDeactivateVoteMessage;
     try {
-      presenterWsActivateVoteMessageSchema.parse(message);
+      presenterWsDeactivateVoteMessageSchema.parse(message);
       wsSender(message);
     } catch (e) {
       log.error(`Failed to send message: ${e}`);
