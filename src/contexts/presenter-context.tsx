@@ -1,3 +1,4 @@
+import { useLogger } from "@/hooks/use-logger";
 import { SessionInfo, SessionInfoSchema } from "@/types/session/session-info";
 import { SessionState } from "@/types/session/session-state";
 import axios from "axios";
@@ -28,6 +29,8 @@ interface PresenterProviderProps {
 };
 
 export const PresenterProvider = ({ children }: PresenterProviderProps) => {
+
+  const logger = useLogger("presenter-context");
 
   const [joinedSessionId, setJoinedSessionId] = useState(() => {
     const sessionId = localStorage.getItem(getKey("sessionId"));
@@ -79,6 +82,7 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
     }
 
     if (ws.current?.readyState === WebSocket.OPEN) {
+      logger.info("WebSocket is already connected");
       return;
     }
 
@@ -142,7 +146,7 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
   useEffect(() => {
     return () => {
       if (ws.current) {
-        console.log("Closing WebSocket connection");
+        logger.info("Closing WebSocket connection on cleanup");
         ws.current.close();
       }
     }
