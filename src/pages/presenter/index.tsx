@@ -31,6 +31,8 @@ export default function PresenterIndexPage() {
     return () => { isMounted = false; };
   }, []);
 
+  presenterContext.connectWs(); // もし複数回実行されてもただ無視されるだけ
+
   const presenterOperation = usePresenterOperation(
     wsSender,
     sessionInfo,
