@@ -41,3 +41,8 @@ export const SessionInfoSchema = z.object({
 
 // Optionally, you can export the inferred TypeScript type from the schema
 export type SessionInfo = z.infer<typeof SessionInfoSchema>;
+
+export type Page = z.infer<typeof PageSchema>;
+export type Script = z.infer<typeof ScriptSchema>;
+export type Choice = z.infer<typeof ChoiceSchema>;
+export type AvailableVote = z.infer<typeof AvailableVoteSchema>;
