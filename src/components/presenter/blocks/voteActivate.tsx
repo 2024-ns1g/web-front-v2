@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Card, CardBody, Button } from "@nextui-org/react";
+import { Card, CardBody, Switch } from "@nextui-org/react";
 import { AvailableVote } from "@/types/session/session-info";
 
 type PresenterBlockVoteControlProps = {
@@ -21,31 +21,31 @@ export const PresenterBlockVoteControl: FC<PresenterBlockVoteControlProps> = ({
         {availableVotes.length === 0 ? (
           <p className="text-center text-gray-500">投票はありません。</p>
         ) : (
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col gap-4">
             {availableVotes.map((vote) => {
               const isActive = activeVoteIds.includes(vote.voteId);
 
               return (
                 <Card key={vote.voteId} className="p-4">
-                  <div className="flex flex-col">
+                  <div className="flex flex-col gap-2">
                     <h3 className="text-xl font-bold">{vote.title}</h3>
                     <p className="text-gray-600">{vote.question}</p>
-                    <div className="mt-2">
-                      {isActive ? (
-                        <Button
-                          color="danger"
-                          onPress={() => onDeactivateVote(vote.voteId)}
-                        >
-                          Deactivate
-                        </Button>
-                      ) : (
-                        <Button
-                          color="primary"
-                          onPress={() => onActivateVote(vote.voteId)}
-                        >
-                          Activate
-                        </Button>
-                      )}
+                    <div className="flex items-center gap-2">
+                      <Switch
+                        isSelected={isActive}
+                        onValueChange={(newValue: boolean) => {
+                          if (newValue) {
+                            onActivateVote(vote.voteId);
+                          } else {
+                            onDeactivateVote(vote.voteId);
+                          }
+                        }}
+                      >
+                        Active
+                      </Switch>
+                      <span className="text-sm text-gray-500">
+                        {isActive ? "Active" : "Inactive"}
+                      </span>
                     </div>
                   </div>
                 </Card>
