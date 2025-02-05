@@ -35,7 +35,7 @@ export default function PresenterIndexPage() {
         setLoading(false);
       }
     };
-    
+
     initialize();
     return () => { isMounted = false; };
   }, []);
@@ -47,6 +47,28 @@ export default function PresenterIndexPage() {
         presenterContext.updateState({
           currentPage: message.data.newPageIndex,
           currentStep: 0,
+        });
+        break;
+      }
+      case "TRIGGER_NEXT_STEP": {
+        if (message.data.isPageChanged) {
+          presenterContext.updateState({
+            currentPage: message.data.newPageIndex,
+          });
+        }
+        presenterContext.updateState({
+          currentStep: message.data.newStepIndex,
+        });
+        break;
+      }
+      case "TRIGGER_PREV_STEP": {
+        if (message.data.isPageChanged) {
+          presenterContext.updateState({
+            currentPage: message.data.newPageIndex,
+          });
+        }
+        presenterContext.updateState({
+          currentStep: message.data.newStepIndex,
         });
         break;
       }
