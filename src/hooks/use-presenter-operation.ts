@@ -7,6 +7,8 @@ import { presenterWsMoveToLastSlideMessage, presenterWsMoveToLastSlideMessageSch
 import { presenterWsChangeCurrentPageMessage, presenterWsChangeCurrentPageMessageSchema } from "@/types/session/ws-message/presenter/change-current-page-message";
 import { presenterWsTriggerPrevStepMessage, presenterWsTriggerPrevStepMessageSchema } from "@/types/session/ws-message/presenter/trigger-prev-step-message";
 import { presenterWsTriggerNextStepMessage, presenterWsTriggerNextStepMessageSchema } from "@/types/session/ws-message/presenter/trigger-next-step-message";
+import { presenterWsActivateVoteMessage, presenterWsActivateVoteMessageSchema } from "@/types/session/ws-message/presenter/activate-vote";
+import { presenterWsDeactivateVoteMessage } from "@/types/session/ws-message/presenter/deactivate-vote";
 
 export const usePresenterOperation = (
   wsSender: (message: any) => void,
@@ -145,6 +147,39 @@ export const usePresenterOperation = (
       toast.error("スライドの移動に失敗しました");
     }
   };
+
+  const activateVote = (voteId: string) => {
+    const message = {
+      requestType: "ACTIVATE_VOTE",
+      data: {
+        voteId
+      }
+    } as presenterWsActivateVoteMessage;
+
+    try {
+      presenterWsActivateVoteMessageSchema.parse(message);
+      wsSender(message);
+    } catch (e) {
+      log.error(`Failed to send message: ${e}`);
+      toast.error("投票の開始に失敗しました");
+    }
+  };
+
+  const deactivateVote = (voteId: string) => {
+    const message = {
+      requestType: "DEACTIVATE_VOTE",
+      data: {
+        voteId
+      }
+    } as presenterWsDeactivateVoteMessage;
+    try {
+      presenterWsActivateVoteMessageSchema.parse(message);
+      wsSender(message);
+    } catch (e) {
+      log.error(`Failed to send message: ${e}`);
+      toast.error("投票の終了に失敗しました");
+    }
+  }
 
   // 可否判定系
 
