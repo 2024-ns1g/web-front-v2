@@ -26,7 +26,7 @@ export const PresenterBlockVoteControl: FC<PresenterBlockVoteControlProps> = ({
               const isActive = activeVoteIds.includes(vote.voteId);
               return (
                 <div key={vote.voteId}>
-                  <div className="flex items-center justify-between py-4">
+                  <div className="flex items-center justify-between py-4 mx-2">
                     <div>
                       <h3 className="text-xl font-bold">{vote.title}</h3>
                       <p className="text-gray-600">{vote.question}</p>
