@@ -1,12 +1,12 @@
 import { z } from "zod";
 
 // Define the schema for a single script
-const ScriptSchema = z.object({
+export const ScriptSchema = z.object({
   content: z.string(),
 });
 
 // Define the schema for a single page
-const PageSchema = z.object({
+export const PageSchema = z.object({
   pageId: z.string(),
   title: z.string(),
   step: z.number(),
@@ -14,7 +14,7 @@ const PageSchema = z.object({
 });
 
 // Define the schema for a single choice
-const ChoiceSchema = z.object({
+export const ChoiceSchema = z.object({
   choiceId: z.string(),
   title: z.string(),
   description: z.string().nullable(),
@@ -23,7 +23,7 @@ const ChoiceSchema = z.object({
 });
 
 // Define the schema for a single available vote
-const AvailableVoteSchema = z.object({
+export const AvailableVoteSchema = z.object({
   voteId: z.string(),
   title: z.string(),
   question: z.string(),
