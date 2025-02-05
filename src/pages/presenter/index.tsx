@@ -114,8 +114,8 @@ export default function PresenterIndexPage() {
           <PresenterBlockVoteControl
             availableVotes={sessionInfo?.availableVotes ?? []}
             activeVoteIds={sessionState?.activeVoteIds ?? []}
-            onActivateVote={() => { }}
-            onDeactivateVote={() => { }}
+            onActivateVote={presenterOperation.activateVote}
+            onDeactivateVote={presenterOperation.deactivateVote}
           ></PresenterBlockVoteControl>
         </Masonry>
       </ResponsiveMasonry>
