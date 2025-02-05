@@ -65,6 +65,18 @@ export default function PresenterIndexPage() {
         });
         break;
       }
+      case "ACTIVATE_VOTE": {
+        presenterContext.updateState({
+          activeVoteIds: [...presenterContext.state.activeVoteIds, message.data.voteId],
+        });
+        break;
+      }
+      case "DEACTIVATE_VOTE": {
+        presenterContext.updateState({
+          activeVoteIds: presenterContext.state.activeVoteIds.filter((id) => id !== message.data.voteId),
+        });
+        break;
+      }
     }
   }, [presenterContext]);
 
