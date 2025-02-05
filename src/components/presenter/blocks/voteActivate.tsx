@@ -24,29 +24,23 @@ export const PresenterBlockVoteControl: FC<PresenterBlockVoteControlProps> = ({
           <div className="flex flex-col gap-4">
             {availableVotes.map((vote) => {
               const isActive = activeVoteIds.includes(vote.voteId);
-
               return (
                 <Card key={vote.voteId} className="p-4">
-                  <div className="flex flex-col gap-2">
-                    <h3 className="text-xl font-bold">{vote.title}</h3>
-                    <p className="text-gray-600">{vote.question}</p>
-                    <div className="flex items-center gap-2">
-                      <Switch
-                        isSelected={isActive}
-                        onValueChange={(newValue: boolean) => {
-                          if (newValue) {
-                            onActivateVote(vote.voteId);
-                          } else {
-                            onDeactivateVote(vote.voteId);
-                          }
-                        }}
-                      >
-                        Active
-                      </Switch>
-                      <span className="text-sm text-gray-500">
-                        {isActive ? "Active" : "Inactive"}
-                      </span>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-xl font-bold">{vote.title}</h3>
+                      <p className="text-gray-600">{vote.question}</p>
                     </div>
+                    <Switch
+                      isSelected={isActive}
+                      onValueChange={(newValue: boolean) => {
+                        if (newValue) {
+                          onActivateVote(vote.voteId);
+                        } else {
+                          onDeactivateVote(vote.voteId);
+                        }
+                      }}
+                    />
                   </div>
                 </Card>
               );
