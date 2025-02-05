@@ -1,7 +1,7 @@
 import { PresenterBlockDirectSeekSlide } from "@/components/presenter/blocks/directSeekSlide";
 import { PresenterBlockPageScript } from "@/components/presenter/blocks/pageScript";
 import { PresenterBlockSessionStatus } from "@/components/presenter/blocks/presentationStatus";
-import { PresenterBlockVoteControl } from "@/components/presenter/blocks/voteActivate";
+import { PresenterBlockVoteControl } from "@/components/presenter/blocks/voteControl";
 import { usePresenterContext } from "@/contexts/presenter-context";
 import { usePresenterOperation } from "@/hooks/use-presenter-operation";
 import { SessionInfo } from "@/types/session/session-info";
