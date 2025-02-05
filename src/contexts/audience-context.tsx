@@ -19,6 +19,8 @@ type AudienceContextType = {
   state: SessionState;
   setState: (state: SessionState) => void;
   updateState: (state: Partial<SessionState>) => void;
+  addActiveVote: (voteId: string) => void;
+  removeActiveVote: (voteId: string) => void;
 }
 
 const AudienceContext = createContext<AudienceContextType | null>(null);
@@ -179,6 +181,24 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     });
   };
 
+  const addActiveVote = (voteId: string) => {
+    setState((prev) => {
+      return {
+        ...prev,
+        activeVoteIds: [...prev.activeVoteIds, voteId],
+      };
+    });
+  }
+
+  const removeActiveVote = (voteId: string) => {
+    setState((prev) => {
+      return {
+        ...prev,
+        activeVoteIds: prev.activeVoteIds.filter((id) => id !== voteId),
+      };
+    });
+  }
+
   return (
     <AudienceContext.Provider
       value={{
@@ -197,6 +217,8 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
         state,
         setState,
         updateState,
+        addActiveVote,
+        removeActiveVote
       }}
     >
       {children}
