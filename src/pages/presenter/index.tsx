@@ -52,6 +52,7 @@ export default function PresenterIndexPage() {
       }
       case "TRIGGER_NEXT_STEP": {
         if (message.data.isPageChanged) {
+          console.log("Page changed: ", message.data.newPageIndex);
           presenterContext.updateState({
             currentPage: message.data.newPageIndex,
           });
