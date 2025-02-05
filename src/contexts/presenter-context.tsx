@@ -68,6 +68,7 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
     activeVoteIds: [],
     currentStep: 0,
     votes: [],
+    voteSummaries: {}
   });
 
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
