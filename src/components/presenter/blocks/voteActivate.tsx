@@ -33,15 +33,15 @@ export const PresenterBlockVoteControl: FC<PresenterBlockVoteControlProps> = ({
                     <div className="mt-2">
                       {isActive ? (
                         <Button
-                          color="error"
-                          onClick={() => onDeactivateVote(vote.voteId)}
+                          color="danger"
+                          onPress={() => onDeactivateVote(vote.voteId)}
                         >
                           Deactivate
                         </Button>
                       ) : (
                         <Button
                           color="primary"
-                          onClick={() => onActivateVote(vote.voteId)}
+                          onPress={() => onActivateVote(vote.voteId)}
                         >
                           Activate
                         </Button>
