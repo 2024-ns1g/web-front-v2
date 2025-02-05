@@ -21,6 +21,15 @@ export const PresenterBlockSessionStatus: FC<PresenterBlockSessionStatusProps> =
   currentPageCurrentStepNumber,
   currentPageTitle
 }) => {
+
+  console.log("PresenterBlockSessionStatus", {
+    slideTitle,
+    totalPageNumber,
+    currentPageIndexNumber,
+    currentPageTotalStepNumber,
+    currentPageCurrentStepNumber,
+  });
+
   return (
     <Card className="w-full">
       <CardBody>
@@ -30,10 +39,10 @@ export const PresenterBlockSessionStatus: FC<PresenterBlockSessionStatusProps> =
           <p className="text-lg text-gray-900">{currentPageTitle}</p>
         </div>
         <div className="grid grid-cols-[1fr_max-content] items-center gap-2">
-          <Progress className="" size="lg" value={(currentPageIndexNumber + 1 / totalPageNumber) * 100} />
-          <p className="text-sm text-gray-600 ml-3 text-right">{currentPageIndexNumber} / {totalPageNumber}</p>
-          <Progress className="" size="md" value={(currentPageCurrentStepNumber + 1 / currentPageTotalStepNumber) * 100} />
-          <p className="text-sm text-gray-600 ml-3 text-right">{currentPageCurrentStepNumber} / {currentPageTotalStepNumber}</p>
+          <Progress className="" size="lg" value={((currentPageIndexNumber + 1) / totalPageNumber) * 100} />
+          <p className="text-sm text-gray-600 ml-3 text-right">{currentPageIndexNumber + 1} / {totalPageNumber}</p>
+          <Progress className="" size="md" value={((currentPageCurrentStepNumber + 1) / currentPageTotalStepNumber) * 100} />
+          <p className="text-sm text-gray-600 ml-3 text-right">{currentPageCurrentStepNumber + 1} / {currentPageTotalStepNumber}</p>
         </div>
       </CardBody>
     </Card>
