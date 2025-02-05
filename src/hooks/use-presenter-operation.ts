@@ -222,6 +222,8 @@ export const usePresenterOperation = (
     jumpToSlide,
     jumpToFistSlide,
     jumpToLastSlide,
+    activateVote,
+    deactivateVote,
     canChangeToNextPage,
     canChangeToPrevPage,
     canChangeToNextStep,
