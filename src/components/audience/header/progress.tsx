@@ -11,6 +11,6 @@ export const HeaderProgressBar: FC<HeaderProgressBarProps> = ({
   currentSlideIndex,
 }) => {
   return (
-    <Progress value={(currentSlideIndex / totalSlides) * 100} />
+    <Progress value={(currentSlideIndex + 1 / totalSlides) * 100} />
   );
 };
