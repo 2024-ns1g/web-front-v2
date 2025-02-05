@@ -24,6 +24,7 @@ export default function AudienceIndexPage() {
   const [isVoteDrawerOpen, setIsVoteDrawerOpen] = useState(false);
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
+  // 現在選択中の投票ID（string）と、選択された選択肢（string）
   const [selectedVoteId, setSelectedVoteId] = useState<string | null>(null);
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
 
@@ -65,7 +66,19 @@ export default function AudienceIndexPage() {
     });
   }, []);
 
-  // 選択中の投票が変わったら、キャッシュ（localStorage）を読み込む
+  // activeVoteIds が 1 件の場合、自動選択する
+  useEffect(() => {
+    if (
+      audience.state.activeVoteIds.length === 1 &&
+      !selectedVoteId &&
+      sessionInfo?.availableVotes?.length
+    ) {
+      const onlyVoteId = audience.state.activeVoteIds[0];
+      setSelectedVoteId(onlyVoteId.toString());
+    }
+  }, [audience.state.activeVoteIds, selectedVoteId, sessionInfo]);
+
+  // 選択中の投票が変わったら、キャッシュ（localStorage）から選択済みの選択肢を読み込む
   useEffect(() => {
     if (selectedVoteId) {
       const cachedChoice = localStorage.getItem(`vote_${selectedVoteId}`);
@@ -77,15 +90,9 @@ export default function AudienceIndexPage() {
     }
   }, [selectedVoteId]);
 
-  // 現在選択されている投票オブジェクト（sessionInfo 内の availableVotes から selectedVoteId で抽出）
-  const currentVote = sessionInfo?.availableVotes?.find(
-    (v) => v.voteId === selectedVoteId
-  );
-
-  // 投票送信処理（送信後はキャッシュに保存し、選択状態は保持）
+  // 投票送信処理（選択が変更されたときに即時送信）
   const handleVoteSubmit = async () => {
     if (!selectedVoteId || !selectedChoice) {
-      toast.error("投票と選択肢を選択してください");
       return;
     }
     try {
@@ -96,11 +103,23 @@ export default function AudienceIndexPage() {
       // キャッシュに保存
       localStorage.setItem(`vote_${selectedVoteId}`, selectedChoice);
       toast.success("投票が送信されました");
-      // 投票後も選択状態は保持するので状態のリセットは行わない
     } catch (error) {
       toast.error("投票送信に失敗しました");
     }
   };
+
+  // selectedChoice の変更を検知して即時投票送信（既にキャッシュがある場合も再送信可能）
+  useEffect(() => {
+    if (selectedVoteId && selectedChoice) {
+      handleVoteSubmit();
+    }
+    // selectedChoice の変更のたびに投票を送信
+  }, [selectedChoice, selectedVoteId]);
+
+  // 現在選択されている投票オブジェクト
+  const currentVote = sessionInfo?.availableVotes?.find(
+    (v) => v.voteId === selectedVoteId
+  );
 
   return (
     <div className="flex flex-col h-full">
@@ -132,7 +151,7 @@ export default function AudienceIndexPage() {
                     );
                     return {
                       label: vote?.title ?? "未定義",
-                      value: voteId
+                      value: voteId.toString()
                     };
                   })}
                   selectedKeys={
@@ -165,7 +184,11 @@ export default function AudienceIndexPage() {
                       { choiceId: "3", count: 30 }
                     ]}
                     selectedChoice={selectedChoice}
-                    onChoiceChange={setSelectedChoice}
+                    onChoiceChange={(choiceId) => {
+                      // ラジオボタンで選択されたとき、即座に状態更新
+                      setSelectedChoice(choiceId);
+                    }}
+                    // votedHandler はここでは単にログ出力（必要に応じて処理を追加）
                     votedHandler={(voteId, choiceId) => {
                       console.log("Voted:", voteId, choiceId);
                     }}
@@ -175,11 +198,9 @@ export default function AudienceIndexPage() {
                 )}
               </DrawerBody>
               <DrawerFooter>
+                {/* Close ボタンのみ残す。投票はラジオ選択時に即時送信される */}
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
-                </Button>
-                <Button color="primary" onPress={handleVoteSubmit}>
-                  Submit Vote
                 </Button>
               </DrawerFooter>
             </>
