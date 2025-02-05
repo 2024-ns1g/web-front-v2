@@ -48,21 +48,18 @@ export default function AudienceIndexPage() {
     switch (message.requestType) {
       case "CHANGE_CURRENT_PAGE": {
         console.log("Before CHANGE_CURRENT_PAGE, currentPage:", audience.state.currentPage);
-        // ※ここは currentPage のみ更新（既存 state を維持しない場合でも問題ない想定）
-        audience.updateState({ ...audience.state, currentPage: message.data.newPageIndex });
+        audience.updateState({ currentPage: message.data.newPageIndex });
         toast.info(`スライドが${message.data.newPageIndex + 1}枚目に変更されました`);
         break;
       }
       case "ACTIVATE_VOTE": {
         console.log("ACTIVATE_VOTE received. Current activeVoteIds:", audience.state.activeVoteIds);
         const newVoteId = message.data.voteId;
-        // 既存の activeVoteIds に新しい voteId を追加
-        const newActiveVotes = audience.state.activeVoteIds
-          ? [...audience.state.activeVoteIds, newVoteId]
-          : [newVoteId];
+        const newActiveVotes = [...audience.state.activeVoteIds, newVoteId];
         console.log("Appending newVoteId:", newVoteId, " -> New activeVoteIds:", newActiveVotes);
-        // ★ ここで state 全体をマージして更新することで、他のプロパティを保持する
-        audience.updateState({ ...audience.state, activeVoteIds: newActiveVotes });
+        audience.updateState({
+          activeVoteIds: newActiveVotes
+        });
         toast.info("新しい投票が開始されました");
         break;
       }
@@ -171,7 +168,7 @@ export default function AudienceIndexPage() {
         }
         activeVoteCount={audience.state.activeVoteIds.length}
         isWsConnected={audience.isWsConnected}
-        wsClickedHandler={() => { }}
+        wsClickedHandler={() => {}}
         voteClickedHandler={() => setIsVoteDrawerOpen(true)}
       />
       <Drawer isOpen={isVoteDrawerOpen} onClose={() => setIsVoteDrawerOpen(false)}>
