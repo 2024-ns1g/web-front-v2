@@ -22,14 +22,6 @@ export const PresenterBlockSessionStatus: FC<PresenterBlockSessionStatusProps> =
   currentPageTitle
 }) => {
 
-  console.log("PresenterBlockSessionStatus", {
-    slideTitle,
-    totalPageNumber,
-    currentPageIndexNumber,
-    currentPageTotalStepNumber,
-    currentPageCurrentStepNumber,
-  });
-
   return (
     <Card className="w-full">
       <CardBody>
