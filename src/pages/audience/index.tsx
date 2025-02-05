@@ -61,6 +61,15 @@ export default function AudienceIndexPage() {
         toast.info("新しい投票が開始されました");
         break;
       }
+      case "DEACTIVATE_VOTE": {
+        console.log("DEACTIVATE_VOTE received. Current activeVoteIds:", audience.state.activeVoteIds);
+        const voteId = message.data.voteId;
+        const newActiveVotes = audience.state.activeVoteIds.filter((id) => id !== voteId);
+        console.log("Removing voteId:", voteId, " -> New activeVoteIds:", newActiveVotes);
+        audience.removeActiveVote(voteId);
+        toast.info("投票が終了しました");
+        break;
+      }
       case "VOTE_PROGRESS_BROADCAST": {
         const { voteId, choiceVotes } = message.data;
         console.log("VOTE_PROGRESS_BROADCAST for voteId:", voteId, "choiceVotes:", choiceVotes);
@@ -166,7 +175,7 @@ export default function AudienceIndexPage() {
         }
         activeVoteCount={audience.state.activeVoteIds.length}
         isWsConnected={audience.isWsConnected}
-        wsClickedHandler={() => {}}
+        wsClickedHandler={() => { }}
         voteClickedHandler={() => setIsVoteDrawerOpen(true)}
       />
       <Drawer isOpen={isVoteDrawerOpen} onClose={() => setIsVoteDrawerOpen(false)}>
