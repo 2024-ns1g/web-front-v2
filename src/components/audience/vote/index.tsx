@@ -1,68 +1,77 @@
-import 'chart.js/auto';
-import { Doughnut } from 'react-chartjs-2';
-import { FC, useEffect, useState } from "react";
-import { VoteChoice } from '@/types/audience/vote-choice';
-import { Radio, RadioGroup } from '@nextui-org/react';
-
-type VoteStatsType = {
-  choiceId: string;
-  count: number;
-};
+import { FC, useMemo } from "react";
+import { Radio, RadioGroup } from "@nextui-org/react";
+import { VoteChoice } from "@/types/session/vote-choice";
+import { Doughnut } from "react-chartjs-2";
+import "chart.js/auto";
 
 interface VoteDrawerBodyProps {
+  voteId: string;
   voteTitle: string;
   voteQuestion: string;
   choices: VoteChoice[];
-  stats: VoteStatsType[];
-  votedHandler: (voteId: string, choiceId: string) => void;
+  stats: { choiceId: string; count: number }[];
+  selectedChoice: string | null;
+  onChoiceChange: (choiceId: string) => void;
+}
+
+// シンプルなランダムカラー生成（必要に応じて調整）
+const generateRandomColorPair = () => {
+  const randomColor = () =>
+    "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0");
+  return {
+    background: randomColor(),
+    border: randomColor(),
+  };
 };
 
 export const VoteDrawerBody: FC<VoteDrawerBodyProps> = ({
+  voteId,
   voteTitle,
-  voteQuestion: voteSummary,
+  voteQuestion,
   choices,
   stats,
-  votedHandler
+  selectedChoice,
+  onChoiceChange,
 }) => {
+  // 背景色や枠線色が設定されていない場合、ランダムカラーを付与する
+  const processedChoices = useMemo(() => {
+    return choices.map(c => {
+      if (!c.backgroundColor || !c.borderColor) {
+        const { background, border } = generateRandomColorPair();
+        return { ...c, backgroundColor: background, borderColor: border };
+      }
+      return c;
+    });
+  }, [choices]);
 
-  const [selected, setSelected] = useState<string | null>(null);
-
-  const [summary, setSummary] = useState([]);
-
-  // Generate and set color when it is not set
-  choices.forEach((c) => {
-    if (!c.backgroundColor || !c.borderColor) {
-      const { background, border } = generateRandomColorPair();
-      c.backgroundColor = background;
-      c.borderColor = border;
-    }
-  });
-
-  const data = {
-    labels: choices.map((c) => c.title),
+  // 必要なら Doughnut チャート用のデータを生成（今回はコメントアウト）
+  const chartData = useMemo(() => ({
+    labels: processedChoices.map(c => c.title),
     datasets: [{
-      data: stats.map((s) => s.count),
-      backgroundColor: choices.map((c) => c.backgroundColor!),
-      borderColor: choices.map((c) => c.borderColor!),
+      data: stats.map(s => s.count),
+      backgroundColor: processedChoices.map(c => c.backgroundColor!),
+      borderColor: processedChoices.map(c => c.borderColor!),
       borderWidth: 1,
     }],
-  };
+  }), [processedChoices, stats]);
 
   return (
-    <>
-      {/* <p className="text-lg font-bold">{voteTitle}</p> */}
-      {/* <Doughnut data={data} /> */}
+    <div>
+      <h3>{voteTitle}</h3>
+      <p>{voteQuestion}</p>
       <RadioGroup
         name="vote"
-        value={selected}
-        onValueChange={(value) => setSelected(value)}
+        value={selectedChoice ?? ""}
+        onValueChange={onChoiceChange}
       >
-        {choices.map((c) => (
+        {processedChoices.map(c => (
           <Radio key={c.choiceId} value={c.choiceId}>
             {c.title}
           </Radio>
         ))}
       </RadioGroup>
-    </>
+      {/* 以下、チャート表示が必要ならコメントアウトを解除 */}
+      <Doughnut data={chartData} />
+    </div>
   );
 };
