@@ -43,7 +43,9 @@ export default function AudienceIndexPage() {
         break;
       }
       case "ACTIVATE_VOTE": {
-        audience.updateState({ activeVoteIds: [...audience.state.activeVoteIds, message.data.voteId] });
+        audience.updateState({
+          activeVoteIds: [...audience.state.activeVoteIds, message.data.voteId]
+        });
         toast.info("新しい投票が開始されました");
         break;
       }
@@ -63,12 +65,24 @@ export default function AudienceIndexPage() {
     });
   }, []);
 
+  // 選択中の投票が変わったら、キャッシュ（localStorage）を読み込む
+  useEffect(() => {
+    if (selectedVoteId) {
+      const cachedChoice = localStorage.getItem(`vote_${selectedVoteId}`);
+      if (cachedChoice) {
+        setSelectedChoice(cachedChoice);
+      } else {
+        setSelectedChoice(null);
+      }
+    }
+  }, [selectedVoteId]);
+
   // 現在選択されている投票オブジェクト（sessionInfo 内の availableVotes から selectedVoteId で抽出）
   const currentVote = sessionInfo?.availableVotes?.find(
     (v) => v.voteId === selectedVoteId
   );
 
-  // 投票送信処理
+  // 投票送信処理（送信後はキャッシュに保存し、選択状態は保持）
   const handleVoteSubmit = async () => {
     if (!selectedVoteId || !selectedChoice) {
       toast.error("投票と選択肢を選択してください");
@@ -79,11 +93,10 @@ export default function AudienceIndexPage() {
         requestType: "SUBMIT_VOTE",
         data: { voteId: selectedVoteId, choiceId: selectedChoice }
       });
+      // キャッシュに保存
+      localStorage.setItem(`vote_${selectedVoteId}`, selectedChoice);
       toast.success("投票が送信されました");
-      setIsVoteDrawerOpen(false);
-      // 選択状態をリセット
-      setSelectedVoteId(null);
-      setSelectedChoice(null);
+      // 投票後も選択状態は保持するので状態のリセットは行わない
     } catch (error) {
       toast.error("投票送信に失敗しました");
     }
@@ -126,10 +139,10 @@ export default function AudienceIndexPage() {
                     selectedVoteId ? new Set([selectedVoteId]) : new Set()
                   }
                   onSelectionChange={(val) => {
-                    // val は Set 型なので先頭要素を取り出す
+                    // val は Set 型なので先頭要素を取り出し、文字列に変換
                     const voteId = Array.from(val)[0] || null;
-                    setSelectedVoteId(voteId !== undefined && voteId !== null ? voteId.toString() : null);
-                    // 投票が変更されたら選択肢もリセット
+                    setSelectedVoteId(voteId !== null ? voteId.toString() : null);
+                    // 投票が変更されたら選択肢もリセット（キャッシュ読み込み用 useEffect が働く）
                     setSelectedChoice(null);
                   }}
                 >
@@ -153,7 +166,6 @@ export default function AudienceIndexPage() {
                     ]}
                     selectedChoice={selectedChoice}
                     onChoiceChange={setSelectedChoice}
-                    // 選択が変わったら votedHandler を実際に呼び出す
                     votedHandler={(voteId, choiceId) => {
                       console.log("Voted:", voteId, choiceId);
                     }}
@@ -184,9 +196,8 @@ export default function AudienceIndexPage() {
           />
           <BodyMarkdownViewer
             content={
-              (sessionInfo?.pages ?? []).find(
-                (p) => p.pageId === selectedPageId
-              )?.scripts[0].content ?? ""
+              (sessionInfo?.pages ?? []).find((p) => p.pageId === selectedPageId)
+                ?.scripts[0].content ?? ""
             }
           />
         </div>
