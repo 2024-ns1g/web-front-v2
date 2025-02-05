@@ -6,6 +6,7 @@ export const SessionStateSchema = z.object({
   currentStep: z.number(),
   activeVoteIds: z.array(z.string()),
   votes: z.array(VoteSchema),
+  voteSummaries: z.record(z.number()),
 });
 
 export type SessionState = z.infer<typeof SessionStateSchema>;

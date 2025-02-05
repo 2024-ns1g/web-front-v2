@@ -48,6 +48,7 @@ export const AudienceProvider = ({ children }: AudienceProviderProps) => {
     activeVoteIds: [],
     currentStep: 0,
     votes: [],
+    voteSummaries: {},
   });
 
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
