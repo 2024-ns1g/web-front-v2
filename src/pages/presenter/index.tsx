@@ -88,7 +88,9 @@ export default function PresenterIndexPage() {
 
   return (
     <>
-      <h1 className="text-4xl">Presenter</h1>
+      <div className="w-full flex justify-center py-2">
+        <h1 className="text-4xl">Presenter</h1>
+      </div>
       <ResponsiveMasonry className="flex justify-center px-4">
         <Masonry className="container">
           <PresenterBlockDirectSeekSlide
