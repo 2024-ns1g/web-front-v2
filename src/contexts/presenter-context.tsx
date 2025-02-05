@@ -1,6 +1,7 @@
 import { useLogger } from "@/hooks/use-logger";
 import { SessionInfo, SessionInfoSchema } from "@/types/session/session-info";
 import { SessionState } from "@/types/session/session-state";
+import { presenterWsRegistMessage } from "@/types/session/ws-message/presenter/regist-message";
 import axios from "axios";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
@@ -100,7 +101,16 @@ export const PresenterProvider = ({ children }: PresenterProviderProps) => {
       const newWs = new WebSocket(wsUrl);
       ws.current = newWs;
 
+      // send regist message
+      const message = {
+        requestType: "REGIST_PRESENTER",
+        data: {
+          token: attachedToken,
+        },
+      } as presenterWsRegistMessage;
+
       newWs.onopen = () => {
+        newWs.send(JSON.stringify(message));
         // set message handler
         newWs.onmessage = (event) => {
           const message = JSON.parse(event.data);
