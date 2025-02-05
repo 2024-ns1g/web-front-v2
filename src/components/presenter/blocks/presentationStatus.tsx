@@ -1,8 +1,8 @@
 // プレゼンの進行状態を表示するコンポーネント
 
-import { Button, Card, CardBody, Progress } from "@nextui-org/react";
+import { Card, CardBody, Progress } from "@nextui-org/react";
 import { FC } from "react";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { FaAngleRight } from "react-icons/fa6";
 
 type PresenterBlockSessionStatusProps = {
   slideTitle: string;

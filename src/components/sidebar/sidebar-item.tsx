@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const SidebarItem = ({ icon, title, isActive, href = "" }: Props) => {
-  const { isSidebarOpen, setSidebarOpen } = useLayoutContext();
+  const { setSidebarOpen } = useLayoutContext();
 
   const handleClick = () => {
     if (window.innerWidth < 768) {
