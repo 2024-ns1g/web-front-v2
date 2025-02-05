@@ -4,7 +4,7 @@ import axios, { AxiosInstance } from 'axios';
 const createApiClient = (auth: boolean = true) => {
 
   const apiClient = axios.create({
-    baseURL: envLoader(envKeys.apiHost, 'http://rca-ukuru:8080'),
+    baseURL: envLoader(envKeys.apiHost, 'http://localhost:8080'),
     timeout: Number(envLoader(envKeys.defaultTimeout, '5000')),
     headers: {
       'Content-Type': 'application/json',
